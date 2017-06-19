@@ -27,7 +27,27 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-include 'modules:com.github.themrmilchmann.osmerion.base',
-        'modules:com.github.themrmilchmann.osmerion.internal.annotation'
+package com.github.themrmilchmann.osmerion.logging;
 
-rootProject.name = 'Osmerion'
+/**
+ * A listener that can be attached to {@link ILogger}s to handle {@link LogMessage}s.
+ *
+ * @author Leon Linhart
+ * @since 1.0.0
+ */
+@FunctionalInterface
+public interface ILogListener {
+
+    /**
+     * Processes a given {@link LogMessage}.
+     *
+     * <p>Information about the thread-safety of this method should be available in the documentation of the logger for which this listener has been registered.
+     * </p>
+     *
+     * @param logMessage the {@code LogMessage} to be processed
+     *
+     * @since 1.0.0
+     */
+    void onLogged(LogMessage logMessage);
+
+}
