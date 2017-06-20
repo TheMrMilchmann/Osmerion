@@ -27,9 +27,19 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-include 'modules:com.github.themrmilchmann.osmerion.base',
+package com.github.themrmilchmann.osmerion.internal.generator
 
-        'modules:com.github.themrmilchmann.osmerion.internal.annotation',
-        'modules:com.github.themrmilchmann.osmerion.internal.generator'
+// Style Configuration
+const val LN = "\n"
 
-rootProject.name = 'Osmerion'
+const val PACKAGE = "com.github.themrmilchmann.osmerion"
+
+val MODULE_BASE = getOsmerionPath("base")
+val MODULE_GRAPHICS = getOsmerionPath("graphics")
+
+const val VERSION_1_0_0 = "1.0.0"
+
+fun getOsmerionPath(path: String, pack: String = PACKAGE) = "$pack.$path"
+
+// LIST OF AUTHORS
+const val AUTHOR_LEON_LINHART = "Leon Linhart"
