@@ -60,6 +60,9 @@ plugins {
     java
 }
 
+val sourceSets = java.sourceSets
+sourceSets["main"].java.srcDir("/src/generated/java")
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_9
     targetCompatibility = JavaVersion.VERSION_1_9
