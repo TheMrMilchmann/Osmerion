@@ -40,6 +40,8 @@ java {
 }
 
 tasks.withType<JavaCompile> {
+    dependsOn(":modules:com.github.themrmilchmann.osmerion.internal.generator:generate")
+
     options.forkOptions.javaHome = File(rootProject.rootDir, "config/jdk9/") // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
     options.isFork = true
 }

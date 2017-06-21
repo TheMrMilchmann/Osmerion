@@ -27,8 +27,22 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import org.gradle.api.tasks.JavaExec
+import java.io.File
+
 plugins {
     kotlin("jvm")
+}
+
+tasks {
+    "generate"(JavaExec::class) {
+        main = "com.github.themrmilchmann.osmerion.internal.generator.GeneratorKt"
+
+        val templatesRoot = File(project(":modules:com.github.themrmilchmann.osmerion.internal.generator.templates").projectDir, "src/main/kotlin/").absolutePath
+        val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
+
+        args(templatesRoot, modulesRoot)
+    }
 }
 
 dependencies {
