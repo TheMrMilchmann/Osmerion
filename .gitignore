@@ -1,6 +1,6 @@
 .gradle
 .idea
 
-config
-
 build/
+
+/config
