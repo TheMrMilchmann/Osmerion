@@ -28,7 +28,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /**
- * TODO doc
+ * This module provides the base functionality used by Osmerion.
+ *
+ * <p>The primary focus of this module is providing implementations for:</p>
+ * <ul>
+ *     <li>beans,</li>
+ *     <li>collections,</li>
+ *     <li>logging utilities,</li>
+ *     <li>platform utilities, and </li>
+ *     <li>efficient, specialized types and functions.</li>
+ * </ul>
  *
  * @author Leon Linhart
  * @since 1.0.0
