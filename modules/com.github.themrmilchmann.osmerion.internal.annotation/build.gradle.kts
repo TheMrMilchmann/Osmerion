@@ -31,12 +31,4 @@ plugins {
     java
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_9
-    targetCompatibility = JavaVersion.VERSION_1_9
-}
-
-tasks.withType<JavaCompile> {
-    options.forkOptions.javaHome = File(rootProject.rootDir, "config/jdk9/") // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
-    options.isFork = true
-}
+configureJavaProject(generated = false, tests = false)

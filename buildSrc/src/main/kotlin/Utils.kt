@@ -27,16 +27,37 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-plugins {
-    java
-}
+import org.gradle.api.*
+import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.*
+import java.io.File
 
-configureJavaProject()
+fun KotlinBuildScript.configureJavaProject(generated: Boolean = true, tests: Boolean = true) {
 
-tasks.withType<JavaCompile> {
-    dependsOn(":modules:com.github.themrmilchmann.osmerion.internal.generator:generate")
-}
+    afterEvaluate {
+        val java = the<JavaPluginConvention>()
+        java.sourceCompatibility = JavaVersion.VERSION_1_9
+        java.targetCompatibility = JavaVersion.VERSION_1_9
 
-dependencies {
-    compile(project(":modules:com.github.themrmilchmann.osmerion.internal.annotation"))
+        if (generated) {
+            val sourceSets = java.sourceSets
+            sourceSets["main"].java.srcDir("/src/generated/java")
+        }
+    }
+
+    tasks.withType<JavaCompile> {
+        options.forkOptions.javaHome = File(rootProject.rootDir, "config/jdk9/") // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
+        options.isFork = true
+    }
+
+    if (tests) {
+        val test: Test by tasks
+        test.useTestNG()
+
+        dependencies {
+            testCompile("org.testng:testng:6.11")
+        }
+    }
 }

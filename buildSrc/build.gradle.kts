@@ -28,15 +28,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 plugins {
-    java
-}
-
-configureJavaProject()
-
-tasks.withType<JavaCompile> {
-    dependsOn(":modules:com.github.themrmilchmann.osmerion.internal.generator:generate")
-}
-
-dependencies {
-    compile(project(":modules:com.github.themrmilchmann.osmerion.internal.annotation"))
+    `kotlin-dsl`
 }
