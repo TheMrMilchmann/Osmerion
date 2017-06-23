@@ -34,8 +34,7 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.*
 import java.io.File
 
-fun KotlinBuildScript.configureJavaProject(generated: Boolean = true, tests: Boolean = true) {
-
+fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = true) {
     afterEvaluate {
         val java = the<JavaPluginConvention>()
         java.sourceCompatibility = JavaVersion.VERSION_1_9
