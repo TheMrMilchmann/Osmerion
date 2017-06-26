@@ -60,3 +60,5 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
         }
     }
 }
+
+fun osmerion(path: String = "") = "com.github.themrmilchmann.osmerion${if (path.isNotEmpty()) ".$path" else "" }"

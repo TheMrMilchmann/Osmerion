@@ -34,9 +34,9 @@ plugins {
 configureJavaProject()
 
 tasks.withType<JavaCompile> {
-    dependsOn(":modules:com.github.themrmilchmann.osmerion.internal.generator:generate")
+    dependsOn(":modules:${osmerion("internal.generator")}:generate")
 }
 
 dependencies {
-    compile(project(":modules:com.github.themrmilchmann.osmerion.internal.annotation"))
+    compile(project(":modules:${osmerion("internal.annotation")}"))
 }

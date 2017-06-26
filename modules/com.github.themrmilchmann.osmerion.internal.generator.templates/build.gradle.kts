@@ -36,10 +36,10 @@ tasks {
     "generate"(JavaExec::class) {
         dependsOn("compileKotlin")
 
-        main = "com.github.themrmilchmann.osmerion.internal.generator.GeneratorKt"
+        main = osmerion("internal.generator.GeneratorKt")
         classpath = java.sourceSets["main"].runtimeClasspath
 
-        val templatesRoot = File(project(":modules:com.github.themrmilchmann.osmerion.internal.generator.templates").projectDir, "src/main/kotlin/").absolutePath
+        val templatesRoot = File(project(":modules:${osmerion("internal.generator.templates")}").projectDir, "src/main/kotlin/").absolutePath
         val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
 
         args(templatesRoot, modulesRoot)
@@ -56,5 +56,5 @@ tasks {
 
 dependencies {
     compile(kotlin("stdlib"))
-    compile(project(":modules:com.github.themrmilchmann.osmerion.internal.generator"))
+    compile(project(":modules:${osmerion("internal.generator")}"))
 }

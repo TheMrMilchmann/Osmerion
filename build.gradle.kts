@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 allprojects {
-    group = "com.github.themrmilchmann.osmerion"
+    group = osmerion()
     version = "1.0.0"
 
     repositories {
