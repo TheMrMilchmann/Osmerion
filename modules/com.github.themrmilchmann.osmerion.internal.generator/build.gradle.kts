@@ -34,17 +34,6 @@ plugins {
     kotlin("jvm")
 }
 
-tasks {
-    "generate"(JavaExec::class) {
-        main = "com.github.themrmilchmann.osmerion.internal.generator.GeneratorKt"
-
-        val templatesRoot = File(project(":modules:com.github.themrmilchmann.osmerion.internal.generator.templates").projectDir, "src/main/kotlin/").absolutePath
-        val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
-
-        args(templatesRoot, modulesRoot)
-    }
-}
-
 dependencies {
     compile(kotlin("stdlib"))
 }
