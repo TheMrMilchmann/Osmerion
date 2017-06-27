@@ -156,7 +156,6 @@ abstract class JavaType(
                 val category = it.category
 
                 if (category != prevCategory && !category.startsWith("_")) {
-                    println()
                     println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
                     println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(indent.length + category.length + 6)}")
                     println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
@@ -167,8 +166,6 @@ abstract class JavaType(
 
                 prevCategory = category
             }
-
-            println()
         }
 
         print("$indent}")
@@ -628,7 +625,7 @@ class JavaMethod(
         println(toJavaDoc(indent = indent))
 
         val annotations = this@JavaMethod.annotations
-        if (annotations != null) print(printAnnotations(indent = indent, annotations = annotations))
+        if (annotations != null) println(printAnnotations(indent = indent, annotations = annotations))
 
         print(indent)
         print(visibility)
@@ -660,21 +657,22 @@ class JavaMethod(
             if (body.isNotEmpty()) {
                 var body: String = body
 
-                while (body.startsWith("\n")) body = body.removePrefix(LN)
-                while (body.endsWith("\n")) body = body.removeSuffix(LN)
+                while (body.startsWith(LN)) body = body.removePrefix(LN)
+                while (body.endsWith(LN)) body = body.removeSuffix(LN)
 
                 println()
                 body.lineSequence().forEach {
-                    println(indent)
+                    print(indent)
                     println(it)
                 }
 
-                println()
                 print(indent)
             }
 
             println("}")
         }
+
+        println()
     }
 
 }
