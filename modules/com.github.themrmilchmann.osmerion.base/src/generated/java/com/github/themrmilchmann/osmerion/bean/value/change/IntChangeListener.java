@@ -28,23 +28,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
+
+import com.github.themrmilchmann.osmerion.bean.value.ObservableIntValue;
 
 /**
- * An observable {@code char} value.
+ * A specialized {@code int} {@link ChangeListener}.
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
-public interface ObservableCharValue extends ObservableValue<Character> {
+@FunctionalInterface
+public interface IntChangeListener {
 
     /**
-     * Returns the value of this {@link ObservableCharValue}.
+     * Processes a value change of an ObservableValue this listener is attached to.
      *
-     * @return the value of this {@code ObservableCharValue}
+     * @param observable the observable whose value has changed
+     * @param oldValue   the old value
+     * @param newValue   the new value
      *
      * @since 1.0.0
      */
-    char get();
+    void onChanged(ObservableIntValue observable, int oldValue, int newValue);
+
+    /**
+     * Returns a specialized ChangeListener wrapping around the given one.
+     *
+     * @param listener the listener to be wrapped
+     *
+     * @return a specialized ChangeListener wrapping around the given one
+     *
+     * @since 1.0.0
+     */
+    static IntChangeListener wrap(ChangeListener<? super Integer> listener) {
+        return new IntChangeListener() {
+        
+            @Override
+            public void onChanged(ObservableIntValue observable, int oldValue, int newValue) {
+                listener.onChanged(observable, oldValue, newValue);
+            }
+        
+            @Override
+            public boolean equals(Object other) {
+                return other == listener || other == this;
+            }
+        
+            @Override
+            public int hashCode() {
+                return listener.hashCode();
+            }
+        
+        };
+    }
 
 }

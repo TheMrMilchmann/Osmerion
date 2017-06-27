@@ -28,23 +28,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
+
+import com.github.themrmilchmann.osmerion.bean.value.ObservableShortValue;
 
 /**
- * An observable {@code int} value.
+ * A specialized {@code short} {@link ChangeListener}.
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
-public interface ObservableIntValue extends ObservableValue<Integer> {
+@FunctionalInterface
+public interface ShortChangeListener {
 
     /**
-     * Returns the value of this {@link ObservableIntValue}.
+     * Processes a value change of an ObservableValue this listener is attached to.
      *
-     * @return the value of this {@code ObservableIntValue}
+     * @param observable the observable whose value has changed
+     * @param oldValue   the old value
+     * @param newValue   the new value
      *
      * @since 1.0.0
      */
-    int get();
+    void onChanged(ObservableShortValue observable, short oldValue, short newValue);
+
+    /**
+     * Returns a specialized ChangeListener wrapping around the given one.
+     *
+     * @param listener the listener to be wrapped
+     *
+     * @return a specialized ChangeListener wrapping around the given one
+     *
+     * @since 1.0.0
+     */
+    static ShortChangeListener wrap(ChangeListener<? super Short> listener) {
+        return new ShortChangeListener() {
+        
+            @Override
+            public void onChanged(ObservableShortValue observable, short oldValue, short newValue) {
+                listener.onChanged(observable, oldValue, newValue);
+            }
+        
+            @Override
+            public boolean equals(Object other) {
+                return other == listener || other == this;
+            }
+        
+            @Override
+            public int hashCode() {
+                return listener.hashCode();
+            }
+        
+        };
+    }
 
 }

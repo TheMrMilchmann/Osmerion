@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2017 Leon Linhart,
  * All rights reserved.
- * MACHINE GENERATED FILE, DO NOT EDIT
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -28,23 +27,30 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
+
+import com.github.themrmilchmann.osmerion.bean.value.ObservableValue;
 
 /**
- * An observable {@code short} value.
+ * A listener which reports value changes when attached to an {@link ObservableValue}.
+ *
+ * @param <T> the type of the value
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
-public interface ObservableShortValue extends ObservableValue<Short> {
+@FunctionalInterface
+public interface ChangeListener<T> {
 
     /**
-     * Returns the value of this {@link ObservableShortValue}.
+     * Processes a value change of an {@link ObservableValue} this listener is attached to.
      *
-     * @return the value of this {@code ObservableShortValue}
+     * @param observableValue the {@code ObservableValue} whose value has changed
+     * @param oldValue the old value
+     * @param newValue the new value
      *
      * @since 1.0.0
      */
-    short get();
+    void onChanged(ObservableValue<? extends T> observableValue, T oldValue, T newValue);
 
 }

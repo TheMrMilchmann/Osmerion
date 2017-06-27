@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2017 Leon Linhart,
  * All rights reserved.
+ * MACHINE GENERATED FILE, DO NOT EDIT
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,28 +28,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
+
+import com.github.themrmilchmann.osmerion.bean.value.ObservableDoubleValue;
 
 /**
- * A listener which reports value changes when attached to an {@link ObservableValue}.
- *
- * @param <T> the type of the value
+ * A specialized {@code double} {@link ChangeListener}.
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface ChangeListener<T> {
+public interface DoubleChangeListener {
 
     /**
-     * TODO doc
+     * Processes a value change of an ObservableValue this listener is attached to.
      *
-     * @param observableValue the {@code ObservableValue} whose value has changed
-     * @param oldValue the old value
-     * @param newValue the new value
+     * @param observable the observable whose value has changed
+     * @param oldValue   the old value
+     * @param newValue   the new value
      *
      * @since 1.0.0
      */
-    void onChanged(ObservableValue<T> observableValue, T oldValue, T newValue);
+    void onChanged(ObservableDoubleValue observable, double oldValue, double newValue);
+
+    /**
+     * Returns a specialized ChangeListener wrapping around the given one.
+     *
+     * @param listener the listener to be wrapped
+     *
+     * @return a specialized ChangeListener wrapping around the given one
+     *
+     * @since 1.0.0
+     */
+    static DoubleChangeListener wrap(ChangeListener<? super Double> listener) {
+        return new DoubleChangeListener() {
+        
+            @Override
+            public void onChanged(ObservableDoubleValue observable, double oldValue, double newValue) {
+                listener.onChanged(observable, oldValue, newValue);
+            }
+        
+            @Override
+            public boolean equals(Object other) {
+                return other == listener || other == this;
+            }
+        
+            @Override
+            public int hashCode() {
+                return listener.hashCode();
+            }
+        
+        };
+    }
 
 }

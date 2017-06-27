@@ -115,7 +115,7 @@ class Generator(
     }
 
     internal fun generate(target: GeneratorTarget) {
-        val output = Paths.get("$trgPath/${target.moduleName}/src/generated/${target.language}/${target.packageName}/${target.fileName}.${target.appendix}")
+        val output = Paths.get("$trgPath/${target.moduleName}/src/generated/${target.language}/${target.packageName.replace('.', '/')}/${target.fileName}.${target.appendix}")
 
         generateOutput(target, output) {
             it.printTarget()

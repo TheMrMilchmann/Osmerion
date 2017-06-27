@@ -27,73 +27,68 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value
+package com.github.themrmilchmann.osmerion.bean.value.change
 
-import com.github.themrmilchmann.osmerion.bean.value.change.ChangeListener
+import com.github.themrmilchmann.osmerion.bean.value.ObservableValue
 import java.lang.reflect.Modifier
 
 import com.github.themrmilchmann.osmerion.internal.generator.*
 import com.github.themrmilchmann.osmerion.internal.generator.java.*
 
-private fun name(type: PrimitiveType) = "Observable${type.abbrevName}Value"
-fun ObservableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: PrimitiveType) = "${type.abbrevName}ChangeListener"
+fun ChangeListener(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
 
-private const val CAT_VALUE_OPS = "1_Value Operations"
-private const val CAT_LISTENERS = "2_Listeners"
-
-val ObservableValue = Profile {
+val ChangeListener = Profile {
     types.forEach {
         val t_value = it
 
         javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addInterfaces(ParametrizedType("ObservableValue", packageName, t_value.boxedType.simpleName))
-            addImports("import $packageName.change.*;")
-
-            documentation = "An observable {@code ${t_value.simpleName}} value."
             authors(AUTHOR_LEON_LINHART)
+            addAnnotations(FunctionalInterface)
+
+            documentation = "A specialized {@code $t_value} {@link ChangeListener}."
             since = VERSION_1_0_0
 
-            t_value.method(
-                "get",
-                "Returns the value of this {@link ${this.fileName}}.",
+            void.method(
+                "onChanged",
+                "Processes a value change of an ObservableValue this listener is attached to.",
 
-                category = CAT_VALUE_OPS,
-                returnDoc = "the value of this {@code ${this.fileName}}",
+                ObservableValue(t_value).PARAM("observable", "the observable whose value has changed"),
+                t_value.PARAM("oldValue", "the old value"),
+                t_value.PARAM("newValue", "the new value"),
+
                 since = VERSION_1_0_0
             )
 
-            void.method(
-                "addListener",
-                "Attaches the specified listener to this value.",
+            ChangeListener(t_value).method(
+                "wrap",
+                "Returns a specialized ChangeListener wrapping around the given one.",
 
-                ChangeListener(t_value).PARAM("listener", "the listener to be attached to this value"),
+                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType}").PARAM("listener", "the listener to be wrapped"),
 
-                category = CAT_LISTENERS,
-                since = VERSION_1_0_0
-            )
-
-            void.method(
-                "addListener",
-                inheritDoc,
-
-                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType.simpleName}").PARAM("listener", ""),
-
-                annotations = listOf(Override),
-                category = CAT_LISTENERS,
+                visibility = Modifier.STATIC,
+                returnDoc = "a specialized ChangeListener wrapping around the given one",
                 since = VERSION_1_0_0,
                 body = """
-this.addListener(${ChangeListener(t_value)}.wrap(listener));
+return new ${name(t_value)}() {
+
+    @Override
+    public void onChanged(${ObservableValue(t_value)} observable, $t_value oldValue, $t_value newValue) {
+        listener.onChanged(observable, oldValue, newValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == listener || other == this;
+    }
+
+    @Override
+    public int hashCode() {
+        return listener.hashCode();
+    }
+
+};
 """
-            )
-
-            void.method(
-                "removeListener",
-                "Detaches the specified listener from this value.",
-
-                ChangeListener(t_value).PARAM("listener", "the listener to be detached from this value"),
-
-                category = CAT_LISTENERS,
-                since = VERSION_1_0_0
             )
         }
     }

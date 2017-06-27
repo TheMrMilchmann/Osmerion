@@ -28,23 +28,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
+
+import com.github.themrmilchmann.osmerion.bean.value.ObservableByteValue;
 
 /**
- * An observable {@code float} value.
+ * A specialized {@code byte} {@link ChangeListener}.
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
-public interface ObservableFloatValue extends ObservableValue<Float> {
+@FunctionalInterface
+public interface ByteChangeListener {
 
     /**
-     * Returns the value of this {@link ObservableFloatValue}.
+     * Processes a value change of an ObservableValue this listener is attached to.
      *
-     * @return the value of this {@code ObservableFloatValue}
+     * @param observable the observable whose value has changed
+     * @param oldValue   the old value
+     * @param newValue   the new value
      *
      * @since 1.0.0
      */
-    float get();
+    void onChanged(ObservableByteValue observable, byte oldValue, byte newValue);
+
+    /**
+     * Returns a specialized ChangeListener wrapping around the given one.
+     *
+     * @param listener the listener to be wrapped
+     *
+     * @return a specialized ChangeListener wrapping around the given one
+     *
+     * @since 1.0.0
+     */
+    static ByteChangeListener wrap(ChangeListener<? super Byte> listener) {
+        return new ByteChangeListener() {
+        
+            @Override
+            public void onChanged(ObservableByteValue observable, byte oldValue, byte newValue) {
+                listener.onChanged(observable, oldValue, newValue);
+            }
+        
+            @Override
+            public boolean equals(Object other) {
+                return other == listener || other == this;
+            }
+        
+            @Override
+            public int hashCode() {
+                return listener.hashCode();
+            }
+        
+        };
+    }
 
 }

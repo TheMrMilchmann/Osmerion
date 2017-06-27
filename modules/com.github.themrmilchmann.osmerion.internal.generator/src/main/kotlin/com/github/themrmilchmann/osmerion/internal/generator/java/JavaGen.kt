@@ -127,16 +127,21 @@ abstract class JavaType(
 
         var specialImportId: String = ""
 
-        imports.forEach {
-            val import = it.removePrefix("import ").removePrefix("static ")
+        if (imports.any()) {
+            imports.forEach {
 
-            if (specialImportId.isNotEmpty() && !import.startsWith(specialImportId)) println()
+                val import = it.removePrefix("import ").removePrefix("static ")
 
-            if (import.startsWith("java.")) specialImportId = "java."
-            else if (import.startsWith("javax.")) specialImportId = "javax."
-            else specialImportId = ""
+                if (specialImportId.isNotEmpty() && !import.startsWith(specialImportId)) println()
 
-            println(it)
+                if (import.startsWith("java.")) specialImportId = "java."
+                else if (import.startsWith("javax.")) specialImportId = "javax."
+                else specialImportId = ""
+
+                println(it)
+            }
+
+            println()
         }
 
         printType()
@@ -545,7 +550,7 @@ class JavaInterface(
             }
             if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
             if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
-            if (body != null) append("default ")
+            if (body != null && !isStatic) append("default ")
             if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
             if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
             if (Modifier.isStrict(visibility)) {
@@ -675,7 +680,7 @@ class JavaMethod(
 
                 println()
                 body.lineSequence().forEach {
-                    print(indent)
+                    print(indent + INDENT)
                     println(it)
                 }
 

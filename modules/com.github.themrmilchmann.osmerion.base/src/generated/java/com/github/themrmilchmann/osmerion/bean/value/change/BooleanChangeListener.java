@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2017 Leon Linhart,
  * All rights reserved.
+ * MACHINE GENERATED FILE, DO NOT EDIT
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,51 +28,58 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.bean.value;
+package com.github.themrmilchmann.osmerion.bean.value.change;
 
-import com.github.themrmilchmann.osmerion.bean.value.change.*;
+import com.github.themrmilchmann.osmerion.bean.value.ObservableBooleanValue;
 
 /**
- * TODO doc
+ * A specialized {@code boolean} {@link ChangeListener}.
  *
  * @author Leon Linhart
  * @since 1.0.0
  */
-public interface ObservableValue<T> {
-
-    // ########################################################################################################################################################
-    // # Value Operations #####################################################################################################################################
-    // ########################################################################################################################################################
+@FunctionalInterface
+public interface BooleanChangeListener {
 
     /**
-     * Returns the value of this {@link ObservableValue}.
+     * Processes a value change of an ObservableValue this listener is attached to.
      *
-     * @return the value of this {@code ObservableValue}
+     * @param observable the observable whose value has changed
+     * @param oldValue   the old value
+     * @param newValue   the new value
      *
      * @since 1.0.0
      */
-    T getValue();
-
-    // ########################################################################################################################################################
-    // # Listeners ############################################################################################################################################
-    // ########################################################################################################################################################
+    void onChanged(ObservableBooleanValue observable, boolean oldValue, boolean newValue);
 
     /**
-     * TODO doc
+     * Returns a specialized ChangeListener wrapping around the given one.
      *
-     * @param listener
+     * @param listener the listener to be wrapped
+     *
+     * @return a specialized ChangeListener wrapping around the given one
      *
      * @since 1.0.0
      */
-    void addListener(ChangeListener<? super T> listener);
-
-    /**
-     * TODO doc
-     *
-     * @param listener
-     *
-     * @since 1.0.0
-     */
-    void removeListener(ChangeListener<? super T> listener);
+    static BooleanChangeListener wrap(ChangeListener<? super Boolean> listener) {
+        return new BooleanChangeListener() {
+        
+            @Override
+            public void onChanged(ObservableBooleanValue observable, boolean oldValue, boolean newValue) {
+                listener.onChanged(observable, oldValue, newValue);
+            }
+        
+            @Override
+            public boolean equals(Object other) {
+                return other == listener || other == this;
+            }
+        
+            @Override
+            public int hashCode() {
+                return listener.hashCode();
+            }
+        
+        };
+    }
 
 }
