@@ -62,3 +62,4 @@ const val COPYRIGHT_HEADER = """/*
 
 const val INDENT = "    "
 const val CATEGORY_DIVIDER = "################################################################################################################################################################"
+const val inheritDoc = "{@inheritDoc}"

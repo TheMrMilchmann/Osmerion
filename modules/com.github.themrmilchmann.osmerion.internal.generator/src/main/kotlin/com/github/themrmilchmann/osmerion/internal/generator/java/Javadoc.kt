@@ -150,7 +150,7 @@ internal fun JavaMethod.toJavaDoc(indent: String = ""): String {
 
     return StringBuilder(if (documentation.isEmpty()) "" else documentation.cleanup("$indent * "))
         .apply {
-            if (parameters.any()) {
+            if (parameters.any { p -> if (documentation == inheritDoc) p.documentation.isNotEmpty() else p.documentation != inheritDoc }) {
                 // Find maximum param name length
                 val alignment = parameters.map { it.name.length }.fold(0) { left, right -> java.lang.Math.max(left, right) }
                 val multilineAligment = paramMultilineAligment(indent, alignment)
