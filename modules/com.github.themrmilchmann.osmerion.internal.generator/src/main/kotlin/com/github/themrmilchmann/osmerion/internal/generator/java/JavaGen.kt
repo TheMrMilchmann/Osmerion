@@ -35,11 +35,13 @@ import java.util.*
 
 import com.github.themrmilchmann.osmerion.internal.generator.*
 
+private val CATEGORY = "(\\d+)\\Q_\\E(.+)".toRegex()
+
 private val WEIGHT_FIELD = 0
 private val WEIGHT_METHOD = 1
 private val WEIGHT_SUBTYPE = Integer.MAX_VALUE
 
-interface Member {
+interface Member : Comparable<Member> {
 
     var category: String
     val name: String
@@ -47,6 +49,8 @@ interface Member {
     fun getWeight(): Int
 
     fun PrintWriter.printMember(indent: String)
+
+    override fun compareTo(other: Member) = name.compareTo(other.name)
 
 }
 
@@ -66,10 +70,10 @@ abstract class JavaType(
         val aW = alpha.getWeight()
         val bW = beta.getWeight()
 
-        if (cC == 0) 0
-        else if (aW < bW) 1
-        else if (aW > bW) -1
-        else alpha.name.compareTo(beta.name)
+        if (cC != 0) cC
+        else if (aW > bW) 1
+        else if (aW < bW) -1
+        else alpha.compareTo(beta)
     }
     val imports = TreeSet<String> {
         alpha, beta ->
@@ -153,13 +157,16 @@ abstract class JavaType(
             var prevCategory: String = ""
 
             body.forEach {
-                val category = it.category
+                if (it.category.isNotEmpty()) {
+                    val mCat = CATEGORY.matchEntire(it.category) ?: throw IllegalArgumentException("Category name does not match pattern")
+                    val category = mCat.groupValues[2]
 
-                if (category != prevCategory && !category.startsWith("_")) {
-                    println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
-                    println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(indent.length + category.length + 6)}")
-                    println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
-                    println()
+                    if (category != prevCategory) {
+                        println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
+                        println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(indent.length + category.length + 6)}")
+                        println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
+                        println()
+                    }
                 }
 
                 it.run { printMember(subIndent) }
@@ -618,6 +625,12 @@ class JavaMethod(
     val see: Array<out String>?,
     val annotations: List<Annotation>?
 ): Member {
+
+    override fun compareTo(other: Member): Int {
+        val cmp = super.compareTo(other)
+
+        return if (cmp != 0) cmp else 1
+    }
 
     override fun getWeight() = WEIGHT_METHOD
 
