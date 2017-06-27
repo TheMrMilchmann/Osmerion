@@ -145,7 +145,7 @@ abstract class JavaType(
     protected fun PrintWriter.printType(indent: String = "", subIndent: String = indent + INDENT) {
         println(documentation.toJavaDoc(indent, see = see, authors = authors, since = since))
 
-        if (annotations.isNotEmpty()) print(printAnnotations(indent = indent, annotations = annotations))
+        if (annotations.isNotEmpty()) println(printAnnotations(indent = indent, annotations = annotations))
 
         printTypeDeclaration(indent)
         print(" {")
