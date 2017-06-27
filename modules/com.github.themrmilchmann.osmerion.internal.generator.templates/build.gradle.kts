@@ -46,10 +46,12 @@ tasks {
     }
 
     "clean-generated" {
-        val modulesRoot = File(rootProject.projectDir, "modules")
-        modulesRoot.listFiles().forEach {
-            val generatedDir = File(it, "src/generated/")
-            if (generatedDir.isDirectory) generatedDir.listFiles().forEach { delete(it) }
+        doLast {
+            val modulesRoot = File(rootProject.projectDir, "modules")
+            modulesRoot.listFiles().forEach {
+                val generatedDir = File(it, "src/generated/")
+                if (generatedDir.isDirectory) generatedDir.listFiles().forEach { delete(it) }
+            }
         }
     }
 }
