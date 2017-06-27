@@ -99,6 +99,16 @@ class GenericType(
     simpleName: String
 ): Type(simpleName, "java.lang") // Use "java.lang" as package to trick import detection
 
+class ParametrizedType(
+    simpleName: String,
+    packageName: String,
+    val parameters: String
+): Type(simpleName, packageName) {
+
+    override fun toString(): String = super.toString() + "<$parameters>"
+
+}
+
 open class Type(
     val simpleName: String,
     val packageName: String
