@@ -58,7 +58,6 @@ val WritableValue = Profile {
                 returnDoc = "the previous value of this {@code ${this.fileName}}",
                 since = VERSION_1_0_0
             )
-
         }
     }
 }
