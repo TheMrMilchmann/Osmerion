@@ -116,29 +116,29 @@ fun cast(from: Type, to: Type, value: String): String {
     if (from is PrimitiveType && to is PrimitiveType) {
         when (to) {
             byte -> when (from) {
-                short, int, char, long -> return "(${to.simpleName}) $value"
+                short, int, char, long -> return "($to) $value"
             }
             short -> when (from) {
-                int, char, long -> return "(${to.simpleName}) $value"
+                int, char, long -> return "($to) $value"
             }
             int -> when (from) {
-                long, float, double -> return "(${to.simpleName}) $value"
+                long, float, double -> return "($to) $value"
             }
             char -> when(from) {
-                byte, short, int, long, float, double -> return "(${to.simpleName}) $value"
+                byte, short, int, long, float, double -> return "($to) $value"
             }
             long -> when (from) {
-                float, double -> return "(${to.simpleName}) $value"
+                float, double -> return "($to) $value"
             }
             float -> when (from) {
-                double -> return "(${to.simpleName}) $value"
+                double -> return "($to) $value"
             }
         }
 
         return value
     }
 
-    return "(${to.simpleName}) $value"
+    return "($to) $value"
 }
 
 fun convert(from: Type, to: Type, value: String): String {

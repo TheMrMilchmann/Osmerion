@@ -369,7 +369,7 @@ class JavaClass(
         addInferredImport(this)
         parameters.forEach { addInferredImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, "", body, category, returnDoc, since, see, annotations)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, see, annotations)
         this@JavaClass.body.add(method)
     }
 
@@ -383,7 +383,7 @@ class JavaClass(
         if (typeParameters.isNotEmpty()) {
             print("<")
             print(StringJoiner(", ").apply {
-                typeParameters.forEach { add(it.simpleName) }
+                typeParameters.forEach { add(it.toString()) }
             })
             print(">")
         }
@@ -600,7 +600,7 @@ class JavaField(
 
         print(indent)
         print(visibility)
-        print(type.simpleName)
+        print(type.toString())
         print(" ")
         print(name)
         println(";")
@@ -632,7 +632,7 @@ class JavaMethod(
 
         print(indent)
         print(visibility)
-        print("${type.simpleName} ")
+        print("${type.toString()} ")
         print(name)
         print("(")
 
@@ -641,7 +641,7 @@ class JavaMethod(
                 parameters.forEach {
                     add(StringJoiner(" ").run {
                         if (it.annotations != null) add(printAnnotations(annotations = it.annotations, separator = " "))
-                        add(it.type.simpleName)
+                        add(it.type.toString())
                         add(it.name)
 
                         toString()
@@ -694,6 +694,6 @@ class JavaParameter(
 
 internal fun printAnnotations(indent: String = "", annotations: Collection<Annotation>, separator: String = LN) =
     StringJoiner(separator).run {
-        annotations.forEach { add("$indent@${it.simpleName}${if (it.parameters.isNotEmpty()) "(${it.parameters})" else ""}") }
+        annotations.forEach { add("$indent@$it${if (it.parameters.isNotEmpty()) "(${it.parameters})" else ""}") }
         toString()
     }
