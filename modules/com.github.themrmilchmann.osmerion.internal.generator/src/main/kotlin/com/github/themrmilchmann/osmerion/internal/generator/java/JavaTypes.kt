@@ -70,7 +70,7 @@ open class Import(
     var typeQualifier: String
 ): Comparable<Import> {
 
-    constructor(type: Type): this(type.packageName, type.simpleName)
+    constructor(type: IType): this(type.packageName, type.simpleName)
 
     override fun compareTo(other: Import): Int {
         val cmp = packageName.compareTo(other.packageName)
@@ -142,19 +142,26 @@ class ParametrizedType(
 }
 
 open class Type(
-    val simpleName: String,
-    val packageName: String
-) {
-
-    fun getQualifiedName() = "$packageName.$simpleName"
+    override val simpleName: String,
+    override val packageName: String
+): IType {
 
     override fun toString() = simpleName
 
 }
 
+interface IType {
+
+    val simpleName: String
+    val packageName: String
+
+    fun getQualifiedName() = "$packageName.$simpleName"
+
+}
+
 /* Primitive type conversion */
 
-fun cast(from: Type, to: Type, value: String): String {
+fun cast(from: IType, to: IType, value: String): String {
     if (from is PrimitiveType && to is PrimitiveType) {
         when (to) {
             byte -> when (from) {
@@ -183,7 +190,7 @@ fun cast(from: Type, to: Type, value: String): String {
     return "($to) $value"
 }
 
-fun convert(from: Type, to: Type, value: String): String {
+fun convert(from: IType, to: IType, value: String): String {
     if (from is PrimitiveType && to is PrimitiveType) {
         when (from) {
             boolean -> when (to) {

@@ -38,7 +38,8 @@ import java.util.stream.*
 private val CATEGORY = "(\\d+)\\Q_\\E(.+)".toRegex()
 
 private val WEIGHT_FIELD = 0
-private val WEIGHT_METHOD = 1
+private val WEIGHT_CONSTRUCTOR = 1
+private val WEIGHT_METHOD = 2
 private val WEIGHT_SUBTYPE = Integer.MAX_VALUE
 
 interface Member : Comparable<Member> {
@@ -58,7 +59,9 @@ abstract class JavaType(
     fileName: String,
     packageName: String,
     moduleName: String
-): GeneratorTarget(fileName, "java", packageName, moduleName), Member {
+): GeneratorTarget(fileName, "java", packageName, moduleName), Member, IType {
+
+    override val simpleName = fileName
 
     val annotations = mutableListOf<Annotation>()
     val body = TreeSet<Member> {
@@ -110,7 +113,7 @@ abstract class JavaType(
         }
     }
 
-    internal fun addImport(type: Type) = addImport(Import(type))
+    internal fun addImport(type: IType) = addImport(Import(type))
 
     override final fun PrintWriter.printMember(indent: String) = printType(indent)
 
@@ -182,8 +185,8 @@ fun Profile.javaClass(
     fileName: String,
     packageName: String,
     moduleName: String,
-    superClass: Type? = null,
-    typeParameters: Array<out Type>? = null,
+    superClass: IType? = null,
+    typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
     init: JavaClass.() -> Unit
 ) {
@@ -221,8 +224,8 @@ class JavaClass(
     override val name: String,
     packageName: String,
     moduleName: String,
-    val superClass: Type?,
-    val typeParameters: Array<out Type>?,
+    val superClass: IType?,
+    val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String
 ): JavaType(name, packageName, moduleName) {
@@ -231,14 +234,47 @@ class JavaClass(
         if (superClass != null) addImport(superClass)
     }
 
-    private val interfaces = mutableListOf<Type>()
+    private val interfaces = mutableListOf<IType>()
 
-    fun addInterfaces(vararg interfaces: Type) {
+    fun addInterfaces(vararg interfaces: IType) {
         interfaces.forEach { addImport(it) }
         this@JavaClass.interfaces.addAll(interfaces)
     }
 
-    fun Type.field(
+    fun constructor(
+        documentation: String,
+        vararg parameters: JavaParameter,
+        visibility: Int = 0,
+        body: String = "",
+        category: String = "",
+        since: String = "",
+        throws: Array<out String>? = null,
+        see: Array<out String>? = null,
+        annotations: List<Annotation>? = null
+    ) {
+        val v = StringBuilder().run {
+            if (Modifier.isPublic(visibility)) append("public ")
+            if (Modifier.isProtected(visibility)) append("protected ")
+            if (Modifier.isPrivate(visibility)) append("private ")
+
+            if (Modifier.isAbstract(visibility)) throw IllegalArgumentException("Illegal modifier \"abstract\"")
+            if (Modifier.isStatic(visibility)) throw IllegalArgumentException("Illegal modifier \"static\"")
+            if (Modifier.isFinal(visibility)) throw IllegalArgumentException("Illegal modifier \"final\"")
+            if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
+            if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
+            if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
+            if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
+            if (Modifier.isStrict(visibility)) throw IllegalArgumentException("Illegal modifier \"strictfp\"")
+            if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
+
+            toString()
+        }
+
+        val constructor = JavaConstructor(this, documentation, parameters, v, body, category, since, throws, see, annotations)
+        this@JavaClass.body.add(constructor)
+    }
+
+    fun IType.field(
         name: String,
         documentation: String,
         visibility: Int = 0,
@@ -282,8 +318,8 @@ class JavaClass(
         fileName: String,
         packageName: String,
         moduleName: String,
-        superClass: Type? = null,
-        typeParameters: Array<out Type>?,
+        superClass: IType? = null,
+        typeParameters: Array<out IType>?,
         visibility: Int = 0,
         init: JavaClass.() -> Unit
     ) {
@@ -347,7 +383,7 @@ class JavaClass(
         this@JavaClass.body.add(target)
     }
 
-    fun Type.method(
+    fun IType.method(
         name: String,
         documentation: String,
         vararg parameters: JavaParameter,
@@ -492,14 +528,14 @@ class JavaInterface(
     val visibility: String
 ): JavaType(name, packageName, moduleName) {
 
-    private val interfaces = mutableListOf<Type>()
+    private val interfaces = mutableListOf<IType>()
 
-    fun addInterfaces(vararg interfaces: Type) {
+    fun addInterfaces(vararg interfaces: IType) {
         interfaces.forEach { addImport(it) }
         this@JavaInterface.interfaces.addAll(interfaces)
     }
 
-    fun Type.field(
+    fun IType.field(
         name: String,
         documentation: String,
         visibility: Int = 0,
@@ -536,8 +572,8 @@ class JavaInterface(
         fileName: String,
         packageName: String,
         moduleName: String,
-        superClass: Type? = null,
-        typeParameters: Array<out Type>?,
+        superClass: IType? = null,
+        typeParameters: Array<out IType>?,
         visibility: Int = 0,
         init: JavaClass.() -> Unit
     ) {
@@ -601,7 +637,7 @@ class JavaInterface(
         this@JavaInterface.body.add(target)
     }
 
-    fun Type.method(
+    fun IType.method(
         name: String,
         documentation: String,
         vararg parameters: JavaParameter,
@@ -680,7 +716,7 @@ class JavaInterface(
 }
 
 class JavaField(
-    val type: Type,
+    val type: IType,
     override val name: String,
     val documentation: String,
     val visibility: String,
@@ -708,8 +744,30 @@ class JavaField(
 
 }
 
-class JavaMethod(
-    val type: Type,
+class JavaConstructor(
+    type: IType,
+    documentation: String,
+    parameters: Array<out JavaParameter>,
+    visibility: String,
+    body: String?,
+    category: String,
+    since: String,
+    throws: Array<out String>?,
+    see: Array<out String>?,
+    annotations: List<Annotation>?
+): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, annotations) {
+
+    override fun getWeight(): Int = WEIGHT_CONSTRUCTOR
+
+    override fun PrintWriter.printDeclaration() {
+        print(visibility)
+        print(name)
+    }
+
+}
+
+open class JavaMethod(
+    val type: IType,
     override val name: String,
     val documentation: String,
     val parameters: Array<out JavaParameter>,
@@ -731,6 +789,12 @@ class JavaMethod(
 
     override fun getWeight() = WEIGHT_METHOD
 
+    open fun PrintWriter.printDeclaration() {
+        print(visibility)
+        print("$type ")
+        print(name)
+    }
+
     override fun PrintWriter.printMember(indent: String) {
         println(toJavaDoc(indent = indent))
 
@@ -738,9 +802,7 @@ class JavaMethod(
         if (annotations != null) println(printAnnotations(indent = indent, annotations = annotations))
 
         print(indent)
-        print(visibility)
-        print("$type ")
-        print(name)
+        printDeclaration()
         print("(")
 
         if (parameters.isNotEmpty()) {
@@ -787,14 +849,14 @@ class JavaMethod(
 
 }
 
-fun Type.PARAM(
+fun IType.PARAM(
     name: String,
     documentation: String,
     annotations: List<Annotation>? = null
 ) = JavaParameter(this, name, documentation, annotations = annotations)
 
 class JavaParameter(
-    val type: Type,
+    val type: IType,
     val name: String,
     val documentation: String,
     val annotations: List<Annotation>? = null
