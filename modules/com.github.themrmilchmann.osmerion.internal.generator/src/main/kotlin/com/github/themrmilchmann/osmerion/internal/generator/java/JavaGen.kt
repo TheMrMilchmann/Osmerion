@@ -315,6 +315,7 @@ class JavaClass(
         category: String = "",
         returnDoc: String = "",
         since: String = "",
+        throws: Array<out String>? = null,
         see: Array<out String>? = null,
         annotations: List<Annotation>? = null
     ) {
@@ -378,7 +379,7 @@ class JavaClass(
         addInferredImport(this)
         parameters.forEach { addInferredImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, see, annotations)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
         this@JavaClass.body.add(method)
     }
 
@@ -520,6 +521,7 @@ class JavaInterface(
         category: String = "",
         returnDoc: String = "",
         since: String = "",
+        throws: Array<out String>? = null,
         see: Array<out String>? = null,
         annotations: List<Annotation>? = null
     ) {
@@ -567,7 +569,7 @@ class JavaInterface(
         addInferredImport(this)
         parameters.forEach { addInferredImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, see, annotations)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
         this@JavaInterface.body.add(method)
     }
 
@@ -627,6 +629,7 @@ class JavaMethod(
     override var category: String,
     val returnDoc: String,
     val since: String,
+    val throws: Array<out String>?,
     val see: Array<out String>?,
     val annotations: List<Annotation>?
 ): Member {

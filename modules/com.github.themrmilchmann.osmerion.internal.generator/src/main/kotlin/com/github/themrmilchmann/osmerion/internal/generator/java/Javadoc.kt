@@ -140,7 +140,7 @@ fun String.toJavaDoc(indent: String = INDENT, see: Array<out String>? = null, au
 
 /** Specialized formatting for methods. */
 internal fun JavaMethod.toJavaDoc(indent: String = ""): String {
-    if (returnDoc.isEmpty() && see == null && since.isEmpty()) {
+    if (returnDoc.isEmpty() && throws == null && see == null && since.isEmpty()) {
         if (documentation.isEmpty() && parameters.all { it.documentation.isEmpty() })
             return ""
 
@@ -165,6 +165,15 @@ internal fun JavaMethod.toJavaDoc(indent: String = ""): String {
                 if (isNotEmpty()) append("\n$indent *\n$indent * ")
                 append("@return ")
                 append(returnDoc.cleanup("$indent *         "))
+            }
+
+            if (throws != null) {
+                if (isNotEmpty()) append("\n$indent *")
+                throws.forEach {
+                    if (isNotEmpty()) append("\n$indent * ")
+                    append("@throws ")
+                    append(it)
+                }
             }
 
             if (see != null) {
