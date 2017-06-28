@@ -60,7 +60,7 @@ val ChangeListener = Profile {
                 since = VERSION_1_0_0
             )
 
-            ChangeListener(t_value).method(
+            this.method(
                 "wrap",
                 """
                 Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of

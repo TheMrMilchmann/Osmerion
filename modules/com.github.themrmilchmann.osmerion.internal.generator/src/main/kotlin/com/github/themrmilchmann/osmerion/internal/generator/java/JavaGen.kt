@@ -141,6 +141,8 @@ abstract class JavaType(
         printType()
     }
 
+    override final fun toString() = fileName
+
     protected fun PrintWriter.printType(indent: String = "", subIndent: String = indent + INDENT) {
         println(documentation.toJavaDoc(indent, see = see, authors = authors, since = since))
 
