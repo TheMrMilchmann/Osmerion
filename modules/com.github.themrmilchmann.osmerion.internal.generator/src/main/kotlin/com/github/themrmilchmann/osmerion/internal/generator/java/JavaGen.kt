@@ -178,55 +178,29 @@ abstract class JavaType(
 
 }
 
-fun Profile.javaClass(fileName: String, packageName: String, moduleName: String, superClass: Type? = null, init: JavaClass.() -> Unit) {
-    val target = JavaClass(fileName, packageName, moduleName, superClass = superClass)
-    init.invoke(target)
-    this@javaClass.targets.add(target)
-}
-
-class JavaClass(
-    override val name: String,
+fun Profile.javaClass(
+    fileName: String,
     packageName: String,
     moduleName: String,
-    val superClass: Type? = null,
-    vararg val typeParameters: Type,
-    val visibility: Int = 0,
-    val isMember: Boolean = false
-): JavaType(name, packageName, moduleName) {
-
-    init {
-        if (superClass != null) addImport(superClass)
-    }
-
-    private val v get() = StringBuilder().run {
+    superClass: Type? = null,
+    typeParameters: Array<out Type>? = null,
+    visibility: Int = 0,
+    init: JavaClass.() -> Unit
+) {
+    val v = StringBuilder().run {
         val isAbstract = Modifier.isAbstract(visibility)
 
         if (Modifier.isPublic(visibility)) append("public ")
-        if (Modifier.isProtected(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"protected\"")
-            else
-                print("protected ")
-        }
-        if (Modifier.isPrivate(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"private\"")
-            else
-                print("private ")
-        }
+        if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
+        if (Modifier.isPrivate(visibility)) throw IllegalArgumentException("Illegal modifier \"private\"")
 
-        if (isAbstract) print("abstract ")
-        if (Modifier.isStatic(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"static\"")
-            else
-                print("static ")
-        }
+        if (isAbstract) append("abstract ")
+        if (Modifier.isStatic(visibility)) throw IllegalArgumentException("Illegal modifier \"static\"")
         if (Modifier.isFinal(visibility)) {
             if (isAbstract)
                 throw IllegalArgumentException("Illegal modifier \"final\"")
             else
-                print("final ")
+                append("final ")
         }
         if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
         if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
@@ -236,6 +210,25 @@ class JavaClass(
         if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
 
         toString()
+    }
+
+    val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
+    init.invoke(target)
+    this@javaClass.targets.add(target)
+}
+
+class JavaClass(
+    override val name: String,
+    packageName: String,
+    moduleName: String,
+    val superClass: Type?,
+    val typeParameters: Array<out Type>?,
+    val intVisibility: Int,
+    val visibility: String
+): JavaType(name, packageName, moduleName) {
+
+    init {
+        if (superClass != null) addImport(superClass)
     }
 
     private val interfaces = mutableListOf<Type>()
@@ -285,14 +278,71 @@ class JavaClass(
         this@JavaClass.body.add(field)
     }
 
-    fun javaClass(fileName: String, packageName: String, moduleName: String, superClass: Type? = null, init: JavaClass.() -> Unit) {
-        val target = JavaClass(fileName, packageName, moduleName, superClass = superClass, isMember = true)
+    fun javaClass(
+        fileName: String,
+        packageName: String,
+        moduleName: String,
+        superClass: Type? = null,
+        typeParameters: Array<out Type>?,
+        visibility: Int = 0,
+        init: JavaClass.() -> Unit
+    ) {
+        val v = StringBuilder().run {
+            val isAbstract = Modifier.isAbstract(visibility)
+
+            if (Modifier.isPublic(visibility)) append("public ")
+            if (Modifier.isProtected(visibility)) append("protected ")
+            if (Modifier.isPrivate(visibility)) append("private ")
+
+            if (isAbstract) append("abstract ")
+            if (Modifier.isStatic(visibility)) append("static ")
+            if (Modifier.isFinal(visibility)) {
+                if (isAbstract)
+                    throw IllegalArgumentException("Illegal modifier \"final\"")
+                else
+                    append("final ")
+            }
+            if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
+            if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
+            if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
+            if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
+            if (Modifier.isStrict(visibility)) throw IllegalArgumentException("Illegal modifier \"strictfp\"")
+            if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
+
+            toString()
+        }
+
+        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
         init.invoke(target)
         this@JavaClass.body.add(target)
     }
 
-    fun javaInterface(fileName: String, packageName: String, moduleName: String, visibility: Int = 0, init: JavaInterface.() -> Unit) {
-        val target = JavaInterface(fileName, packageName, moduleName, visibility, true)
+    fun javaInterface(
+        fileName: String,
+        packageName: String,
+        moduleName: String,
+        visibility: Int = 0,
+        init: JavaInterface.() -> Unit
+    ) {
+        val v = StringBuilder().run {
+            if (Modifier.isPublic(visibility)) append("public ")
+            if (Modifier.isProtected(visibility)) append("protected ")
+            if (Modifier.isPrivate(visibility)) append("private ")
+
+            if (Modifier.isAbstract(visibility)) println("WARNING: Redundant modifier \"abstract\"")
+            if (Modifier.isStatic(visibility)) println("WARNING: Redundant modifier \"static\"")
+            if (Modifier.isFinal(visibility)) throw IllegalArgumentException("Illegal modifier \"final\"")
+            if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
+            if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
+            if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
+            if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
+            if (Modifier.isStrict(visibility)) throw IllegalArgumentException("Illegal modifier \"strictfp\"")
+            // if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
+
+            toString()
+        }
+
+        val target = JavaInterface(fileName, packageName, moduleName, visibility, v)
         init.invoke(target)
         this@JavaClass.body.add(target)
     }
@@ -325,7 +375,7 @@ class JavaClass(
             if (isAbstract) {
                 if (body != null)
                     throw IllegalArgumentException("\"abstract\" modifier combined with method body")
-                else if (!Modifier.isAbstract(this@JavaClass.visibility))
+                else if (!Modifier.isAbstract(this@JavaClass.intVisibility))
                     throw IllegalArgumentException("Illegal modifier \"abstract\"")
                 else
                     append("abstract ")
@@ -377,11 +427,11 @@ class JavaClass(
     override fun getWeight() = WEIGHT_SUBTYPE
 
     override fun PrintWriter.printTypeDeclaration(indent: String) {
-        print(v)
+        print(visibility)
         print("class ")
         print(fileName)
 
-        if (typeParameters.isNotEmpty()) {
+        if (typeParameters != null) {
             print("<")
             print(StringJoiner(", ").apply {
                 typeParameters.forEach { add(it.toString()) }
@@ -404,42 +454,20 @@ class JavaClass(
 
 }
 
-fun Profile.javaInterface(fileName: String, packageName: String, moduleName: String, visibility: Int = 0, init: JavaInterface.() -> Unit) {
-    val target = JavaInterface(fileName, packageName, moduleName, visibility, false)
-    init.invoke(target)
-    this@javaInterface.targets.add(target)
-}
-
-class JavaInterface(
-    override val name: String,
+fun Profile.javaInterface(
+    fileName: String,
     packageName: String,
     moduleName: String,
-    val visibility: Int,
-    val isMember: Boolean
-): JavaType(name, packageName, moduleName) {
-
-    private val v get() = StringBuilder().run {
+    visibility: Int = 0,
+    init: JavaInterface.() -> Unit
+) {
+    val v = StringBuilder().run {
         if (Modifier.isPublic(visibility)) append("public ")
-        if (Modifier.isProtected(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"protected\"")
-            else
-                print("protected ")
-        }
-        if (Modifier.isPrivate(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"private\"")
-            else
-                print("private ")
-        }
+        if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
+        if (Modifier.isPrivate(visibility)) throw IllegalArgumentException("Illegal modifier \"private\"")
 
         if (Modifier.isAbstract(visibility)) println("WARNING: Redundant modifier \"abstract\"")
-        if (Modifier.isStatic(visibility)) {
-            if (!isMember)
-                throw IllegalArgumentException("Illegal modifier \"static\"")
-            else
-                println("WARNING: Redundant modifier \"static\"")
-        }
+        if (Modifier.isStatic(visibility)) throw IllegalArgumentException("Illegal modifier \"static\"")
         if (Modifier.isFinal(visibility)) throw IllegalArgumentException("Illegal modifier \"final\"")
         if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
         if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
@@ -450,6 +478,19 @@ class JavaInterface(
 
         toString()
     }
+
+    val target = JavaInterface(fileName, packageName, moduleName, visibility, v)
+    init.invoke(target)
+    this@javaInterface.targets.add(target)
+}
+
+class JavaInterface(
+    override val name: String,
+    packageName: String,
+    moduleName: String,
+    val intVisibility: Int,
+    val visibility: String
+): JavaType(name, packageName, moduleName) {
 
     private val interfaces = mutableListOf<Type>()
 
@@ -491,14 +532,71 @@ class JavaInterface(
         this@JavaInterface.body.add(field)
     }
 
-    fun javaClass(fileName: String, packageName: String, moduleName: String, superClass: Type? = null, init: JavaClass.() -> Unit) {
-        val target = JavaClass(fileName, packageName, moduleName, superClass = superClass, isMember = true)
+    fun javaClass(
+        fileName: String,
+        packageName: String,
+        moduleName: String,
+        superClass: Type? = null,
+        typeParameters: Array<out Type>?,
+        visibility: Int = 0,
+        init: JavaClass.() -> Unit
+    ) {
+        val v = StringBuilder().run {
+            val isAbstract = Modifier.isAbstract(visibility)
+
+            if (Modifier.isPublic(visibility)) append("public ")
+            if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
+            if (Modifier.isPrivate(visibility)) throw IllegalArgumentException("Illegal modifier \"private\"")
+
+            if (isAbstract) append("abstract ")
+            if (Modifier.isStatic(visibility)) println("WARNING: Redundant modifier \"static\"")
+            if (Modifier.isFinal(visibility)) {
+                if (isAbstract)
+                    throw IllegalArgumentException("Illegal modifier \"final\"")
+                else
+                    append("final ")
+            }
+            if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
+            if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
+            if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
+            if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
+            if (Modifier.isStrict(visibility)) throw IllegalArgumentException("Illegal modifier \"strictfp\"")
+            if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
+
+            toString()
+        }
+
+        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
         init.invoke(target)
         this@JavaInterface.body.add(target)
     }
 
-    fun javaInterface(fileName: String, packageName: String, moduleName: String, visibility: Int = 0, init: JavaInterface.() -> Unit) {
-        val target = JavaInterface(fileName, packageName, moduleName, visibility,true)
+    fun javaInterface(
+        fileName: String,
+        packageName: String,
+        moduleName: String,
+        visibility: Int = 0,
+        init: JavaInterface.() -> Unit
+    ) {
+        val v = StringBuilder().run {
+            if (Modifier.isPublic(visibility)) append("public ")
+            if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
+            if (Modifier.isPrivate(visibility)) throw IllegalArgumentException("Illegal modifier \"private\"")
+
+            if (Modifier.isAbstract(visibility)) println("WARNING: Redundant modifier \"abstract\"")
+            if (Modifier.isStatic(visibility)) println("WARNING: Redundant modifier \"static\"")
+            if (Modifier.isFinal(visibility)) throw IllegalArgumentException("Illegal modifier \"final\"")
+            if (Modifier.isTransient(visibility)) throw IllegalArgumentException("Illegal modifier \"transient\"")
+            if (Modifier.isVolatile(visibility)) throw IllegalArgumentException("Illegal modifier \"volatile\"")
+            if (Modifier.isSynchronized(visibility)) throw IllegalArgumentException("Illegal modifier \"synchronized\"")
+            if (Modifier.isNative(visibility)) throw IllegalArgumentException("Illegal modifier \"native\"")
+            if (Modifier.isStrict(visibility)) throw IllegalArgumentException("Illegal modifier \"strictfp\"")
+            // if (Modifier.isInterface(visibility)) throw IllegalArgumentException("Illegal modifier \"interface\"")
+
+            toString()
+        }
+
+        val target = JavaInterface(fileName, packageName, moduleName, visibility,v)
         init.invoke(target)
         this@JavaInterface.body.add(target)
     }
@@ -567,7 +665,7 @@ class JavaInterface(
     override fun getWeight() = WEIGHT_SUBTYPE
 
     override fun PrintWriter.printTypeDeclaration(indent: String) {
-        print(v)
+        print(visibility)
         print("interface ")
         print(fileName)
 
