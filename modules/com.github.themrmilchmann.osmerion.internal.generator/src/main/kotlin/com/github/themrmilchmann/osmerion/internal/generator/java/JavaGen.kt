@@ -34,6 +34,7 @@ import java.lang.reflect.Modifier
 import java.util.*
 
 import com.github.themrmilchmann.osmerion.internal.generator.*
+import java.util.stream.Collectors
 
 private val CATEGORY = "(\\d+)\\Q_\\E(.+)".toRegex()
 
@@ -75,20 +76,7 @@ abstract class JavaType(
         else if (aW < bW) -1
         else alpha.compareTo(beta)
     }
-    val imports = TreeSet<String> {
-        alpha, beta ->
-
-        val a = alpha.removePrefix("import ").removePrefix("static ")
-        val b = alpha.removePrefix("import ").removePrefix("static ")
-
-        if (a.startsWith("java.")) {
-            if (b.startsWith("java.")) a.compareTo(b)
-            else 1
-        } else if (a.startsWith("javax.")) {
-            if (b.startsWith("javax.")) a.compareTo(b)
-            else 1
-        } else a.compareTo(beta)
-    }
+    val imports = TreeSet<Import>()
 
     override var category: String = ""
     var authors: Array<out String>? = null
@@ -108,15 +96,22 @@ abstract class JavaType(
         this@JavaType.annotations.addAll(annotations)
     }
 
-    fun addImports(vararg imports: String) {
-        this@JavaType.imports.addAll(imports)
-    }
+    fun addImport(import: Import) {
+        if (import is StaticImport || (import.packageName != "java.lang" && import.packageName != packageName)) {
+            val occurrences = imports.stream().filter { i -> import.compareTo(i) == 0}.collect(Collectors.toList())
 
-    internal fun addInferredImport(type: Type) {
-        if (packageName != type.packageName && type.packageName != "java.lang") {
-            addImports("import ${type.getQualifiedName()};")
+            if (occurrences.size > 5) {
+                this@JavaType.imports.removeAll(occurrences)
+
+                import.typeQualifier = "*"
+                this@JavaType.imports.add(import)
+            } else if (!(occurrences.size == 1 && occurrences[0].typeQualifier == "*")) {
+                this@JavaType.imports.add(import)
+            }
         }
     }
+
+    internal fun addImport(type: Type) = addImport(Import(type))
 
     override final fun PrintWriter.printMember(indent: String) = printType(indent)
 
@@ -129,16 +124,13 @@ abstract class JavaType(
 
         if (imports.any()) {
             imports.forEach {
+                if (specialImportId.isNotEmpty() && !it.packageName.startsWith(specialImportId)) println()
 
-                val import = it.removePrefix("import ").removePrefix("static ")
-
-                if (specialImportId.isNotEmpty() && !import.startsWith(specialImportId)) println()
-
-                if (import.startsWith("java.")) specialImportId = "java."
-                else if (import.startsWith("javax.")) specialImportId = "javax."
+                if (it.packageName.startsWith("java.")) specialImportId = "java."
+                else if (it.packageName.startsWith("javax.")) specialImportId = "javax."
                 else specialImportId = ""
 
-                println(it)
+                it.apply { printImport() }
             }
 
             println()
@@ -204,7 +196,7 @@ class JavaClass(
 ): JavaType(name, packageName, moduleName) {
 
     init {
-        if (superClass != null) addInferredImport(superClass)
+        if (superClass != null) addImport(superClass)
     }
 
     private val v get() = StringBuilder().run {
@@ -250,7 +242,7 @@ class JavaClass(
     private val interfaces = mutableListOf<Type>()
 
     fun addInterfaces(vararg interfaces: Type) {
-        interfaces.forEach { addInferredImport(it) }
+        interfaces.forEach { addImport(it) }
         this@JavaClass.interfaces.addAll(interfaces)
     }
 
@@ -288,7 +280,7 @@ class JavaClass(
             toString()
         }
 
-        addInferredImport(this)
+        addImport(this)
 
         val field = JavaField(this, name, documentation, v, category, since, see, annotations)
         this@JavaClass.body.add(field)
@@ -376,8 +368,8 @@ class JavaClass(
             toString()
         }
 
-        addInferredImport(this)
-        parameters.forEach { addInferredImport(it.type) }
+        addImport(this)
+        parameters.forEach { addImport(it.type) }
 
         val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
         this@JavaClass.body.add(method)
@@ -463,7 +455,7 @@ class JavaInterface(
     private val interfaces = mutableListOf<Type>()
 
     fun addInterfaces(vararg interfaces: Type) {
-        interfaces.forEach { addInferredImport(it) }
+        interfaces.forEach { addImport(it) }
         this@JavaInterface.interfaces.addAll(interfaces)
     }
 
@@ -494,7 +486,7 @@ class JavaInterface(
             toString()
         }
 
-        addInferredImport(this)
+        addImport(this)
 
         val field = JavaField(this, name, documentation, v, category, since, see, annotations)
         this@JavaInterface.body.add(field)
@@ -566,8 +558,8 @@ class JavaInterface(
             toString()
         }
 
-        addInferredImport(this)
-        parameters.forEach { addInferredImport(it.type) }
+        addImport(this)
+        parameters.forEach { addImport(it.type) }
 
         val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
         this@JavaInterface.body.add(method)

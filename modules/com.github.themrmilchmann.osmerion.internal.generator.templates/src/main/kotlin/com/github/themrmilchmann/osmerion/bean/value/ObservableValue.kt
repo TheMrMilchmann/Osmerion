@@ -47,7 +47,7 @@ val ObservableValue = Profile {
 
         javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
             addInterfaces(ParametrizedType("ObservableValue", packageName, t_value.boxedType.simpleName))
-            addImports("import $packageName.change.*;")
+            addImport(Import("$packageName.change", "*"))
 
             documentation = "An observable {@code ${t_value.simpleName}} value."
             authors(AUTHOR_LEON_LINHART)

@@ -30,8 +30,6 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value;
 
-import com.github.themrmilchmann.osmerion.bean.value.change.IntChangeListener;
-import com.github.themrmilchmann.osmerion.bean.value.change.IntChangeListener;
 import com.github.themrmilchmann.osmerion.bean.value.change.*;
 
 /**

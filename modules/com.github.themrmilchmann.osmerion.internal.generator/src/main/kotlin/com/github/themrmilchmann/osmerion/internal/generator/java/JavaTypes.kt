@@ -29,6 +29,7 @@
  */
 package com.github.themrmilchmann.osmerion.internal.generator.java
 
+import java.io.PrintWriter
 import java.util.*
 
 val void = VoidType("Void", "void")
@@ -63,6 +64,37 @@ val Override = Annotation("Override", "java.lang")
 
 val Object = Type("Object", "java.lang")
 val String = Type("String", "java.lang")
+
+open class Import(
+    val packageName: String,
+    var typeQualifier: String
+): Comparable<Import> {
+
+    constructor(type: Type): this(type.packageName, type.simpleName)
+
+    override fun compareTo(other: Import): Int {
+        val cmp = packageName.compareTo(other.packageName)
+        if (cmp != 0) return cmp
+
+        if (typeQualifier == "*" || other.typeQualifier == "*") return 0
+
+        return typeQualifier.compareTo(other.typeQualifier)
+    }
+
+    open fun PrintWriter.printImport() = println("import ${this@Import};")
+
+    override fun toString() = "$packageName.$typeQualifier"
+
+}
+
+class StaticImport(
+    packageName: String,
+    typeQualifier: String
+): Import(packageName, typeQualifier) {
+
+    override fun PrintWriter.printImport() = println("import static ${this@StaticImport};")
+
+}
 
 class Annotation(
     simpleName: String,

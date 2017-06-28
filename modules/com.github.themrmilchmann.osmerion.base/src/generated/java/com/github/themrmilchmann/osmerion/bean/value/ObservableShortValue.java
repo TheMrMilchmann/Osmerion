@@ -30,8 +30,7 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value;
 
-import com.github.themrmilchmann.osmerion.bean.value.change.ChangeListener;
-import com.github.themrmilchmann.osmerion.bean.value.change.ShortChangeListener;
+import com.github.themrmilchmann.osmerion.bean.value.change.*;
 
 /**
  * An observable {@code short} value.
