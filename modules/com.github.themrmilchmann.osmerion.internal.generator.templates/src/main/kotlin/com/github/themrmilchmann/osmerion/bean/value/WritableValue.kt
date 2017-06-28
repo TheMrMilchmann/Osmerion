@@ -29,10 +29,10 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
-import java.lang.reflect.Modifier
-
 import com.github.themrmilchmann.osmerion.internal.generator.*
 import com.github.themrmilchmann.osmerion.internal.generator.java.*
+import com.github.themrmilchmann.osmerion.internal.generator.java.Type
+import java.lang.reflect.*
 
 private fun name(type: PrimitiveType) = "Writable${type.abbrevName}Value"
 fun WritableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")

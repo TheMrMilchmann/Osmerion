@@ -29,11 +29,11 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
-import com.github.themrmilchmann.osmerion.bean.value.change.ChangeListener
-import java.lang.reflect.Modifier
-
+import com.github.themrmilchmann.osmerion.bean.value.change.*
 import com.github.themrmilchmann.osmerion.internal.generator.*
 import com.github.themrmilchmann.osmerion.internal.generator.java.*
+import com.github.themrmilchmann.osmerion.internal.generator.java.Type
+import java.lang.reflect.*
 
 private fun name(type: PrimitiveType) = "Observable${type.abbrevName}Value"
 fun ObservableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
