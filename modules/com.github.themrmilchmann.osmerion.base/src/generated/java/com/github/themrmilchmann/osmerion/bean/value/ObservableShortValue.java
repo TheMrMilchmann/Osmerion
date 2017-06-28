@@ -58,9 +58,16 @@ public interface ObservableShortValue extends ObservableValue<Short> {
     // #############################################################################################################################################################
 
     /**
-     * Attaches the specified listener to this value.
+     * Attaches the specified listener to this {@link ObservableValue}.
+     * 
+     * <p>As long as the listener is attached it will be notified whenever the value of this {@code ObservableValue} changes via
+     * {@link ChangeListener#onChanged(ObservableValue, Object, Object)}.</p>
      *
-     * @param listener the listener to be attached to this value
+     * @param listener the listener to be attached to this {@code ObservableValue}
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #removeListener(ShortChangeListener)
      *
      * @since 1.0.0
      */
@@ -72,6 +79,8 @@ public interface ObservableShortValue extends ObservableValue<Short> {
 
     /**
      * {@inheritDoc}
+     *
+     * @see #addListener(ShortChangeListener)
      *
      * @since 1.0.0
      */
@@ -88,6 +97,10 @@ public interface ObservableShortValue extends ObservableValue<Short> {
      * Detaches the specified listener from this value.
      *
      * @param listener the listener to be detached from this value
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #addListener(ShortChangeListener)
      *
      * @since 1.0.0
      */

@@ -30,7 +30,7 @@
 package com.github.themrmilchmann.osmerion.bean.value;
 
 /**
- * TODO doc
+ * An observable {@code Object} value.
  *
  * @author Leon Linhart
  * @since 1.0.0

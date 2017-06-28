@@ -30,7 +30,7 @@
 package com.github.themrmilchmann.osmerion.bean.value;
 
 /**
- * TODO doc
+ * A writable {@code Object} value.
  *
  * @author Leon Linhart
  * @since 1.0.0
@@ -42,10 +42,7 @@ public interface WritableObjectValue<T> extends WritableValue<T> {
     // #################################################################################################################
 
     /**
-     * TODO doc
-     *
-     * @param value
-     * @return
+     * {@inheritDoc}
      *
      * @since 1.0.0
      */

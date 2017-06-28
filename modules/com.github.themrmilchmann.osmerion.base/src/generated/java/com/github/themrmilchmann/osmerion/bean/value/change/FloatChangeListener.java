@@ -53,7 +53,11 @@ public interface FloatChangeListener {
     void onChanged(ObservableFloatValue observable, float oldValue, float newValue);
 
     /**
-     * Returns a specialized ChangeListener wrapping around the given one.
+     * Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
+     * the same type, it is simply returned.
+     * 
+     * <p>The wrapper's hashcode is the same as the hashcode of the wrapped listener. The wrapper's {@code equals()} method only returns true if the
+     * wrapped listener is passed as argument.</p>
      *
      * @param listener the listener to be wrapped
      *
@@ -62,7 +66,7 @@ public interface FloatChangeListener {
      * @since 1.0.0
      */
     static FloatChangeListener wrap(ChangeListener<? super Float> listener) {
-        return new FloatChangeListener() {
+        return (listener instanceof FloatChangeListener) ? (FloatChangeListener) listener : new FloatChangeListener() {
         
             @Override
             public void onChanged(ObservableFloatValue observable, float oldValue, float newValue) {

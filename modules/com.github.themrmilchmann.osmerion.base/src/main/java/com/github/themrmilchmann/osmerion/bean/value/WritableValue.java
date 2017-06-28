@@ -30,7 +30,9 @@
 package com.github.themrmilchmann.osmerion.bean.value;
 
 /**
- * TODO doc
+ * An {@link ObservableValue} with writing access.
+ *
+ * <p>This class should not be used directly. Instead implement one of its specialized subclasses.</p>
  *
  * @author Leon Linhart
  * @since 1.0.0
@@ -38,10 +40,10 @@ package com.github.themrmilchmann.osmerion.bean.value;
 public interface WritableValue<T> extends ObservableValue<T> {
 
     /**
-     * TODO doc
+     * Sets the value of this {@code WritableValue} and returns the previous value.
      *
-     * @param value
-     * @return
+     * @param value the new value
+     * @return the previous value
      *
      * @since 1.0.0
      */

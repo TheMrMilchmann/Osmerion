@@ -53,7 +53,11 @@ public interface BooleanChangeListener {
     void onChanged(ObservableBooleanValue observable, boolean oldValue, boolean newValue);
 
     /**
-     * Returns a specialized ChangeListener wrapping around the given one.
+     * Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
+     * the same type, it is simply returned.
+     * 
+     * <p>The wrapper's hashcode is the same as the hashcode of the wrapped listener. The wrapper's {@code equals()} method only returns true if the
+     * wrapped listener is passed as argument.</p>
      *
      * @param listener the listener to be wrapped
      *
@@ -62,7 +66,7 @@ public interface BooleanChangeListener {
      * @since 1.0.0
      */
     static BooleanChangeListener wrap(ChangeListener<? super Boolean> listener) {
-        return new BooleanChangeListener() {
+        return (listener instanceof BooleanChangeListener) ? (BooleanChangeListener) listener : new BooleanChangeListener() {
         
             @Override
             public void onChanged(ObservableBooleanValue observable, boolean oldValue, boolean newValue) {

@@ -53,7 +53,11 @@ public interface ByteChangeListener {
     void onChanged(ObservableByteValue observable, byte oldValue, byte newValue);
 
     /**
-     * Returns a specialized ChangeListener wrapping around the given one.
+     * Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
+     * the same type, it is simply returned.
+     * 
+     * <p>The wrapper's hashcode is the same as the hashcode of the wrapped listener. The wrapper's {@code equals()} method only returns true if the
+     * wrapped listener is passed as argument.</p>
      *
      * @param listener the listener to be wrapped
      *
@@ -62,7 +66,7 @@ public interface ByteChangeListener {
      * @since 1.0.0
      */
     static ByteChangeListener wrap(ChangeListener<? super Byte> listener) {
-        return new ByteChangeListener() {
+        return (listener instanceof ByteChangeListener) ? (ByteChangeListener) listener : new ByteChangeListener() {
         
             @Override
             public void onChanged(ObservableByteValue observable, byte oldValue, byte newValue) {

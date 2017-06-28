@@ -32,7 +32,11 @@ package com.github.themrmilchmann.osmerion.bean.value;
 import com.github.themrmilchmann.osmerion.bean.value.change.*;
 
 /**
- * TODO doc
+ * A wrapper to make a value observable.
+ *
+ * <p>This class should not be used directly. Instead implement one of its specialized subclasses.</p>
+ *
+ * @see WritableValue
  *
  * @author Leon Linhart
  * @since 1.0.0
@@ -57,18 +61,29 @@ public interface ObservableValue<T> {
     // ########################################################################################################################################################
 
     /**
-     * TODO doc
+     * Attaches the specified listener to this {@link ObservableValue}.
      *
-     * @param listener
+     * <p>As long as the listener is attached it will be notified whenever the value of this {@code ObservableValue} changes via
+     * {@link ChangeListener#onChanged(ObservableValue, Object, Object)}.</p>
+     *
+     * @param listener the listener to be attached to this {@code ObservableValue}
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #removeListener(ChangeListener)
      *
      * @since 1.0.0
      */
     void addListener(ChangeListener<? super T> listener);
 
     /**
-     * TODO doc
+     * Detaches the specified listener from this {@link ObservableValue}.
      *
-     * @param listener
+     * @param listener the listener to be detached from this {@code ObservableValue}
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #addListener(ChangeListener)
      *
      * @since 1.0.0
      */

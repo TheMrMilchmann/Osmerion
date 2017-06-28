@@ -64,11 +64,18 @@ val ObservableValue = Profile {
 
             void.method(
                 "addListener",
-                "Attaches the specified listener to this value.",
+                """
+                Attaches the specified listener to this {@link ObservableValue}.
 
-                ChangeListener(t_value).PARAM("listener", "the listener to be attached to this value"),
+                As long as the listener is attached it will be notified whenever the value of this {@code ObservableValue} changes via
+                {@link ChangeListener#onChanged(ObservableValue, Object, Object)}.
+                """,
+
+                ChangeListener(t_value).PARAM("listener", "the listener to be attached to this {@code ObservableValue}"),
 
                 category = CAT_LISTENERS,
+                throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
+                see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0
             )
 
@@ -80,6 +87,7 @@ val ObservableValue = Profile {
 
                 annotations = listOf(Override),
                 category = CAT_LISTENERS,
+                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0,
                 body = """
 this.addListener(${ChangeListener(t_value)}.wrap(listener));
@@ -93,6 +101,8 @@ this.addListener(${ChangeListener(t_value)}.wrap(listener));
                 ChangeListener(t_value).PARAM("listener", "the listener to be detached from this value"),
 
                 category = CAT_LISTENERS,
+                throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
+                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0
             )
         }

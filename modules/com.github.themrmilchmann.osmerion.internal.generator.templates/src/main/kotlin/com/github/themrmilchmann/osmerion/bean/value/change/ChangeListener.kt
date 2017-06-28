@@ -62,7 +62,13 @@ val ChangeListener = Profile {
 
             ChangeListener(t_value).method(
                 "wrap",
-                "Returns a specialized ChangeListener wrapping around the given one.",
+                """
+                Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
+                the same type, it is simply returned.
+
+                The wrapper's hashcode is the same as the hashcode of the wrapped listener. The wrapper's {@code equals()} method only returns true if the
+                wrapped listener is passed as argument.
+                """,
 
                 ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType}").PARAM("listener", "the listener to be wrapped"),
 
@@ -70,7 +76,7 @@ val ChangeListener = Profile {
                 returnDoc = "a specialized ChangeListener wrapping around the given one",
                 since = VERSION_1_0_0,
                 body = """
-return new ${name(t_value)}() {
+return (listener instanceof ${name(t_value)}) ? (${name(t_value)}) listener : new ${name(t_value)}() {
 
     @Override
     public void onChanged(${ObservableValue(t_value)} observable, $t_value oldValue, $t_value newValue) {

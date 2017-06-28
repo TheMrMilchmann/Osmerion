@@ -58,9 +58,16 @@ public interface ObservableCharValue extends ObservableValue<Character> {
     // #############################################################################################################################################################
 
     /**
-     * Attaches the specified listener to this value.
+     * Attaches the specified listener to this {@link ObservableValue}.
+     * 
+     * <p>As long as the listener is attached it will be notified whenever the value of this {@code ObservableValue} changes via
+     * {@link ChangeListener#onChanged(ObservableValue, Object, Object)}.</p>
      *
-     * @param listener the listener to be attached to this value
+     * @param listener the listener to be attached to this {@code ObservableValue}
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #removeListener(CharChangeListener)
      *
      * @since 1.0.0
      */
@@ -72,6 +79,8 @@ public interface ObservableCharValue extends ObservableValue<Character> {
 
     /**
      * {@inheritDoc}
+     *
+     * @see #addListener(CharChangeListener)
      *
      * @since 1.0.0
      */
@@ -88,6 +97,10 @@ public interface ObservableCharValue extends ObservableValue<Character> {
      * Detaches the specified listener from this value.
      *
      * @param listener the listener to be detached from this value
+     *
+     * @throws NullPointerException if {@code listener} is {@code null}
+     *
+     * @see #addListener(CharChangeListener)
      *
      * @since 1.0.0
      */
