@@ -29,7 +29,7 @@
  */
 package com.github.themrmilchmann.osmerion.internal.generator.java
 
-import java.io.PrintWriter
+import java.io.*
 import java.util.*
 
 val void = VoidType("Void", "void")

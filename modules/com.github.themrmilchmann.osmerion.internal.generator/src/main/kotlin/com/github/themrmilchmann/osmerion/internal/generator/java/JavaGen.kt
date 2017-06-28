@@ -29,12 +29,11 @@
  */
 package com.github.themrmilchmann.osmerion.internal.generator.java
 
-import java.io.*
-import java.lang.reflect.Modifier
-import java.util.*
-
 import com.github.themrmilchmann.osmerion.internal.generator.*
-import java.util.stream.Collectors
+import java.io.*
+import java.lang.reflect.*
+import java.util.*
+import java.util.stream.*
 
 private val CATEGORY = "(\\d+)\\Q_\\E(.+)".toRegex()
 
@@ -642,7 +641,7 @@ class JavaMethod(
 
         print(indent)
         print(visibility)
-        print("${type.toString()} ")
+        print("$type ")
         print(name)
         print("(")
 
