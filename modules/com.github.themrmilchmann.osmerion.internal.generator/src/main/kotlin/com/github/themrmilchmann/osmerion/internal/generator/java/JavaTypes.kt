@@ -73,6 +73,11 @@ open class Import(
     constructor(type: IType): this(type.packageName, type.simpleName)
 
     override fun compareTo(other: Import): Int {
+        if (packageName.startsWith("java.") && !other.packageName.startsWith("java.")) return -1
+        if (!packageName.startsWith("java.") && other.packageName.startsWith("java.")) return 1
+        if (packageName.startsWith("javax.") && !other.packageName.startsWith("javax.")) return -1
+        if (!packageName.startsWith("javax.") && other.packageName.startsWith("javax.")) return 1
+
         val cmp = packageName.compareTo(other.packageName)
         if (cmp != 0) return cmp
 
