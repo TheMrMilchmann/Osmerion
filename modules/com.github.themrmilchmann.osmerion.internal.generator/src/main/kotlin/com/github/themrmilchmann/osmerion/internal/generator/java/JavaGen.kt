@@ -35,7 +35,7 @@ import java.lang.reflect.*
 import java.util.*
 import java.util.stream.*
 
-private val CATEGORY = "(\\d+)\\Q_\\E(.+)".toRegex()
+private val CATEGORY = "(\\d+)\\Q_\\E(.*)".toRegex()
 
 private val WEIGHT_FIELD = 0
 private val WEIGHT_CONSTRUCTOR = 1
@@ -49,7 +49,7 @@ interface Member : Comparable<Member> {
 
     fun getWeight(): Int
 
-    fun PrintWriter.printMember(indent: String)
+    fun PrintWriter.printMember(indent: String): Boolean
 
     override fun compareTo(other: Member) = name.compareTo(other.name)
 
@@ -115,7 +115,12 @@ abstract class JavaType(
 
     internal fun addImport(type: IType) = addImport(Import(type))
 
-    override final fun PrintWriter.printMember(indent: String) = printType(indent)
+    override final fun PrintWriter.printMember(indent: String): Boolean {
+        printType(indent = indent)
+        println()
+
+        return false
+    }
 
     override final fun PrintWriter.printTarget() {
         println(COPYRIGHT_HEADER)
@@ -155,24 +160,32 @@ abstract class JavaType(
             println()
             println()
 
+            var isFirst = true
             var prevCategory: String = ""
+            var isLastLineBlank = true
 
             body.forEach {
                 if (it.category.isNotEmpty()) {
                     val mCat = CATEGORY.matchEntire(it.category) ?: throw IllegalArgumentException("Category name does not match pattern")
                     val category = mCat.groupValues[2]
 
-                    if (category != prevCategory) {
-                        println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
-                        println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(subIndent.length + category.length + 6)}")
-                        println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
+                    if (it.category != prevCategory && !(isFirst && category.isEmpty())) {
+                        if (category.isNotEmpty()) {
+                            if (!isLastLineBlank) println()
+
+                            println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
+                            println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(subIndent.length + category.length + 6)}")
+                            println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
+                        }
+
                         println()
                     }
 
-                    prevCategory = category
+                    isFirst = false
+                    prevCategory = it.category
                 }
 
-                it.run { printMember(subIndent) }
+                it.run { isLastLineBlank = printMember(subIndent) }
             }
         }
 
@@ -733,7 +746,7 @@ class JavaField(
 
     override fun getWeight() = WEIGHT_FIELD
 
-    override fun PrintWriter.printMember(indent: String) {
+    override fun PrintWriter.printMember(indent: String): Boolean {
         println(documentation.toJavaDoc(indent = indent, see = see, since = since))
 
         val annotations = this@JavaField.annotations
@@ -751,6 +764,8 @@ class JavaField(
         }
 
         println(";")
+
+        return false
     }
 
 }
@@ -806,7 +821,7 @@ open class JavaMethod(
         print(name)
     }
 
-    override fun PrintWriter.printMember(indent: String) {
+    override fun PrintWriter.printMember(indent: String): Boolean {
         println(toJavaDoc(indent = indent))
 
         val annotations = this@JavaMethod.annotations
@@ -856,6 +871,8 @@ open class JavaMethod(
         }
 
         println()
+
+        return true
     }
 
 }
