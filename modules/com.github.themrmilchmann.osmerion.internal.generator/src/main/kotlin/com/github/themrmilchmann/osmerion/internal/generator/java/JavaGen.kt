@@ -168,11 +168,11 @@ abstract class JavaType(
                         println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
                         println()
                     }
+
+                    prevCategory = category
                 }
 
                 it.run { printMember(subIndent) }
-
-                prevCategory = category
             }
         }
 
