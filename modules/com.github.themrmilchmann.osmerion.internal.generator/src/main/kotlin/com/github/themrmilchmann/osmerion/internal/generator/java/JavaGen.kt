@@ -63,8 +63,8 @@ abstract class JavaType(
 
     override val simpleName = fileName
 
-    val annotations = mutableListOf<Annotation>()
-    val body = TreeSet<Member> {
+    private val annotations = mutableListOf<Annotation>()
+    internal val body = TreeSet<Member> {
         alpha, beta ->
 
         val aC = alpha.category
@@ -78,7 +78,7 @@ abstract class JavaType(
         else if (aW < bW) -1
         else alpha.compareTo(beta)
     }
-    val imports = TreeSet<Import>()
+    private val imports = TreeSet<Import>()
 
     override var category: String = ""
     var authors: Array<out String>? = null
@@ -783,7 +783,7 @@ class JavaConstructor(
     annotations: List<Annotation>?
 ): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, annotations) {
 
-    override fun getWeight(): Int = WEIGHT_CONSTRUCTOR
+    override fun getWeight() = WEIGHT_CONSTRUCTOR
 
     override fun PrintWriter.printDeclaration() {
         print(visibility)
