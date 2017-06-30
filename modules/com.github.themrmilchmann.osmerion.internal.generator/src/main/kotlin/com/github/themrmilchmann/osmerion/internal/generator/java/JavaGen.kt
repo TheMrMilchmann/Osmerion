@@ -280,6 +280,7 @@ class JavaClass(
         name: String,
         documentation: String,
         visibility: Int = 0,
+        value: String = "",
         category: String = "",
         since: String = "",
         see: Array<out String>? = null,
@@ -312,7 +313,7 @@ class JavaClass(
 
         addImport(this)
 
-        val field = JavaField(this, name, documentation, v, category, since, see, annotations)
+        val field = JavaField(this, name, documentation, v, value, category, since, see, annotations)
         this@JavaClass.body.add(field)
     }
 
@@ -541,6 +542,7 @@ class JavaInterface(
         name: String,
         documentation: String,
         visibility: Int = 0,
+        value: String = "",
         category: String = "",
         since: String = "",
         see: Array<out String>? = null,
@@ -566,7 +568,7 @@ class JavaInterface(
 
         addImport(this)
 
-        val field = JavaField(this, name, documentation, v, category, since, see, annotations)
+        val field = JavaField(this, name, documentation, v, value, category, since, see, annotations)
         this@JavaInterface.body.add(field)
     }
 
@@ -722,6 +724,7 @@ class JavaField(
     override val name: String,
     val documentation: String,
     val visibility: String,
+    val value: String,
     override var category: String,
     val since: String,
     val see: Array<out String>?,
@@ -741,6 +744,12 @@ class JavaField(
         print(type.toString())
         print(" ")
         print(name)
+
+        if (value.isNotEmpty()) {
+            print(" = ")
+            print(value)
+        }
+
         println(";")
     }
 
