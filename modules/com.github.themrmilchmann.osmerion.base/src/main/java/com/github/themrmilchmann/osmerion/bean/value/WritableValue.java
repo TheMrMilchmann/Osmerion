@@ -43,6 +43,7 @@ public interface WritableValue<T> extends ObservableValue<T> {
      * Sets the value of this {@code WritableValue} and returns the previous value.
      *
      * @param value the new value
+     *
      * @return the previous value
      *
      * @since 1.0.0

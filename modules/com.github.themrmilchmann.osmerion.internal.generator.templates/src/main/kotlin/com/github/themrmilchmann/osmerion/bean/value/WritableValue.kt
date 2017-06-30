@@ -37,6 +37,8 @@ import java.lang.reflect.*
 private fun name(type: PrimitiveType) = "Writable${type.abbrevName}Value"
 fun WritableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
 
+private const val CAT_VALUE_OPS = "1_Value Operations"
+
 val WritableValue = Profile {
     types.forEach {
         val t_value = it
@@ -55,6 +57,7 @@ val WritableValue = Profile {
 
                 t_value.PARAM("value", "the new value"),
 
+                category = CAT_VALUE_OPS,
                 returnDoc = "the previous value of this {@code ${this.fileName}}",
                 since = VERSION_1_0_0
             )

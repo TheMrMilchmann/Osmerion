@@ -42,7 +42,11 @@ public interface WritableObjectValue<T> extends WritableValue<T> {
     // #################################################################################################################
 
     /**
-     * {@inheritDoc}
+     * Sets the value of this {@link WritableObjectValue}.
+     *
+     * @param value the new value
+     *
+     * @return the previous value of this {@code WritableObjectValue}
      *
      * @since 1.0.0
      */

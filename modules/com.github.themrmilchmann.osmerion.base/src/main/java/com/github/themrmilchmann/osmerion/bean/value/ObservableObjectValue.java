@@ -37,10 +37,14 @@ package com.github.themrmilchmann.osmerion.bean.value;
  */
 public interface ObservableObjectValue<T> extends ObservableValue<T> {
 
+    // #########################################################################################################################################################
+    // # Value Operations ######################################################################################################################################
+    // #########################################################################################################################################################
+
     /**
-     * Returns the value of this {@link ObservableValue}.
+     * Returns the value of this {@link ObservableObjectValue}.
      *
-     * @return the value of this {@code ObservableValue}
+     * @return the value of this {@code ObservableObjectValue}
      *
      * @since 1.0.0
      */
