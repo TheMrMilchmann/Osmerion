@@ -64,6 +64,7 @@ val Override = Annotation("Override", "java.lang")
 
 val Object = Type("Object", "java.lang")
 val String = Type("String", "java.lang")
+fun List(content: String) = ParametrizedType("List", "java.util", content)
 
 open class Import(
     val packageName: String,
