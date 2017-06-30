@@ -34,7 +34,7 @@ plugins {
 configureJavaProject()
 
 tasks.withType<JavaCompile> {
-    dependsOn(":modules:${osmerion("internal.generator")}:generate")
+    dependsOn(":modules:${osmerion("internal.generator.templates")}:generate")
 }
 
 dependencies {
