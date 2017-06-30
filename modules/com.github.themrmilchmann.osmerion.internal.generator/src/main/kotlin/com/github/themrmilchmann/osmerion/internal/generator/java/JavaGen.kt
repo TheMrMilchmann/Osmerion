@@ -335,7 +335,7 @@ class JavaClass(
         packageName: String,
         moduleName: String,
         superClass: IType? = null,
-        typeParameters: Array<out IType>?,
+        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         init: JavaClass.() -> Unit
     ) {
@@ -373,6 +373,7 @@ class JavaClass(
         fileName: String,
         packageName: String,
         moduleName: String,
+        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         init: JavaInterface.() -> Unit
     ) {
@@ -394,7 +395,7 @@ class JavaClass(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, visibility, v)
+        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
         init.invoke(target)
         this@JavaClass.body.add(target)
     }
@@ -510,6 +511,7 @@ fun Profile.javaInterface(
     fileName: String,
     packageName: String,
     moduleName: String,
+    typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
     init: JavaInterface.() -> Unit
 ) {
@@ -531,7 +533,7 @@ fun Profile.javaInterface(
         toString()
     }
 
-    val target = JavaInterface(fileName, packageName, moduleName, visibility, v)
+    val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
     init.invoke(target)
     this@javaInterface.targets.add(target)
 }
@@ -540,6 +542,7 @@ class JavaInterface(
     override val name: String,
     packageName: String,
     moduleName: String,
+    val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String
 ): JavaType(name, packageName, moduleName) {
@@ -590,7 +593,7 @@ class JavaInterface(
         packageName: String,
         moduleName: String,
         superClass: IType? = null,
-        typeParameters: Array<out IType>?,
+        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         init: JavaClass.() -> Unit
     ) {
@@ -628,6 +631,7 @@ class JavaInterface(
         fileName: String,
         packageName: String,
         moduleName: String,
+        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         init: JavaInterface.() -> Unit
     ) {
@@ -649,7 +653,7 @@ class JavaInterface(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, visibility,v)
+        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
         init.invoke(target)
         this@JavaInterface.body.add(target)
     }
@@ -721,6 +725,14 @@ class JavaInterface(
         print(visibility)
         print("interface ")
         print(fileName)
+
+        if (typeParameters != null) {
+            print("<")
+            print(StringJoiner(", ").apply {
+                typeParameters.forEach { add(it.toString()) }
+            })
+            print(">")
+        }
 
         if (interfaces.isNotEmpty()) {
             print(" extends ")
