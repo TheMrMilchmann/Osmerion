@@ -163,9 +163,9 @@ abstract class JavaType(
                     val category = mCat.groupValues[2]
 
                     if (category != prevCategory) {
-                        println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
-                        println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(indent.length + category.length + 6)}")
-                        println("$subIndent// ${CATEGORY_DIVIDER.substring(indent.length + 3)}")
+                        println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
+                        println("$subIndent// # $category ${CATEGORY_DIVIDER.substring(subIndent.length + category.length + 6)}")
+                        println("$subIndent// ${CATEGORY_DIVIDER.substring(subIndent.length + 3)}")
                         println()
                     }
                 }
