@@ -182,10 +182,10 @@ private fun <T> generateOutput(target: T, file: Path, lmt: Long? = null, generat
         val before = readFile(file)
         val after = baos.toByteArray()
 
-        fun somethingChanged(before: ByteBuffer, after: ByteArray): Boolean {
-            if (before.remaining() != after.size)
+        fun somethingChanged(b: ByteBuffer, a: ByteArray): Boolean {
+            if (b.remaining() != a.size)
                 return true
-            return (0..before.limit() - 1).any { before.get(it) != after[it] }
+            return (0..b.limit() - 1).any { a[it] != a[it] }
         }
 
         if (somethingChanged(before, after)) {
