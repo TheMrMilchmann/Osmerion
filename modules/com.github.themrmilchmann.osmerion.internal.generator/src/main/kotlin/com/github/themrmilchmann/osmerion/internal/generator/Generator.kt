@@ -185,7 +185,7 @@ private fun <T> generateOutput(target: T, file: Path, lmt: Long? = null, generat
         fun somethingChanged(b: ByteBuffer, a: ByteArray): Boolean {
             if (b.remaining() != a.size)
                 return true
-            return (0..b.limit() - 1).any { a[it] != a[it] }
+            return (0..b.limit() - 1).any { b[it] != a[it] }
         }
 
         if (somethingChanged(before, after)) {
