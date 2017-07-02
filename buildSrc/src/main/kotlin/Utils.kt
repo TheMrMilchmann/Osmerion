@@ -40,15 +40,23 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
         java.sourceCompatibility = JavaVersion.VERSION_1_9
         java.targetCompatibility = JavaVersion.VERSION_1_9
 
+        val sourceSets = java.sourceSets
+        sourceSets["main"].java.outputDir = File(rootProject.projectDir, "config/modules/${project.name}")
+
         if (generated) {
-            val sourceSets = java.sourceSets
             sourceSets["main"].java.srcDir("/src/generated/java")
         }
     }
 
-    tasks.withType<JavaCompile> {
-        options.forkOptions.javaHome = File(rootProject.rootDir, "config/jdk9/") // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
-        options.isFork = true
+    tasks {
+        "compileJava"(JavaCompile::class) {
+            options.forkOptions.javaHome = File(rootProject.rootDir, "config/jdk9/") // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
+            options.isFork = true
+            options.isDebug = true
+
+            options.compilerArgs.add("--module-path")
+            options.compilerArgs.add(File(rootProject.projectDir, "config/modules/").absolutePath)
+        }
     }
 
     if (tests) {
