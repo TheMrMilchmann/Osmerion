@@ -46,6 +46,9 @@ module com.github.themrmilchmann.osmerion.base {
 
     requires com.github.themrmilchmann.osmerion.internal.annotation;
 
+    exports com.github.themrmilchmann.osmerion.bean.property;
+    exports com.github.themrmilchmann.osmerion.bean.value;
+    exports com.github.themrmilchmann.osmerion.bean.value.change;
     exports com.github.themrmilchmann.osmerion.logging;
 
 }
