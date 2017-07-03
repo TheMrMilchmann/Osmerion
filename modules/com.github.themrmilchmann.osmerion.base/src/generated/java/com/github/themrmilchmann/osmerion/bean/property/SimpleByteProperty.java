@@ -54,7 +54,7 @@ public class SimpleByteProperty extends AbstractByteProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleByteProperty(byte initialValue) {
+    public SimpleByteProperty(byte initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleByteProperty extends AbstractByteProperty {
      * @since 1.0.0
      */
     @Override
-    protected byte validate(byte value) {
+    public byte validate(byte value) {
         return value;
     }
 

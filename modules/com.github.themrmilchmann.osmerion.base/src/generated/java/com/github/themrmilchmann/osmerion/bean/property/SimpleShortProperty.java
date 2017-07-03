@@ -54,7 +54,7 @@ public class SimpleShortProperty extends AbstractShortProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleShortProperty(short initialValue) {
+    public SimpleShortProperty(short initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleShortProperty extends AbstractShortProperty {
      * @since 1.0.0
      */
     @Override
-    protected short validate(short value) {
+    public short validate(short value) {
         return value;
     }
 

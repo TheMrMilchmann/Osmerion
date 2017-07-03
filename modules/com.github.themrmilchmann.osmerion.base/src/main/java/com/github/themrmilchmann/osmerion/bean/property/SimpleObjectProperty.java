@@ -42,7 +42,7 @@ public class SimpleObjectProperty<T> extends AbstractObjectProperty<T> {
      *
      * @since 1.0.0
      */
-    protected SimpleObjectProperty() {
+    public SimpleObjectProperty() {
         super();
     }
 
@@ -53,7 +53,7 @@ public class SimpleObjectProperty<T> extends AbstractObjectProperty<T> {
      *
      * @since 1.0.0
      */
-    protected SimpleObjectProperty(T initialValue) {
+    public SimpleObjectProperty(T initialValue) {
         super(initialValue);
     }
 

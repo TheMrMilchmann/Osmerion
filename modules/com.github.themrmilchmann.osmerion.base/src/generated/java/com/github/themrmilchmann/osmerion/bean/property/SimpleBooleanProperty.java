@@ -54,7 +54,7 @@ public class SimpleBooleanProperty extends AbstractBooleanProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleBooleanProperty(boolean initialValue) {
+    public SimpleBooleanProperty(boolean initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleBooleanProperty extends AbstractBooleanProperty {
      * @since 1.0.0
      */
     @Override
-    protected boolean validate(boolean value) {
+    public boolean validate(boolean value) {
         return value;
     }
 

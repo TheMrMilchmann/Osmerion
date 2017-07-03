@@ -54,7 +54,7 @@ public class SimpleLongProperty extends AbstractLongProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleLongProperty(long initialValue) {
+    public SimpleLongProperty(long initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleLongProperty extends AbstractLongProperty {
      * @since 1.0.0
      */
     @Override
-    protected long validate(long value) {
+    public long validate(long value) {
         return value;
     }
 

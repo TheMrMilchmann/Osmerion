@@ -54,7 +54,7 @@ public class SimpleFloatProperty extends AbstractFloatProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleFloatProperty(float initialValue) {
+    public SimpleFloatProperty(float initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleFloatProperty extends AbstractFloatProperty {
      * @since 1.0.0
      */
     @Override
-    protected float validate(float value) {
+    public float validate(float value) {
         return value;
     }
 

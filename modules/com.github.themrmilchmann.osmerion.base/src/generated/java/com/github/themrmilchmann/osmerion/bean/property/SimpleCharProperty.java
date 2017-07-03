@@ -54,7 +54,7 @@ public class SimpleCharProperty extends AbstractCharProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleCharProperty(char initialValue) {
+    public SimpleCharProperty(char initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleCharProperty extends AbstractCharProperty {
      * @since 1.0.0
      */
     @Override
-    protected char validate(char value) {
+    public char validate(char value) {
         return value;
     }
 

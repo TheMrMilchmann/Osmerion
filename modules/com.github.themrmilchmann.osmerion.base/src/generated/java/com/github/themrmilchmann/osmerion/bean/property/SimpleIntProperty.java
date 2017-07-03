@@ -54,7 +54,7 @@ public class SimpleIntProperty extends AbstractIntProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleIntProperty(int initialValue) {
+    public SimpleIntProperty(int initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleIntProperty extends AbstractIntProperty {
      * @since 1.0.0
      */
     @Override
-    protected int validate(int value) {
+    public int validate(int value) {
         return value;
     }
 

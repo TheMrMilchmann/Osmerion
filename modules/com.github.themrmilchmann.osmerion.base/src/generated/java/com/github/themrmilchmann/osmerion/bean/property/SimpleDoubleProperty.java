@@ -54,7 +54,7 @@ public class SimpleDoubleProperty extends AbstractDoubleProperty {
      *
      * @since 1.0.0
      */
-    protected SimpleDoubleProperty(double initialValue) {
+    public SimpleDoubleProperty(double initialValue) {
         super(initialValue);
     }
 
@@ -68,7 +68,7 @@ public class SimpleDoubleProperty extends AbstractDoubleProperty {
      * @since 1.0.0
      */
     @Override
-    protected double validate(double value) {
+    public double validate(double value) {
         return value;
     }
 
