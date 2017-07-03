@@ -69,4 +69,10 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
     }
 }
 
+fun Project.configureKotlinProject(stdlib: Boolean = true) {
+    dependencies {
+        if (stdlib) compile(kotlin("stdlib-jre8"))
+    }
+}
+
 fun osmerion(path: String = "") = "com.github.themrmilchmann.osmerion${if (path.isNotEmpty()) ".$path" else "" }"

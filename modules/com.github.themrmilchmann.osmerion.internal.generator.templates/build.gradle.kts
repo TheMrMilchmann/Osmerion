@@ -31,6 +31,7 @@ plugins {
     kotlin("jvm")
 }
 
+configureKotlinProject()
 
 tasks {
     "generate"(JavaExec::class) {
@@ -57,6 +58,5 @@ tasks {
 }
 
 dependencies {
-    compile(kotlin("stdlib"))
     compile(project(":modules:${osmerion("internal.generator")}"))
 }
