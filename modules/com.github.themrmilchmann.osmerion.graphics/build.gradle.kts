@@ -27,11 +27,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-include 'modules:com.github.themrmilchmann.osmerion.base',
-        'modules:com.github.themrmilchmann.osmerion.graphics',
+plugins {
+    java
+}
 
-        'modules:com.github.themrmilchmann.osmerion.internal.annotation',
-        'modules:com.github.themrmilchmann.osmerion.internal.generator',
-        'modules:com.github.themrmilchmann.osmerion.internal.generator.templates'
+configureJavaProject()
 
-rootProject.name = 'Osmerion'
+dependencies {
+    compile(project(":modules:${osmerion("base")}"))
+}
