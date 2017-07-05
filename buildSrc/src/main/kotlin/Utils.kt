@@ -44,7 +44,8 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
         sourceSets["main"].java.outputDir = File(rootProject.projectDir, "config/modules/${project.name}")
 
         if (generated) {
-            sourceSets["main"].java.srcDir("/src/generated/java")
+            sourceSets["main"].java.srcDir("/src/main-generated/java")
+            sourceSets["test"].java.srcDir("/src/test-generated/java")
         }
     }
 
