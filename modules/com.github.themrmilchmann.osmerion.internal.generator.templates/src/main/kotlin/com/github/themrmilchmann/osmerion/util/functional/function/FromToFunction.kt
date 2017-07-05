@@ -45,7 +45,7 @@ val FromToFunction = Profile {
         types.forEach {
             val t_to = it
 
-            javaInterface(name(t_from, t_to), packageName, MODULE_BASE, typeParameters = arrayOf(GenericType("T")), visibility = Modifier.PUBLIC) {
+            javaInterface(name(t_from, t_to), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
                 addAnnotations(FunctionalInterface)
 
                 documentation = "A function converting an {@code $t_from} to {@code $t_to}."

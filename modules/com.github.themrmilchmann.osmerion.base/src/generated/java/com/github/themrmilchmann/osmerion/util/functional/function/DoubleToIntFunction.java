@@ -37,7 +37,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface DoubleToIntFunction<T> {
+public interface DoubleToIntFunction {
 
     /**
      * Applies this function to the given argument.

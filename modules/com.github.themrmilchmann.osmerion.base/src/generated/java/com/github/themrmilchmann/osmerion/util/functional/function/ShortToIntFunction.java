@@ -37,7 +37,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface ShortToIntFunction<T> {
+public interface ShortToIntFunction {
 
     /**
      * Applies this function to the given argument.

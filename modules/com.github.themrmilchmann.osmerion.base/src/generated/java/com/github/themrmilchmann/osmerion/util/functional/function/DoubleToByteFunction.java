@@ -37,7 +37,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface DoubleToByteFunction<T> {
+public interface DoubleToByteFunction {
 
     /**
      * Applies this function to the given argument.

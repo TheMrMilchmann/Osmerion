@@ -37,7 +37,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface BooleanToByteFunction<T> {
+public interface BooleanToByteFunction {
 
     /**
      * Applies this function to the given argument.
