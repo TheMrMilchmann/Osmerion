@@ -33,8 +33,10 @@ plugins {
 
 configureJavaProject()
 
-tasks.withType<JavaCompile> {
-    dependsOn(":modules:${osmerion("internal.generator.templates")}:generate")
+tasks {
+    "compileJava"(JavaCompile::class) {
+        dependsOn(":modules:${osmerion("internal.generator.templates")}:generate")
+    }
 }
 
 dependencies {
