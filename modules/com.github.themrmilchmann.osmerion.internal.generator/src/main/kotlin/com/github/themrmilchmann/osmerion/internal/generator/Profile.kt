@@ -27,7 +27,7 @@ abstract class GeneratorTarget(
     val language: String,
     val packageName: String,
     val moduleName: String,
-    val kind: String = "main",
+    val kind: String,
     val appendix: String = language
 ) {
 

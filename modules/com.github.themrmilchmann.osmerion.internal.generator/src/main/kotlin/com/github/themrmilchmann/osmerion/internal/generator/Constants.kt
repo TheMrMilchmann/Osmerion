@@ -32,6 +32,9 @@ package com.github.themrmilchmann.osmerion.internal.generator
 // Style Configuration
 const val LN = "\n"
 
+const val KIND_MAIN = "main"
+const val KIND_TEST = "test"
+
 const val PACKAGE = "com.github.themrmilchmann.osmerion"
 
 val MODULE_BASE = getOsmerionPath("base")

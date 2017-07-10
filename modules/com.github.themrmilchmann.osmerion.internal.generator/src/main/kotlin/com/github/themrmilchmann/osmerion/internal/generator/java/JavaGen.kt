@@ -58,8 +58,9 @@ interface Member : Comparable<Member> {
 abstract class JavaType(
     fileName: String,
     packageName: String,
-    moduleName: String
-): GeneratorTarget(fileName, "java", packageName, moduleName), Member, IType {
+    moduleName: String,
+    kind: String
+): GeneratorTarget(fileName, "java", packageName, moduleName, kind = kind), Member, IType {
 
     override val simpleName = fileName
 
@@ -242,8 +243,9 @@ class JavaClass(
     val superClass: IType?,
     val typeParameters: Array<out IType>?,
     val intVisibility: Int,
-    val visibility: String
-): JavaType(name, packageName, moduleName) {
+    val visibility: String,
+    kind: String = KIND_MAIN
+): JavaType(name, packageName, moduleName, kind = kind) {
 
     init {
         if (superClass != null) addImport(superClass)
@@ -544,8 +546,9 @@ class JavaInterface(
     moduleName: String,
     val typeParameters: Array<out IType>?,
     val intVisibility: Int,
-    val visibility: String
-): JavaType(name, packageName, moduleName) {
+    val visibility: String,
+    kind: String = KIND_MAIN
+): JavaType(name, packageName, moduleName, kind = kind) {
 
     private val interfaces = mutableListOf<IType>()
 
