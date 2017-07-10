@@ -60,7 +60,7 @@ abstract class JavaType(
     packageName: String,
     moduleName: String,
     kind: String
-): GeneratorTarget(fileName, "java", packageName, moduleName, kind = kind), Member, IType {
+): GeneratorTarget(fileName, "java", packageName, moduleName, kind), Member, IType {
 
     override val simpleName = fileName
 
@@ -204,6 +204,7 @@ fun Profile.javaClass(
     superClass: IType? = null,
     typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
+    kind: String = KIND_MAIN,
     init: JavaClass.() -> Unit
 ) {
     val v = StringBuilder().run {
@@ -231,7 +232,7 @@ fun Profile.javaClass(
         toString()
     }
 
-    val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
+    val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
     init.invoke(target)
     this@javaClass.targets.add(target)
 }
@@ -244,7 +245,7 @@ class JavaClass internal constructor(
     val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String,
-    kind: String = KIND_MAIN
+    kind: String
 ): JavaType(name, packageName, moduleName, kind = kind) {
 
     init {
@@ -339,6 +340,7 @@ class JavaClass internal constructor(
         superClass: IType? = null,
         typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
+        kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
     ) {
         val v = StringBuilder().run {
@@ -366,7 +368,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
+        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
     }
@@ -377,6 +379,7 @@ class JavaClass internal constructor(
         moduleName: String,
         typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
+        kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
     ) {
         val v = StringBuilder().run {
@@ -397,7 +400,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
+        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
     }
@@ -515,6 +518,7 @@ fun Profile.javaInterface(
     moduleName: String,
     typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
+    kind: String = KIND_MAIN,
     init: JavaInterface.() -> Unit
 ) {
     val v = StringBuilder().run {
@@ -535,7 +539,7 @@ fun Profile.javaInterface(
         toString()
     }
 
-    val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
+    val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
     init.invoke(target)
     this@javaInterface.targets.add(target)
 }
@@ -547,8 +551,8 @@ class JavaInterface internal constructor(
     val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String,
-    kind: String = KIND_MAIN
-): JavaType(name, packageName, moduleName, kind = kind) {
+    kind: String
+): JavaType(name, packageName, moduleName, kind) {
 
     private val interfaces = mutableListOf<IType>()
 
@@ -598,6 +602,7 @@ class JavaInterface internal constructor(
         superClass: IType? = null,
         typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
+        kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
     ) {
         val v = StringBuilder().run {
@@ -625,7 +630,7 @@ class JavaInterface internal constructor(
             toString()
         }
 
-        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v)
+        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
     }
@@ -636,6 +641,7 @@ class JavaInterface internal constructor(
         moduleName: String,
         typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
+        kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
     ) {
         val v = StringBuilder().run {
@@ -656,7 +662,7 @@ class JavaInterface internal constructor(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v)
+        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
     }
