@@ -236,7 +236,7 @@ fun Profile.javaClass(
     this@javaClass.targets.add(target)
 }
 
-class JavaClass(
+class JavaClass internal constructor(
     override val name: String,
     packageName: String,
     moduleName: String,
@@ -540,7 +540,7 @@ fun Profile.javaInterface(
     this@javaInterface.targets.add(target)
 }
 
-class JavaInterface(
+class JavaInterface internal constructor(
     override val name: String,
     packageName: String,
     moduleName: String,
@@ -747,7 +747,7 @@ class JavaInterface(
 
 }
 
-class JavaField(
+class JavaField internal constructor(
     val type: IType,
     override val name: String,
     val documentation: String,
@@ -785,7 +785,7 @@ class JavaField(
 
 }
 
-class JavaConstructor(
+class JavaConstructor internal constructor(
     type: IType,
     documentation: String,
     parameters: Array<out JavaParameter>,
@@ -807,7 +807,7 @@ class JavaConstructor(
 
 }
 
-open class JavaMethod(
+open class JavaMethod internal constructor(
     val type: IType,
     override val name: String,
     val documentation: String,
@@ -898,7 +898,7 @@ fun IType.PARAM(
     annotations: List<Annotation>? = null
 ) = JavaParameter(this, name, documentation, annotations = annotations)
 
-class JavaParameter(
+class JavaParameter internal constructor(
     val type: IType,
     val name: String,
     val documentation: String,
