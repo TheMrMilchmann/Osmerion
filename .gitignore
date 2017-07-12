@@ -3,6 +3,7 @@
 
 build/
 
+/bin
 /config
 /doc/web
 /lib
