@@ -65,14 +65,14 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
         test.useTestNG()
 
         dependencies {
-            testCompile("org.testng:testng:6.11")
+            "testCompile"("org.testng:testng:6.11")
         }
     }
 }
 
 fun Project.configureKotlinProject(stdlib: Boolean = true) {
     dependencies {
-        if (stdlib) compile(kotlin("stdlib-jre8"))
+        if (stdlib) "compile"(kotlin("stdlib-jre8"))
     }
 }
 
