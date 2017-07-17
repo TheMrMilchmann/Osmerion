@@ -39,6 +39,6 @@ allprojects {
 
 tasks {
     "wrapper"(Wrapper::class) {
-        distributionUrl = "https://repo.gradle.org/gradle/dist-snapshots/gradle-kotlin-dsl-4.1-20170707154639+0000-all.zip"
+        distributionUrl = "https://repo.gradle.org/gradle/dist-snapshots/gradle-kotlin-dsl-4.1-20170717152239+0000-all.zip"
     }
 }
