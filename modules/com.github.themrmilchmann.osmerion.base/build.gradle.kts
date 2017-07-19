@@ -28,9 +28,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 plugins {
-    java
+    `java-library`
+    id("org.gradle.java.experimental-jigsaw").version("0.1.1")
 }
 
+javaModule.setName(osmerion("base"))
 configureJavaProject()
 
 tasks {
