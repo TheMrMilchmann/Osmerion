@@ -780,7 +780,7 @@ class JavaField internal constructor(
     override fun getWeight() = WEIGHT_FIELD
 
     override fun PrintWriter.printMember(indent: String): Boolean {
-        println(documentation.toJavaDoc(indent = indent, see = see, since = since))
+        if (documentation.isNotEmpty()) println(documentation.toJavaDoc(indent = indent, see = see, since = since))
 
         val annotations = this@JavaField.annotations
         if (annotations != null) print(printAnnotations(indent = indent, annotations = annotations))
