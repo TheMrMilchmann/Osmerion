@@ -206,7 +206,7 @@ fun Profile.javaClass(
     visibility: Int = 0,
     kind: String = KIND_MAIN,
     init: JavaClass.() -> Unit
-) {
+): JavaClass {
     val v = StringBuilder().run {
         val isAbstract = Modifier.isAbstract(visibility)
 
@@ -235,6 +235,8 @@ fun Profile.javaClass(
     val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
     init.invoke(target)
     this@javaClass.targets.add(target)
+
+    return target
 }
 
 class JavaClass internal constructor(
@@ -342,7 +344,7 @@ class JavaClass internal constructor(
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
-    ) {
+    ): JavaClass {
         val v = StringBuilder().run {
             val isAbstract = Modifier.isAbstract(visibility)
 
@@ -371,6 +373,8 @@ class JavaClass internal constructor(
         val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
+
+        return target
     }
 
     fun javaInterface(
@@ -381,7 +385,7 @@ class JavaClass internal constructor(
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
-    ) {
+    ): JavaInterface {
         val v = StringBuilder().run {
             if (Modifier.isPublic(visibility)) append("public ")
             if (Modifier.isProtected(visibility)) append("protected ")
@@ -403,6 +407,8 @@ class JavaClass internal constructor(
         val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
+
+        return target
     }
 
     fun IType.method(
@@ -520,7 +526,7 @@ fun Profile.javaInterface(
     visibility: Int = 0,
     kind: String = KIND_MAIN,
     init: JavaInterface.() -> Unit
-) {
+): JavaInterface {
     val v = StringBuilder().run {
         if (Modifier.isPublic(visibility)) append("public ")
         if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
@@ -542,6 +548,8 @@ fun Profile.javaInterface(
     val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
     init.invoke(target)
     this@javaInterface.targets.add(target)
+
+    return target
 }
 
 class JavaInterface internal constructor(
@@ -604,7 +612,7 @@ class JavaInterface internal constructor(
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
-    ) {
+    ): JavaClass {
         val v = StringBuilder().run {
             val isAbstract = Modifier.isAbstract(visibility)
 
@@ -633,6 +641,8 @@ class JavaInterface internal constructor(
         val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
+
+        return target
     }
 
     fun javaInterface(
@@ -643,7 +653,7 @@ class JavaInterface internal constructor(
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
-    ) {
+    ): JavaInterface {
         val v = StringBuilder().run {
             if (Modifier.isPublic(visibility)) append("public ")
             if (Modifier.isProtected(visibility)) throw IllegalArgumentException("Illegal modifier \"protected\"")
@@ -665,6 +675,8 @@ class JavaInterface internal constructor(
         val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
+
+        return target
     }
 
     fun IType.method(
