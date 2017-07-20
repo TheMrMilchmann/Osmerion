@@ -33,14 +33,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractObjectProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleObjectProperty<T> extends AbstractObjectProperty<T> {
 
     /**
      * Creates a new {@link SimpleObjectProperty} with the default initial value {@link AbstractObjectProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleObjectProperty() {
         super();
@@ -51,7 +51,7 @@ public class SimpleObjectProperty<T> extends AbstractObjectProperty<T> {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleObjectProperty(T initialValue) {
         super(initialValue);
@@ -64,7 +64,7 @@ public class SimpleObjectProperty<T> extends AbstractObjectProperty<T> {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     protected T validate(T value) {

@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableDoubleValue;
  * A read-only representation of a {@code double} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyDoubleProperty extends ReadOnlyProperty<Double>, ObservableDoubleValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyDoubleProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyDoubleWrapper(this));

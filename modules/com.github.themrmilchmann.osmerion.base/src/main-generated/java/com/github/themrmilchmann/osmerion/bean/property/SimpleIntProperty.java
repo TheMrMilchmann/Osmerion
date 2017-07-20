@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractIntProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleIntProperty extends AbstractIntProperty {
 
     /**
      * Creates a new {@link SimpleIntProperty} with the default initial value {@link AbstractIntProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleIntProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleIntProperty extends AbstractIntProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleIntProperty(int initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleIntProperty extends AbstractIntProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public int validate(int value) {

@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractShortProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleShortProperty extends AbstractShortProperty {
 
     /**
      * Creates a new {@link SimpleShortProperty} with the default initial value {@link AbstractShortProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleShortProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleShortProperty extends AbstractShortProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleShortProperty(short initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleShortProperty extends AbstractShortProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public short validate(short value) {

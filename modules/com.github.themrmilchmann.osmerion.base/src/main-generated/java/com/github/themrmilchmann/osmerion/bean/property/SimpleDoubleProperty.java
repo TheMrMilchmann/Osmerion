@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractDoubleProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleDoubleProperty extends AbstractDoubleProperty {
 
     /**
      * Creates a new {@link SimpleDoubleProperty} with the default initial value {@link AbstractDoubleProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleDoubleProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleDoubleProperty extends AbstractDoubleProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleDoubleProperty(double initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleDoubleProperty extends AbstractDoubleProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public double validate(double value) {

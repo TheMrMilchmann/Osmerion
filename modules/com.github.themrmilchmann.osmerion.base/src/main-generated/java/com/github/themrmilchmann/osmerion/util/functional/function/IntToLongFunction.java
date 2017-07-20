@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting an {@code int} to {@code long}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface IntToLongFunction {
@@ -46,7 +46,7 @@ public interface IntToLongFunction {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     long apply(int t);
 

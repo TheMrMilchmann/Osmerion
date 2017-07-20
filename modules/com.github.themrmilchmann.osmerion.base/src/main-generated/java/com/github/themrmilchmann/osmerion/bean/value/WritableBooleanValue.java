@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code boolean} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableBooleanValue extends WritableValue<Boolean>, ObservableBooleanValue {
 
@@ -49,7 +49,7 @@ public interface WritableBooleanValue extends WritableValue<Boolean>, Observable
      *
      * @return the previous value of this {@code WritableBooleanValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     boolean set(boolean value);
 

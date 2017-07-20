@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting an {@code long} to {@code short}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface LongToShortFunction {
@@ -46,7 +46,7 @@ public interface LongToShortFunction {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     short apply(long t);
 

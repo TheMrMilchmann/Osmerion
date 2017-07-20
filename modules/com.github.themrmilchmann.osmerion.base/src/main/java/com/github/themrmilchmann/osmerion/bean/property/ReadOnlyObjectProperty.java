@@ -37,14 +37,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableObjectValue;
  * @param <T> the type of the value
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyObjectProperty<T> extends ReadOnlyProperty<T>, ObservableObjectValue<T> {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyObjectProperty<T> asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyObjectWrapper<T>(this));

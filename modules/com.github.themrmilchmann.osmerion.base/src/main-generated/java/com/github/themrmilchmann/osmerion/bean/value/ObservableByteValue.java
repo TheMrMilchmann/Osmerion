@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code byte} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableByteValue extends ObservableValue<Byte> {
 
@@ -49,7 +49,7 @@ public interface ObservableByteValue extends ObservableValue<Byte> {
      *
      * @return the value of this {@code ObservableByteValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     byte get();
 
@@ -69,7 +69,7 @@ public interface ObservableByteValue extends ObservableValue<Byte> {
      *
      * @see #removeListener(ByteChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(ByteChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableByteValue extends ObservableValue<Byte> {
      *
      * @see #addListener(ByteChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Byte> listener) {
@@ -94,7 +94,7 @@ public interface ObservableByteValue extends ObservableValue<Byte> {
      *
      * @see #addListener(ByteChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(ByteChangeListener listener);
 

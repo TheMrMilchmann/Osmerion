@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.ByteChangeListener;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyByteWrapper extends ReadOnlyWrapper<Byte, ReadOnlyByteProperty> implements ReadOnlyByteProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyByteWrapper extends ReadOnlyWrapper<Byte, ReadOnlyByteProper
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyByteWrapper(ReadOnlyByteProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyByteWrapper extends ReadOnlyWrapper<Byte, ReadOnlyByteProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public byte get() {
@@ -74,7 +74,7 @@ final class ReadOnlyByteWrapper extends ReadOnlyWrapper<Byte, ReadOnlyByteProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(ByteChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyByteWrapper extends ReadOnlyWrapper<Byte, ReadOnlyByteProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(ByteChangeListener listener) {

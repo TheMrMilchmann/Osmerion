@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.LongChangeListener;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyLongWrapper extends ReadOnlyWrapper<Long, ReadOnlyLongProperty> implements ReadOnlyLongProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyLongWrapper extends ReadOnlyWrapper<Long, ReadOnlyLongProper
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyLongWrapper(ReadOnlyLongProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyLongWrapper extends ReadOnlyWrapper<Long, ReadOnlyLongProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public long get() {
@@ -74,7 +74,7 @@ final class ReadOnlyLongWrapper extends ReadOnlyWrapper<Long, ReadOnlyLongProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(LongChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyLongWrapper extends ReadOnlyWrapper<Long, ReadOnlyLongProper
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(LongChangeListener listener) {

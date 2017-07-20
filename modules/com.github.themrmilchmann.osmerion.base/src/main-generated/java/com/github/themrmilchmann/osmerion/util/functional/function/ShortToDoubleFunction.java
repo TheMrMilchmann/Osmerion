@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting an {@code short} to {@code double}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface ShortToDoubleFunction {
@@ -46,7 +46,7 @@ public interface ShortToDoubleFunction {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     double apply(short t);
 

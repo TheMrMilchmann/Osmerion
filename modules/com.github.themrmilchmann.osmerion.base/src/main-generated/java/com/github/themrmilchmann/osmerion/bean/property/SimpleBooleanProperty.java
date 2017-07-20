@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractBooleanProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleBooleanProperty extends AbstractBooleanProperty {
 
     /**
      * Creates a new {@link SimpleBooleanProperty} with the default initial value {@link AbstractBooleanProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleBooleanProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleBooleanProperty extends AbstractBooleanProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleBooleanProperty(boolean initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleBooleanProperty extends AbstractBooleanProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public boolean validate(boolean value) {

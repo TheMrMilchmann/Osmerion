@@ -41,7 +41,7 @@ package com.github.themrmilchmann.osmerion.logging;
  * @see ILogger#isEnabled(LogLevel)
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class LogLevel {
 
@@ -54,7 +54,7 @@ public class LogLevel {
      * @param name the name for this {@code LogLevel}
      * @param severity the numerical severity for this {@code LogLevel}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public LogLevel(String name, int severity) {
         this.name = name;
@@ -67,7 +67,7 @@ public class LogLevel {
      * @param logMessage the {@code LogMessage} to be formatted
      * @return the formatted message
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     String format(LogMessage logMessage) {
         StringBuilder stringBuilder = new StringBuilder("[")
@@ -92,7 +92,7 @@ public class LogLevel {
      *
      * @return the name of this {@code LogLevel}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public String getName() {
         return this.name;
@@ -103,7 +103,7 @@ public class LogLevel {
      *
      * @return the numerical severity of this {@code LogLevel}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public int getSeverity() {
         return this.severity;

@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.IntChangeListener;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyIntWrapper extends ReadOnlyWrapper<Integer, ReadOnlyIntProperty> implements ReadOnlyIntProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyIntWrapper extends ReadOnlyWrapper<Integer, ReadOnlyIntPrope
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyIntWrapper(ReadOnlyIntProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyIntWrapper extends ReadOnlyWrapper<Integer, ReadOnlyIntPrope
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public int get() {
@@ -74,7 +74,7 @@ final class ReadOnlyIntWrapper extends ReadOnlyWrapper<Integer, ReadOnlyIntPrope
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(IntChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyIntWrapper extends ReadOnlyWrapper<Integer, ReadOnlyIntPrope
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(IntChangeListener listener) {

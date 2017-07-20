@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableIntValue;
  * A read-only representation of a {@code int} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyIntProperty extends ReadOnlyProperty<Integer>, ObservableIntValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyIntProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyIntWrapper(this));

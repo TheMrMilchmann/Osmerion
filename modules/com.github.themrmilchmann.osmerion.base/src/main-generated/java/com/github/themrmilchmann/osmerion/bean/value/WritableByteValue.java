@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code byte} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableByteValue extends WritableValue<Byte>, ObservableByteValue {
 
@@ -49,7 +49,7 @@ public interface WritableByteValue extends WritableValue<Byte>, ObservableByteVa
      *
      * @return the previous value of this {@code WritableByteValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     byte set(byte value);
 

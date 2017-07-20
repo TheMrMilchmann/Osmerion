@@ -47,14 +47,14 @@ val SimpleProperty = Profile {
         javaClass(name(t_value), packageName, MODULE_BASE, superClass = AbstractProperty(t_value), visibility = Modifier.PUBLIC) {
             documentation = "A simple implementation of {@link ${AbstractProperty(t_value)}}."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             constructor(
                 "Creates a new {@link $this} with the default initial value {@link ${AbstractProperty(t_value)}#INITIAL_VALUE}",
 
                 visibility = Modifier.PROTECTED,
                 category = CAT_CONSTRUCTORS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 super();
 """
@@ -67,7 +67,7 @@ super();
 
                 visibility = Modifier.PUBLIC,
                 category = CAT_CONSTRUCTORS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 super(initialValue);
 """
@@ -82,7 +82,7 @@ super(initialValue);
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
                 category = CAT_VALUE_OPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return value;
 """

@@ -50,7 +50,7 @@ val FromToFunction = Profile {
 
                 documentation = "A function converting an {@code $t_from} to {@code $t_to}."
                 authors(AUTHOR_LEON_LINHART)
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
 
                 t_to.method(
                     "apply",
@@ -59,7 +59,7 @@ val FromToFunction = Profile {
                     t_from.PARAM("t", "the function argument"),
 
                     returnDoc = "the function result",
-                    since = VERSION_1_0_0
+                    since = VERSION_1_0_0_0
                 )
             }
         }

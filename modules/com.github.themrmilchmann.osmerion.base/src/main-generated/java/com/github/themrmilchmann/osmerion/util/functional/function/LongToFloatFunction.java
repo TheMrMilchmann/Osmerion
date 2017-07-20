@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting an {@code long} to {@code float}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface LongToFloatFunction {
@@ -46,7 +46,7 @@ public interface LongToFloatFunction {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     float apply(long t);
 

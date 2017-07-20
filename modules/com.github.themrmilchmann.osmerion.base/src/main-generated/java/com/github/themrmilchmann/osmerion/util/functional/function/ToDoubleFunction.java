@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting an Object to {@code double}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface ToDoubleFunction<T> {
@@ -46,7 +46,7 @@ public interface ToDoubleFunction<T> {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     double apply(T t);
 

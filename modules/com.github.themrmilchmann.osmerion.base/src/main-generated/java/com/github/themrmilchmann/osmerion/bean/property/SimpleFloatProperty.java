@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractFloatProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleFloatProperty extends AbstractFloatProperty {
 
     /**
      * Creates a new {@link SimpleFloatProperty} with the default initial value {@link AbstractFloatProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleFloatProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleFloatProperty extends AbstractFloatProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleFloatProperty(float initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleFloatProperty extends AbstractFloatProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public float validate(float value) {

@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableDoubleValue;
  * A specialized {@code double} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface DoubleChangeListener {
@@ -48,7 +48,7 @@ public interface DoubleChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableDoubleValue observable, double oldValue, double newValue);
 
@@ -63,7 +63,7 @@ public interface DoubleChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static DoubleChangeListener wrap(ChangeListener<? super Double> listener) {
         return (listener instanceof DoubleChangeListener) ? (DoubleChangeListener) listener : new DoubleChangeListener() {

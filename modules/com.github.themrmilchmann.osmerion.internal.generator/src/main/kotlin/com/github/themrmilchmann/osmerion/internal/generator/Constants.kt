@@ -40,7 +40,7 @@ const val PACKAGE = "com.github.themrmilchmann.osmerion"
 val MODULE_BASE = getOsmerionPath("base")
 val MODULE_GRAPHICS = getOsmerionPath("graphics")
 
-const val VERSION_1_0_0 = "1.0.0"
+const val VERSION_1_0_0_0 = "1.0.0.0"
 
 fun getOsmerionPath(path: String, pack: String = PACKAGE) = "$pack.$path"
 

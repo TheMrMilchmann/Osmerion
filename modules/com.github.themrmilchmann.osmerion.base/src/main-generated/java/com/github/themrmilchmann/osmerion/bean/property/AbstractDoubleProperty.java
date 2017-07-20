@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleDoubleProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractDoubleProperty extends Property<Double> implements ReadOnlyDoubleProperty, WritableDoubleValue {
 
     /**
      * The initial value of an AbstractDoubleProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final double INITIAL_VALUE = 0D;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<DoubleChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected double value;
 
     /**
      * Creates a new {@link AbstractDoubleProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractDoubleProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractDoubleProperty(double initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final double get() {
@@ -103,7 +103,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Double getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final double set(double value) {
@@ -134,7 +134,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Double setValue(Double value) {
@@ -148,7 +148,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract double validate(double value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
      *
      * @see #removeListener(DoubleChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(DoubleChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
      *
      * @see #addListener(DoubleChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(DoubleChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractDoubleProperty extends Property<Double> implements
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Double> listener) {

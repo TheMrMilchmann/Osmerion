@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code float} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableFloatValue extends ObservableValue<Float> {
 
@@ -49,7 +49,7 @@ public interface ObservableFloatValue extends ObservableValue<Float> {
      *
      * @return the value of this {@code ObservableFloatValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     float get();
 
@@ -69,7 +69,7 @@ public interface ObservableFloatValue extends ObservableValue<Float> {
      *
      * @see #removeListener(FloatChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(FloatChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableFloatValue extends ObservableValue<Float> {
      *
      * @see #addListener(FloatChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Float> listener) {
@@ -94,7 +94,7 @@ public interface ObservableFloatValue extends ObservableValue<Float> {
      *
      * @see #addListener(FloatChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(FloatChangeListener listener);
 

@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleByteProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractByteProperty extends Property<Byte> implements ReadOnlyByteProperty, WritableByteValue {
 
     /**
      * The initial value of an AbstractByteProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final byte INITIAL_VALUE = 0;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<ByteChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected byte value;
 
     /**
      * Creates a new {@link AbstractByteProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractByteProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractByteProperty(byte initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final byte get() {
@@ -103,7 +103,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Byte getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final byte set(byte value) {
@@ -134,7 +134,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Byte setValue(Byte value) {
@@ -148,7 +148,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract byte validate(byte value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
      *
      * @see #removeListener(ByteChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(ByteChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
      *
      * @see #addListener(ByteChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ByteChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractByteProperty extends Property<Byte> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Byte> listener) {

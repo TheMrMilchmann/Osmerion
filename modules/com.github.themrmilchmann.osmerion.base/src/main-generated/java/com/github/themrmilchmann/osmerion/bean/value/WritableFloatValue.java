@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code float} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableFloatValue extends WritableValue<Float>, ObservableFloatValue {
 
@@ -49,7 +49,7 @@ public interface WritableFloatValue extends WritableValue<Float>, ObservableFloa
      *
      * @return the previous value of this {@code WritableFloatValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     float set(float value);
 

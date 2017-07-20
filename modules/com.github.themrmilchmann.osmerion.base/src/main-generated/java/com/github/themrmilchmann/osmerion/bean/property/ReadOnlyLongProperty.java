@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableLongValue;
  * A read-only representation of a {@code long} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyLongProperty extends ReadOnlyProperty<Long>, ObservableLongValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyLongProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyLongWrapper(this));

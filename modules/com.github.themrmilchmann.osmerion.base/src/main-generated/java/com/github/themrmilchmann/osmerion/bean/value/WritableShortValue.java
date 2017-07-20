@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code short} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableShortValue extends WritableValue<Short>, ObservableShortValue {
 
@@ -49,7 +49,7 @@ public interface WritableShortValue extends WritableValue<Short>, ObservableShor
      *
      * @return the previous value of this {@code WritableShortValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     short set(short value);
 

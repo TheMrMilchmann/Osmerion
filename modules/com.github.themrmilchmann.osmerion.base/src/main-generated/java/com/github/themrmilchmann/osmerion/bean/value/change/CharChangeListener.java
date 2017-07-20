@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableCharValue;
  * A specialized {@code char} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface CharChangeListener {
@@ -48,7 +48,7 @@ public interface CharChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableCharValue observable, char oldValue, char newValue);
 
@@ -63,7 +63,7 @@ public interface CharChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static CharChangeListener wrap(ChangeListener<? super Character> listener) {
         return (listener instanceof CharChangeListener) ? (CharChangeListener) listener : new CharChangeListener() {

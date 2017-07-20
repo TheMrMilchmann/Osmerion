@@ -33,7 +33,7 @@ package com.github.themrmilchmann.osmerion.logging;
  * A listener that can be attached to {@link ILogger}s to handle {@link LogMessage}s.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface ILogListener {
@@ -46,7 +46,7 @@ public interface ILogListener {
      *
      * @param logMessage the {@code LogMessage} to be processed
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onLogged(LogMessage logMessage);
 

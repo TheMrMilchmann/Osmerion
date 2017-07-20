@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableLongValue;
  * A specialized {@code long} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface LongChangeListener {
@@ -48,7 +48,7 @@ public interface LongChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableLongValue observable, long oldValue, long newValue);
 
@@ -63,7 +63,7 @@ public interface LongChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static LongChangeListener wrap(ChangeListener<? super Long> listener) {
         return (listener instanceof LongChangeListener) ? (LongChangeListener) listener : new LongChangeListener() {

@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code int} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableIntValue extends ObservableValue<Integer> {
 
@@ -49,7 +49,7 @@ public interface ObservableIntValue extends ObservableValue<Integer> {
      *
      * @return the value of this {@code ObservableIntValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     int get();
 
@@ -69,7 +69,7 @@ public interface ObservableIntValue extends ObservableValue<Integer> {
      *
      * @see #removeListener(IntChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(IntChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableIntValue extends ObservableValue<Integer> {
      *
      * @see #addListener(IntChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Integer> listener) {
@@ -94,7 +94,7 @@ public interface ObservableIntValue extends ObservableValue<Integer> {
      *
      * @see #addListener(IntChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(IntChangeListener listener);
 

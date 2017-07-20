@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleFloatProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractFloatProperty extends Property<Float> implements ReadOnlyFloatProperty, WritableFloatValue {
 
     /**
      * The initial value of an AbstractFloatProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final float INITIAL_VALUE = 0F;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<FloatChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected float value;
 
     /**
      * Creates a new {@link AbstractFloatProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractFloatProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractFloatProperty(float initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final float get() {
@@ -103,7 +103,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Float getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final float set(float value) {
@@ -134,7 +134,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Float setValue(Float value) {
@@ -148,7 +148,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract float validate(float value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
      *
      * @see #removeListener(FloatChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(FloatChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
      *
      * @see #addListener(FloatChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(FloatChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractFloatProperty extends Property<Float> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Float> listener) {

@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code int} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableIntValue extends WritableValue<Integer>, ObservableIntValue {
 
@@ -49,7 +49,7 @@ public interface WritableIntValue extends WritableValue<Integer>, ObservableIntV
      *
      * @return the previous value of this {@code WritableIntValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     int set(int value);
 

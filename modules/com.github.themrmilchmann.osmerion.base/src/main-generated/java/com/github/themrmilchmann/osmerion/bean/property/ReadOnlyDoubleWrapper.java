@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.DoubleChangeListener
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyDoubleWrapper extends ReadOnlyWrapper<Double, ReadOnlyDoubleProperty> implements ReadOnlyDoubleProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyDoubleWrapper extends ReadOnlyWrapper<Double, ReadOnlyDouble
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyDoubleWrapper(ReadOnlyDoubleProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyDoubleWrapper extends ReadOnlyWrapper<Double, ReadOnlyDouble
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public double get() {
@@ -74,7 +74,7 @@ final class ReadOnlyDoubleWrapper extends ReadOnlyWrapper<Double, ReadOnlyDouble
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(DoubleChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyDoubleWrapper extends ReadOnlyWrapper<Double, ReadOnlyDouble
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(DoubleChangeListener listener) {

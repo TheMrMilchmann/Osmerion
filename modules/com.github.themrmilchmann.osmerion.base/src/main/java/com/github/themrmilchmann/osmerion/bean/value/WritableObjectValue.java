@@ -33,7 +33,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code Object} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableObjectValue<T> extends WritableValue<T> {
 
@@ -48,7 +48,7 @@ public interface WritableObjectValue<T> extends WritableValue<T> {
      *
      * @return the previous value of this {@code WritableObjectValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     T set(T value);
 

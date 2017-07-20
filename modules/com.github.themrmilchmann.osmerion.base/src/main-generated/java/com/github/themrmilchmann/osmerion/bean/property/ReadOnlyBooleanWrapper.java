@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.BooleanChangeListene
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyBooleanWrapper extends ReadOnlyWrapper<Boolean, ReadOnlyBooleanProperty> implements ReadOnlyBooleanProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyBooleanWrapper extends ReadOnlyWrapper<Boolean, ReadOnlyBool
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyBooleanWrapper(ReadOnlyBooleanProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyBooleanWrapper extends ReadOnlyWrapper<Boolean, ReadOnlyBool
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public boolean get() {
@@ -74,7 +74,7 @@ final class ReadOnlyBooleanWrapper extends ReadOnlyWrapper<Boolean, ReadOnlyBool
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(BooleanChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyBooleanWrapper extends ReadOnlyWrapper<Boolean, ReadOnlyBool
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(BooleanChangeListener listener) {

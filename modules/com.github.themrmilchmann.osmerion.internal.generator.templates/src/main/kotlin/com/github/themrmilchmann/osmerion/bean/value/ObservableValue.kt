@@ -51,7 +51,7 @@ val ObservableValue = Profile {
 
             documentation = "An observable {@code ${t_value.simpleName}} value."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             t_value.method(
                 "get",
@@ -59,7 +59,7 @@ val ObservableValue = Profile {
 
                 category = CAT_VALUE_OPS,
                 returnDoc = "the value of this {@code ${this.fileName}}",
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             void.method(
@@ -76,7 +76,7 @@ val ObservableValue = Profile {
                 category = CAT_LISTENERS,
                 throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
                 see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             void.method(
@@ -88,7 +88,7 @@ val ObservableValue = Profile {
                 annotations = listOf(Override),
                 category = CAT_LISTENERS,
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 this.addListener(${ChangeListener(t_value)}.wrap(listener));
 """
@@ -103,7 +103,7 @@ this.addListener(${ChangeListener(t_value)}.wrap(listener));
                 category = CAT_LISTENERS,
                 throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
         }
     }

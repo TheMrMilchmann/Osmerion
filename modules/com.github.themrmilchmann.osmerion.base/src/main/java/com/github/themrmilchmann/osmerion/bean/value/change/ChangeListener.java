@@ -37,7 +37,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableValue;
  * @param <T> the type of the value
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface ChangeListener<T> {
@@ -49,7 +49,7 @@ public interface ChangeListener<T> {
      * @param oldValue the old value
      * @param newValue the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableValue<? extends T> observableValue, T oldValue, T newValue);
 

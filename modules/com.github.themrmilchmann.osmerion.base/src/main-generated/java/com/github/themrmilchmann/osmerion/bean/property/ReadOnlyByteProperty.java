@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableByteValue;
  * A read-only representation of a {@code byte} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyByteProperty extends ReadOnlyProperty<Byte>, ObservableByteValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyByteProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyByteWrapper(this));

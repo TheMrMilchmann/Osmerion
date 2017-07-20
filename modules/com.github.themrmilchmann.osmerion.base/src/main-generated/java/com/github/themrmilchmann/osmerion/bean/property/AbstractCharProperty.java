@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleCharProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractCharProperty extends Property<Character> implements ReadOnlyCharProperty, WritableCharValue {
 
     /**
      * The initial value of an AbstractCharProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final char INITIAL_VALUE = '\u0000';
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<CharChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected char value;
 
     /**
      * Creates a new {@link AbstractCharProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractCharProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractCharProperty(char initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final char get() {
@@ -103,7 +103,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Character getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final char set(char value) {
@@ -134,7 +134,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Character setValue(Character value) {
@@ -148,7 +148,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract char validate(char value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
      *
      * @see #removeListener(CharChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(CharChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
      *
      * @see #addListener(CharChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(CharChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractCharProperty extends Property<Character> implement
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Character> listener) {

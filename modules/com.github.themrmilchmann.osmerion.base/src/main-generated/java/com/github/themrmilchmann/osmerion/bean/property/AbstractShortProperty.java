@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleShortProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractShortProperty extends Property<Short> implements ReadOnlyShortProperty, WritableShortValue {
 
     /**
      * The initial value of an AbstractShortProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final short INITIAL_VALUE = 0;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<ShortChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected short value;
 
     /**
      * Creates a new {@link AbstractShortProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractShortProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractShortProperty(short initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final short get() {
@@ -103,7 +103,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Short getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final short set(short value) {
@@ -134,7 +134,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Short setValue(Short value) {
@@ -148,7 +148,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract short validate(short value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
      *
      * @see #removeListener(ShortChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(ShortChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
      *
      * @see #addListener(ShortChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ShortChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractShortProperty extends Property<Short> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Short> listener) {

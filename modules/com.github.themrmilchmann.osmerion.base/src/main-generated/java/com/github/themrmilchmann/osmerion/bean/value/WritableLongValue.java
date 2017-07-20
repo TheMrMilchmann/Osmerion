@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code long} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableLongValue extends WritableValue<Long>, ObservableLongValue {
 
@@ -49,7 +49,7 @@ public interface WritableLongValue extends WritableValue<Long>, ObservableLongVa
      *
      * @return the previous value of this {@code WritableLongValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     long set(long value);
 

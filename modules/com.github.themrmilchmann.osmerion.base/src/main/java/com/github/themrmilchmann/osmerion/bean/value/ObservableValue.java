@@ -39,7 +39,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see WritableValue
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableValue<T> {
 
@@ -52,7 +52,7 @@ public interface ObservableValue<T> {
      *
      * @return the value of this {@code ObservableValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     T getValue();
 
@@ -72,7 +72,7 @@ public interface ObservableValue<T> {
      *
      * @see #removeListener(ChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(ChangeListener<? super T> listener);
 
@@ -85,7 +85,7 @@ public interface ObservableValue<T> {
      *
      * @see #addListener(ChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(ChangeListener<? super T> listener);
 

@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.CharChangeListener;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyCharWrapper extends ReadOnlyWrapper<Character, ReadOnlyCharProperty> implements ReadOnlyCharProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyCharWrapper extends ReadOnlyWrapper<Character, ReadOnlyCharP
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyCharWrapper(ReadOnlyCharProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyCharWrapper extends ReadOnlyWrapper<Character, ReadOnlyCharP
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public char get() {
@@ -74,7 +74,7 @@ final class ReadOnlyCharWrapper extends ReadOnlyWrapper<Character, ReadOnlyCharP
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(CharChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyCharWrapper extends ReadOnlyWrapper<Character, ReadOnlyCharP
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(CharChangeListener listener) {

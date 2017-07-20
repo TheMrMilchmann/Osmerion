@@ -46,7 +46,7 @@ val ToFunction = Profile {
 
             documentation = "A function converting an Object to {@code $t_value}."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             t_value.method(
                 "apply",
@@ -55,7 +55,7 @@ val ToFunction = Profile {
                 GenericType("T").PARAM("t", "the function argument"),
 
                 returnDoc = "the function result",
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
         }
     }

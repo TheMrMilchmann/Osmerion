@@ -47,7 +47,7 @@ val ChangeListener = Profile {
             addAnnotations(FunctionalInterface)
 
             documentation = "A specialized {@code $t_value} {@link ChangeListener}."
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             void.method(
                 "onChanged",
@@ -57,7 +57,7 @@ val ChangeListener = Profile {
                 t_value.PARAM("oldValue", "the old value"),
                 t_value.PARAM("newValue", "the new value"),
 
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             this.method(
@@ -74,7 +74,7 @@ val ChangeListener = Profile {
 
                 visibility = Modifier.STATIC,
                 returnDoc = "a specialized ChangeListener wrapping around the given one",
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return (listener instanceof ${name(t_value)}) ? (${name(t_value)}) listener : new ${name(t_value)}() {
 

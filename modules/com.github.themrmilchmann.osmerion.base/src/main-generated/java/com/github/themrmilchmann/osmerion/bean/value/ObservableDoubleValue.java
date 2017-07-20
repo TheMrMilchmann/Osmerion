@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code double} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableDoubleValue extends ObservableValue<Double> {
 
@@ -49,7 +49,7 @@ public interface ObservableDoubleValue extends ObservableValue<Double> {
      *
      * @return the value of this {@code ObservableDoubleValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     double get();
 
@@ -69,7 +69,7 @@ public interface ObservableDoubleValue extends ObservableValue<Double> {
      *
      * @see #removeListener(DoubleChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(DoubleChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableDoubleValue extends ObservableValue<Double> {
      *
      * @see #addListener(DoubleChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Double> listener) {
@@ -94,7 +94,7 @@ public interface ObservableDoubleValue extends ObservableValue<Double> {
      *
      * @see #addListener(DoubleChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(DoubleChangeListener listener);
 

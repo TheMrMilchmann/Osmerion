@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code boolean} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableBooleanValue extends ObservableValue<Boolean> {
 
@@ -49,7 +49,7 @@ public interface ObservableBooleanValue extends ObservableValue<Boolean> {
      *
      * @return the value of this {@code ObservableBooleanValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     boolean get();
 
@@ -69,7 +69,7 @@ public interface ObservableBooleanValue extends ObservableValue<Boolean> {
      *
      * @see #removeListener(BooleanChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(BooleanChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableBooleanValue extends ObservableValue<Boolean> {
      *
      * @see #addListener(BooleanChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Boolean> listener) {
@@ -94,7 +94,7 @@ public interface ObservableBooleanValue extends ObservableValue<Boolean> {
      *
      * @see #addListener(BooleanChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(BooleanChangeListener listener);
 

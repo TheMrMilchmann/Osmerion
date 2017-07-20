@@ -48,13 +48,13 @@ val ReadOnlyProperty = Profile {
 
             documentation = "A read-only representation of a {@code $t_value} property."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             ReadOnlyProperty(t_value).method(
                 "asReadOnlyProperty",
                 inheritDoc,
 
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return (this instanceof ReadOnlyWrapper ? this : new ReadOnly${t_value.abbrevName}Wrapper(this));
 """

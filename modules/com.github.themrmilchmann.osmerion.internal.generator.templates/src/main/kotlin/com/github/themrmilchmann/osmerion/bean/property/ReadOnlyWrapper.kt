@@ -55,7 +55,7 @@ val ReadOnlyWrapper = Profile {
             Method calls are redirected to the underlying property.
             """
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             constructor(
                 """
@@ -64,7 +64,7 @@ val ReadOnlyWrapper = Profile {
 
                 ReadOnlyProperty(t_value).PARAM("property", "the property to be wrapped"),
 
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 super(property);
 """
@@ -77,7 +77,7 @@ super(property);
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
                 category = CAT_VALUE_OPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return this.property.get();
 """
@@ -92,7 +92,7 @@ return this.property.get();
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
                 category = CAT_LISTENERS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 this.property.addListener(listener);
 """
@@ -107,7 +107,7 @@ this.property.addListener(listener);
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
                 category = CAT_LISTENERS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 this.property.removeListener(listener);
 """

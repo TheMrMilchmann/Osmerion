@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code long} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableLongValue extends ObservableValue<Long> {
 
@@ -49,7 +49,7 @@ public interface ObservableLongValue extends ObservableValue<Long> {
      *
      * @return the value of this {@code ObservableLongValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     long get();
 
@@ -69,7 +69,7 @@ public interface ObservableLongValue extends ObservableValue<Long> {
      *
      * @see #removeListener(LongChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(LongChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableLongValue extends ObservableValue<Long> {
      *
      * @see #addListener(LongChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Long> listener) {
@@ -94,7 +94,7 @@ public interface ObservableLongValue extends ObservableValue<Long> {
      *
      * @see #addListener(LongChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(LongChangeListener listener);
 

@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleIntProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractIntProperty extends Property<Integer> implements ReadOnlyIntProperty, WritableIntValue {
 
     /**
      * The initial value of an AbstractIntProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final int INITIAL_VALUE = 0;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<IntChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected int value;
 
     /**
      * Creates a new {@link AbstractIntProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractIntProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractIntProperty(int initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final int get() {
@@ -103,7 +103,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Integer getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final int set(int value) {
@@ -134,7 +134,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Integer setValue(Integer value) {
@@ -148,7 +148,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract int validate(int value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      *
      * @see #removeListener(IntChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(IntChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      *
      * @see #addListener(IntChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(IntChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Integer> listener) {

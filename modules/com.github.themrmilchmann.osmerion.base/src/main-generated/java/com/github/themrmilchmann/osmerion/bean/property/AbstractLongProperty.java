@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleLongProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractLongProperty extends Property<Long> implements ReadOnlyLongProperty, WritableLongValue {
 
     /**
      * The initial value of an AbstractLongProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final long INITIAL_VALUE = 0L;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<LongChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected long value;
 
     /**
      * Creates a new {@link AbstractLongProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractLongProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractLongProperty(long initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final long get() {
@@ -103,7 +103,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Long getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final long set(long value) {
@@ -134,7 +134,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Long setValue(Long value) {
@@ -148,7 +148,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract long validate(long value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
      *
      * @see #removeListener(LongChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(LongChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
      *
      * @see #addListener(LongChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(LongChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractLongProperty extends Property<Long> implements Rea
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Long> listener) {

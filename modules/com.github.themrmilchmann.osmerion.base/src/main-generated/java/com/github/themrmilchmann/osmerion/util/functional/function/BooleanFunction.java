@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
  * A function converting a {@code boolean} to {@code Object}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface BooleanFunction<T> {
@@ -46,7 +46,7 @@ public interface BooleanFunction<T> {
      *
      * @return the function result
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     T apply(boolean t);
 

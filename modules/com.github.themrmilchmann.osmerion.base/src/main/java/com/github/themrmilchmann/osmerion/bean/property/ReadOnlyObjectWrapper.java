@@ -36,7 +36,7 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyObjectWrapper<T> extends ReadOnlyWrapper<T, ReadOnlyObjectProperty<T>> implements ReadOnlyObjectProperty<T> {
 
@@ -45,7 +45,7 @@ final class ReadOnlyObjectWrapper<T> extends ReadOnlyWrapper<T, ReadOnlyObjectPr
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyObjectWrapper(ReadOnlyObjectProperty<T> property) {
         super(property);
@@ -58,7 +58,7 @@ final class ReadOnlyObjectWrapper<T> extends ReadOnlyWrapper<T, ReadOnlyObjectPr
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public T get() {

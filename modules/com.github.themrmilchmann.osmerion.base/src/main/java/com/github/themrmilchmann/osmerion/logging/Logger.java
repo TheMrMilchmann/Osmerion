@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
  * @see LogMessage
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public final class Logger implements ILogger {
 
@@ -64,7 +64,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void log(LogLevel level, String message) {
@@ -77,7 +77,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void log(LogLevel level, Supplier<String> messageSupplier) {
@@ -90,7 +90,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void log(LogLevel level, Throwable t) {
@@ -103,7 +103,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void log(LogLevel level, String message, Throwable t) {
@@ -116,7 +116,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void log(LogLevel level, Supplier<String> messageSupplier, Throwable t) {
@@ -139,7 +139,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(ILogListener listener) {
@@ -152,7 +152,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(ILogListener listener) {
@@ -178,7 +178,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public List<LogLevel> getLogLevels() {
@@ -190,7 +190,7 @@ public final class Logger implements ILogger {
      *
      * @return this loggers parent
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public Logger getParent() {
         return this.parent;
@@ -203,7 +203,7 @@ public final class Logger implements ILogger {
      *
      * @return the numerical severity of this {@code LogLevel}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public int getSeverity() {
         return this.severity;
@@ -212,7 +212,7 @@ public final class Logger implements ILogger {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public boolean isEnabled(LogLevel level) {
@@ -222,7 +222,7 @@ public final class Logger implements ILogger {
     /**
      * A factory class for loggers.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final class Builder {
 
@@ -247,7 +247,7 @@ public final class Logger implements ILogger {
          *
          * @return the newly initialized loggers {@code Logger.Handle}
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public Handle build() {
             CopyOnWriteArrayList<LogLevel> logLevels = new CopyOnWriteArrayList<>(this.logLevels);
@@ -267,7 +267,7 @@ public final class Logger implements ILogger {
          *
          * @return a mutable {@code List} of accepted {@code LogLevel}s
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public List<LogLevel> getLogLevels() {
             return this.logLevels;
@@ -278,7 +278,7 @@ public final class Logger implements ILogger {
          *
          * @param value the new severity
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public void setSeverity(int value) {
             this.severity = value;
@@ -291,7 +291,7 @@ public final class Logger implements ILogger {
          *
          * @param value whether this logger should use its parent's config
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public void setUseParentConfig(boolean value) {
             this.useParentConfig = value;
@@ -305,7 +305,7 @@ public final class Logger implements ILogger {
      * <p>While a {@code Logger.Handle} holds a strong reference to the {@code Logger} it's managing, the logger does not reference the handle in any way. Thus
      * the handle may be marked for garbage collection even if the logger is still use.</p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final class Handle implements ILogProxy {
 
@@ -320,7 +320,7 @@ public final class Logger implements ILogger {
          *
          * @return the managed {@code Logger}
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         @Override
         public Logger getLogger() {
@@ -344,7 +344,7 @@ public final class Logger implements ILogger {
          *
          * @see Builder#getLogLevels()
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public void addLogLevel(LogLevel level) {
             if (level == null) throw new NullPointerException();
@@ -366,7 +366,7 @@ public final class Logger implements ILogger {
          *
          * @see Builder#getLogLevels()
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public void removeLogLevel(LogLevel level) {
             if (level == null) throw new NullPointerException();
@@ -380,7 +380,7 @@ public final class Logger implements ILogger {
          * @param value the new severity
          * @return a {@code List} of all {@code LogLevel}s with which a method will now be passed to the Logger's output listeners
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public List<LogLevel> setSeverity(int value) {
             this.logger.severity = value;
@@ -395,7 +395,7 @@ public final class Logger implements ILogger {
          *
          * @param value whether this logger should use its parent's config
          *
-         * @since 1.0.0
+         * @since 1.0.0.0
          */
         public void setUseParentConfig(boolean value) {
             this.logger.useParentConfig = value && this.logger.parent != null;

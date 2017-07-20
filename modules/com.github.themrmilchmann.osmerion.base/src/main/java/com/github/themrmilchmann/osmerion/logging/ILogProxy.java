@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * @see ILogger
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ILogProxy extends ILogger {
 
@@ -47,7 +47,7 @@ public interface ILogProxy extends ILogger {
      *
      * @return the underlying {@code ILogger}.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ILogger getLogger();
 
@@ -60,7 +60,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void log(LogLevel level, String message) {
@@ -72,7 +72,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void log(LogLevel level, Supplier<String> messageSupplier) {
@@ -84,7 +84,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void log(LogLevel level, Throwable t) {
@@ -96,7 +96,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void log(LogLevel level, String message, Throwable t) {
@@ -108,7 +108,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void log(LogLevel level, Supplier<String> messageSupplier, Throwable t) {
@@ -124,7 +124,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default List<LogLevel> getLogLevels() {
@@ -136,7 +136,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default boolean isEnabled(LogLevel level) {
         return this.getLogger().isEnabled(level);
@@ -151,7 +151,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ILogListener listener) {
@@ -163,7 +163,7 @@ public interface ILogProxy extends ILogger {
      *
      * <p><b>Note: The call is redirected to the underlying logger.</b></p>
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void removeListener(ILogListener listener) {

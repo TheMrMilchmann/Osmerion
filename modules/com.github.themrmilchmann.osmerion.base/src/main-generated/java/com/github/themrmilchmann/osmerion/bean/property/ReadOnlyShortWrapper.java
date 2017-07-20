@@ -38,7 +38,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.ShortChangeListener;
  * <p>Method calls are redirected to the underlying property.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 final class ReadOnlyShortWrapper extends ReadOnlyWrapper<Short, ReadOnlyShortProperty> implements ReadOnlyShortProperty {
 
@@ -47,7 +47,7 @@ final class ReadOnlyShortWrapper extends ReadOnlyWrapper<Short, ReadOnlyShortPro
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     ReadOnlyShortWrapper(ReadOnlyShortProperty property) {
         super(property);
@@ -60,7 +60,7 @@ final class ReadOnlyShortWrapper extends ReadOnlyWrapper<Short, ReadOnlyShortPro
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public short get() {
@@ -74,7 +74,7 @@ final class ReadOnlyShortWrapper extends ReadOnlyWrapper<Short, ReadOnlyShortPro
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void addListener(ShortChangeListener listener) {
@@ -84,7 +84,7 @@ final class ReadOnlyShortWrapper extends ReadOnlyWrapper<Short, ReadOnlyShortPro
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public void removeListener(ShortChangeListener listener) {

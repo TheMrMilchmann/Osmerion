@@ -42,34 +42,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * @see SimpleBooleanProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractBooleanProperty extends Property<Boolean> implements ReadOnlyBooleanProperty, WritableBooleanValue {
 
     /**
      * The initial value of an AbstractBooleanProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final boolean INITIAL_VALUE = false;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<BooleanChangeListener> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected boolean value;
 
     /**
      * Creates a new {@link AbstractBooleanProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractBooleanProperty() {
         this(INITIAL_VALUE);
@@ -80,7 +80,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractBooleanProperty(boolean initialValue) {
         this.value = initialValue;
@@ -93,7 +93,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final boolean get() {
@@ -103,7 +103,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Boolean getValue() {
@@ -113,7 +113,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final boolean set(boolean value) {
@@ -134,7 +134,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final Boolean setValue(Boolean value) {
@@ -148,7 +148,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract boolean validate(boolean value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
      *
      * @see #removeListener(BooleanChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(BooleanChangeListener listener) {
@@ -176,7 +176,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
      *
      * @see #addListener(BooleanChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(BooleanChangeListener listener) {
@@ -187,7 +187,7 @@ public abstract class AbstractBooleanProperty extends Property<Boolean> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super Boolean> listener) {

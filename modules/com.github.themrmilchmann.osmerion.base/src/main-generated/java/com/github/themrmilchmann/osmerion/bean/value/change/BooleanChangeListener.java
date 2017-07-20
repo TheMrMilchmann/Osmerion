@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableBooleanValue;
  * A specialized {@code boolean} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface BooleanChangeListener {
@@ -48,7 +48,7 @@ public interface BooleanChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableBooleanValue observable, boolean oldValue, boolean newValue);
 
@@ -63,7 +63,7 @@ public interface BooleanChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static BooleanChangeListener wrap(ChangeListener<? super Boolean> listener) {
         return (listener instanceof BooleanChangeListener) ? (BooleanChangeListener) listener : new BooleanChangeListener() {

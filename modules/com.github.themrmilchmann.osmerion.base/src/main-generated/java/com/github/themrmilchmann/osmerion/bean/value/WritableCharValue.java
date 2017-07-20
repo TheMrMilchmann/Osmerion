@@ -34,7 +34,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * A writable {@code char} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableCharValue extends WritableValue<Character>, ObservableCharValue {
 
@@ -49,7 +49,7 @@ public interface WritableCharValue extends WritableValue<Character>, ObservableC
      *
      * @return the previous value of this {@code WritableCharValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     char set(char value);
 

@@ -34,14 +34,14 @@ package com.github.themrmilchmann.osmerion.bean.property;
  * A simple implementation of {@link AbstractLongProperty}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public class SimpleLongProperty extends AbstractLongProperty {
 
     /**
      * Creates a new {@link SimpleLongProperty} with the default initial value {@link AbstractLongProperty#INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected SimpleLongProperty() {
         super();
@@ -52,7 +52,7 @@ public class SimpleLongProperty extends AbstractLongProperty {
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public SimpleLongProperty(long initialValue) {
         super(initialValue);
@@ -65,7 +65,7 @@ public class SimpleLongProperty extends AbstractLongProperty {
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public long validate(long value) {

@@ -43,34 +43,34 @@ import com.github.themrmilchmann.osmerion.bean.value.change.ChangeListener;
  * @see SimpleObjectProperty
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class AbstractObjectProperty<T> extends Property<T> implements ReadOnlyObjectProperty<T>, WritableObjectValue<T> {
 
     /**
      * The initial value of an AbstractBooleanProperty.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public static final Object INITIAL_VALUE = null;
 
     /**
      * The list of ChangeListeners attached to this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected List<ChangeListener<? super T>> changeListeners;
     /**
      * The current value of this property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected T value;
 
     /**
      * Creates a new {@link AbstractObjectProperty} with the default initial value {@link #INITIAL_VALUE}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @SuppressWarnings("unchecked")
     protected AbstractObjectProperty() {
@@ -82,7 +82,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
      *
      * @param initialValue the initial value for this property
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected AbstractObjectProperty(T initialValue) {
         this.value = initialValue;
@@ -95,7 +95,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final T get() {
@@ -105,7 +105,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final T getValue() {
@@ -115,7 +115,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final T set(T value) {
@@ -136,7 +136,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final T setValue(T value) {
@@ -150,7 +150,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
      *
      * @return the validated value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     protected abstract T validate(T value);
 
@@ -161,7 +161,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void addListener(ChangeListener<? super T> listener) {
@@ -174,7 +174,7 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public final void removeListener(ChangeListener<? super T> listener) {

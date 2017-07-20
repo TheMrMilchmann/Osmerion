@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code char} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableCharValue extends ObservableValue<Character> {
 
@@ -49,7 +49,7 @@ public interface ObservableCharValue extends ObservableValue<Character> {
      *
      * @return the value of this {@code ObservableCharValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     char get();
 
@@ -69,7 +69,7 @@ public interface ObservableCharValue extends ObservableValue<Character> {
      *
      * @see #removeListener(CharChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(CharChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableCharValue extends ObservableValue<Character> {
      *
      * @see #addListener(CharChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Character> listener) {
@@ -94,7 +94,7 @@ public interface ObservableCharValue extends ObservableValue<Character> {
      *
      * @see #addListener(CharChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(CharChangeListener listener);
 

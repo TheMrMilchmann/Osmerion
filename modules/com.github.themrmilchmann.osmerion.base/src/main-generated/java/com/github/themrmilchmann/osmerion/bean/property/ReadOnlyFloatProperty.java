@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableFloatValue;
  * A read-only representation of a {@code float} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyFloatProperty extends ReadOnlyProperty<Float>, ObservableFloatValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyFloatProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyFloatWrapper(this));

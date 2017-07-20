@@ -36,14 +36,14 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableShortValue;
  * A read-only representation of a {@code short} property.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ReadOnlyShortProperty extends ReadOnlyProperty<Short>, ObservableShortValue {
 
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default ReadOnlyShortProperty asReadOnlyProperty() {
         return (this instanceof ReadOnlyWrapper ? this : new ReadOnlyShortWrapper(this));

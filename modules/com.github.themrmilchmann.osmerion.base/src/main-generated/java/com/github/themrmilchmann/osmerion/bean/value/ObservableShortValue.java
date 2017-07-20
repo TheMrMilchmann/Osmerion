@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  * An observable {@code short} value.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ObservableShortValue extends ObservableValue<Short> {
 
@@ -49,7 +49,7 @@ public interface ObservableShortValue extends ObservableValue<Short> {
      *
      * @return the value of this {@code ObservableShortValue}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     short get();
 
@@ -69,7 +69,7 @@ public interface ObservableShortValue extends ObservableValue<Short> {
      *
      * @see #removeListener(ShortChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(ShortChangeListener listener);
 
@@ -78,7 +78,7 @@ public interface ObservableShortValue extends ObservableValue<Short> {
      *
      * @see #addListener(ShortChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     default void addListener(ChangeListener<? super Short> listener) {
@@ -94,7 +94,7 @@ public interface ObservableShortValue extends ObservableValue<Short> {
      *
      * @see #addListener(ShortChangeListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(ShortChangeListener listener);
 

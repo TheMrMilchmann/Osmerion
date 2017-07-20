@@ -35,7 +35,7 @@ package com.github.themrmilchmann.osmerion.bean.value;
  * <p>This class should not be used directly. Instead implement one of its specialized subclasses.</p>
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface WritableValue<T> extends ObservableValue<T> {
 
@@ -46,7 +46,7 @@ public interface WritableValue<T> extends ObservableValue<T> {
      *
      * @return the previous value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     T setValue(T value);
 

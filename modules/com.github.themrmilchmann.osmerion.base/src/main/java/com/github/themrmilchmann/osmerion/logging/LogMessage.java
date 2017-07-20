@@ -38,7 +38,7 @@ package com.github.themrmilchmann.osmerion.logging;
  * @see ILogListener
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public final class LogMessage {
 
@@ -65,7 +65,7 @@ public final class LogMessage {
      *
      * @return the time at which this {@code LogMessage} has been constructed.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public long getConstructionTime() {
         return this.constructionTime;
@@ -76,7 +76,7 @@ public final class LogMessage {
      *
      * @return the {@code LogLevel} of this {@code LogMessage}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public LogLevel getLevel() {
         return this.level;
@@ -87,7 +87,7 @@ public final class LogMessage {
      *
      * @return the {@code ILogger} that constructed this {@code LogMessage}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public ILogger getLogger() {
         return this.logger;
@@ -98,7 +98,7 @@ public final class LogMessage {
      *
      * @return the {@code String} message component of this {@code LogMessage} or {@code null}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public String getMessage() {
         return this.message;
@@ -109,7 +109,7 @@ public final class LogMessage {
      *
      * @return the {@code Throwable} attached to this {@code LogMessage} or {@code null}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     public Throwable getThrowable() {
         return this.throwable;
@@ -122,7 +122,7 @@ public final class LogMessage {
      *
      * @see LogLevel#format(LogMessage)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     @Override
     public String toString() {

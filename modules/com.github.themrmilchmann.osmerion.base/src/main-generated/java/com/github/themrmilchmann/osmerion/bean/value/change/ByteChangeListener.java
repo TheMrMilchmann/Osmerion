@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableByteValue;
  * A specialized {@code byte} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface ByteChangeListener {
@@ -48,7 +48,7 @@ public interface ByteChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableByteValue observable, byte oldValue, byte newValue);
 
@@ -63,7 +63,7 @@ public interface ByteChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static ByteChangeListener wrap(ChangeListener<? super Byte> listener) {
         return (listener instanceof ByteChangeListener) ? (ByteChangeListener) listener : new ByteChangeListener() {

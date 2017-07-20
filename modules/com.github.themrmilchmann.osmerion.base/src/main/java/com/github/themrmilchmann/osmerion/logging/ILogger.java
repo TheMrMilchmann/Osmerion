@@ -40,7 +40,7 @@ import java.util.function.Supplier;
  * @see LogMessage
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public interface ILogger {
 
@@ -56,7 +56,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void log(LogLevel level, String message);
 
@@ -71,7 +71,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void log(LogLevel level, Supplier<String> messageSupplier);
 
@@ -83,7 +83,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void log(LogLevel level, Throwable t);
 
@@ -96,7 +96,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void log(LogLevel level, String message, Throwable t);
 
@@ -112,7 +112,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void log(LogLevel level, Supplier<String> messageSupplier, Throwable t);
 
@@ -125,7 +125,7 @@ public interface ILogger {
      *
      * @return an immutable view of this loggers accepted {@code LogLevel}s or {@code null} if this logger does not filter {@code LogLevel}s
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     List<LogLevel> getLogLevels();
 
@@ -137,7 +137,7 @@ public interface ILogger {
      *
      * @see LogLevel
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     default boolean isEnabled(LogLevel level) {
         List<LogLevel> logLevels = this.getLogLevels();
@@ -160,7 +160,7 @@ public interface ILogger {
      * @see ILogListener
      * @see #removeListener(ILogListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void addListener(ILogListener listener);
 
@@ -175,7 +175,7 @@ public interface ILogger {
      * @see ILogListener
      * @see #addListener(ILogListener)
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void removeListener(ILogListener listener);
 

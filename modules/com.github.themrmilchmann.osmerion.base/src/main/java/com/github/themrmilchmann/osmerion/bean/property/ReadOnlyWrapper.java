@@ -42,14 +42,14 @@ import com.github.themrmilchmann.osmerion.bean.value.change.ChangeListener;
  * @param <P> the type of the property being wrapped
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 public abstract class ReadOnlyWrapper<T, P extends ReadOnlyProperty<T>> implements ReadOnlyProperty<T> {
 
     /**
      * The wrapped property.
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
 	protected P property;
 
@@ -58,7 +58,7 @@ public abstract class ReadOnlyWrapper<T, P extends ReadOnlyProperty<T>> implemen
      *
      * @param property the property to be wrapped
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
 	protected ReadOnlyWrapper(P property) {
 		this.property = property;
@@ -67,7 +67,7 @@ public abstract class ReadOnlyWrapper<T, P extends ReadOnlyProperty<T>> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
 	@Override
 	public final T getValue() {
@@ -81,7 +81,7 @@ public abstract class ReadOnlyWrapper<T, P extends ReadOnlyProperty<T>> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
 	@Override
 	public final void addListener(ChangeListener<? super T> listener) {
@@ -91,7 +91,7 @@ public abstract class ReadOnlyWrapper<T, P extends ReadOnlyProperty<T>> implemen
     /**
      * {@inheritDoc}
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
 	@Override
 	public final void removeListener(ChangeListener<? super T> listener) {

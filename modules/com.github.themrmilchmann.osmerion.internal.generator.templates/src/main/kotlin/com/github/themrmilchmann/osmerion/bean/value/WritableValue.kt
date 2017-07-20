@@ -49,7 +49,7 @@ val WritableValue = Profile {
 
             documentation = "A writable {@code ${t_value.simpleName}} value."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             t_value.method(
                 "set",
@@ -59,7 +59,7 @@ val WritableValue = Profile {
 
                 category = CAT_VALUE_OPS,
                 returnDoc = "the previous value of this {@code ${this.fileName}}",
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
         }
     }

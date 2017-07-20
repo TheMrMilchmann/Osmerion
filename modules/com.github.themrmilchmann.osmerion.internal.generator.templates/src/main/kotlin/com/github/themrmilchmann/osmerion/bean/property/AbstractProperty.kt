@@ -59,7 +59,7 @@ val AbstractProperty = Profile {
             documentation = "A basic {@code $t_value} property."
             see(SimpleProperty(t_value).toString())
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0
+            since = VERSION_1_0_0_0
 
             t_value.field(
                 "INITIAL_VALUE",
@@ -67,7 +67,7 @@ val AbstractProperty = Profile {
 
                 visibility = Modifier.PUBLIC.or(Modifier.STATIC).or(Modifier.FINAL),
                 category = CAT_F_CONSTANTS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 value = t_value.nullValue
             )
 
@@ -77,7 +77,7 @@ val AbstractProperty = Profile {
 
                 visibility = Modifier.PROTECTED,
                 category = CAT_F_INSTANCE,
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             t_value.field(
@@ -86,7 +86,7 @@ val AbstractProperty = Profile {
 
                 visibility = Modifier.PROTECTED,
                 category = CAT_F_INSTANCE,
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             constructor(
@@ -94,7 +94,7 @@ val AbstractProperty = Profile {
 
                 visibility = Modifier.PROTECTED,
                 category = CAT_M_CONSTRUCTORS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 this(INITIAL_VALUE);
 """
@@ -107,7 +107,7 @@ this(INITIAL_VALUE);
 
                 visibility = Modifier.PROTECTED,
                 category = CAT_M_CONSTRUCTORS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 this.value = initialValue;
 """
@@ -124,7 +124,7 @@ this.value = initialValue;
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return this.value;
 """
@@ -137,7 +137,7 @@ return this.value;
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return this.get();
 """
@@ -152,7 +152,7 @@ return this.get();
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 if (this.isBound()) throw new UnsupportedOperationException("A bound property's value may not be set explicitly");
 
@@ -178,7 +178,7 @@ return oldValue;
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 return this.set(value);
 """
@@ -193,7 +193,7 @@ return this.set(value);
                 visibility = Modifier.PROTECTED.or(Modifier.ABSTRACT),
                 category = CAT_M_VALOPS,
                 returnDoc = "the validated value",
-                since = VERSION_1_0_0
+                since = VERSION_1_0_0_0
             )
 
             // #################################################################################################################################################
@@ -210,7 +210,7 @@ return this.set(value);
                 annotations = listOf(Override),
                 category = CAT_M_LISTENERS,
                 see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 if (listener == null) throw new NullPointerException();
 if (this.changeListeners == null) this.changeListeners = new ArrayList<>(1);
@@ -229,7 +229,7 @@ this.changeListeners.add(listener);
                 annotations = listOf(Override),
                 category = CAT_M_LISTENERS,
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
@@ -246,7 +246,7 @@ if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
                 category = CAT_M_LISTENERS,
-                since = VERSION_1_0_0,
+                since = VERSION_1_0_0_0,
                 body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);

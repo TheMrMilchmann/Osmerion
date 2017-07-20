@@ -36,7 +36,7 @@ import com.github.themrmilchmann.osmerion.bean.value.ObservableIntValue;
  * A specialized {@code int} {@link ChangeListener}.
  *
  * @author Leon Linhart
- * @since 1.0.0
+ * @since 1.0.0.0
  */
 @FunctionalInterface
 public interface IntChangeListener {
@@ -48,7 +48,7 @@ public interface IntChangeListener {
      * @param oldValue   the old value
      * @param newValue   the new value
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     void onChanged(ObservableIntValue observable, int oldValue, int newValue);
 
@@ -63,7 +63,7 @@ public interface IntChangeListener {
      *
      * @return a specialized ChangeListener wrapping around the given one
      *
-     * @since 1.0.0
+     * @since 1.0.0.0
      */
     static IntChangeListener wrap(ChangeListener<? super Integer> listener) {
         return (listener instanceof IntChangeListener) ? (IntChangeListener) listener : new IntChangeListener() {
