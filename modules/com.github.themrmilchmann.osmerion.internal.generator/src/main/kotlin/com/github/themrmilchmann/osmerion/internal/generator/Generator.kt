@@ -102,7 +102,7 @@ class Generator(
                 it.forEach {
                     try {
                         Class
-                            .forName("${packageDirectory.relativize(it.parent).toString().replace('\\', '.')}.${it.fileName.toString().substringBeforeLast('.').upperCaseFirst}Kt")
+                            .forName("${packageDirectory.relativize(it.parent).toString().replace("[\\\\/]".toRegex(), ".")}.${it.fileName.toString().substringBeforeLast('.').upperCaseFirst}Kt")
                             .methods
                             .asSequence()
                             .consume()
