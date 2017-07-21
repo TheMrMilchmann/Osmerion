@@ -39,6 +39,7 @@ tasks {
 
         main = osmerion("internal.generator.GeneratorKt")
         classpath = java.sourceSets["main"].runtimeClasspath
+        isIgnoreExitValue = false
 
         val templatesRoot = File(project(":modules:${osmerion("internal.generator.templates")}").projectDir, "src/main/kotlin/").absolutePath
         val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
