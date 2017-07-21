@@ -6,7 +6,12 @@ jdk: oraclejdk9
 addons:
     apt:
         packages:
+            - oracle-java8-installer
             - oracle-java9-installer
+
+env:
+  global:
+    - JDK_8=/usr/lib/jvm/java-8-oracle
 
 script:
     - ./gradlew build --no-daemon -S
