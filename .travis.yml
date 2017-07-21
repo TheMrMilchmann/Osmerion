@@ -2,16 +2,11 @@ sudo: required
 dist: trusty
 
 language: java
-jdk: oraclejdk9
-addons:
-    apt:
-        packages:
-            - oracle-java8-installer
-            - oracle-java9-installer
+jdk: oraclejdk8
 
 env:
   global:
     - JDK_8=/usr/lib/jvm/java-8-oracle
+    - JDK_9=$(jdk_switcher home oraclejdk9)
 
-script:
-    - ./gradlew build --no-daemon -S
+script: ./gradlew check --no-daemon -S
