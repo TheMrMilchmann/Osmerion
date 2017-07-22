@@ -101,14 +101,23 @@ private fun String.layoutJavadoc(indent: String = INDENT): String {
         "$indent/**\n$indent * $this\n$indent */"
 }
 
-fun String.toJavaDoc(indent: String = INDENT, see: Array<out String>? = null, authors: Array<out String>? = null, since: String = "") =
-    if (see == null && authors == null && since.isEmpty()) {
+internal fun String.toJavaDoc(indent: String = INDENT, typeParameters: List<JavaTypeParameter> = emptyList(), see: Array<out String>? = null, authors: Array<out String>? = null, since: String = "") =
+    if (typeParameters.isEmpty() && see == null && authors == null && since.isEmpty()) {
         this
             .cleanup("$indent * ")
             .layoutJavadoc(indent)
     } else {
         StringBuilder(if (this.isEmpty()) "" else this.cleanup("$indent * "))
             .apply {
+                if (typeParameters.isNotEmpty()) {
+                    if (isNotEmpty()) append("\n$indent *")
+                    typeParameters.forEach {
+                        if (isNotEmpty()) append("\n$indent * ")
+                        append("@param <${it.type}> ")
+                        append(it.documentation)
+                    }
+                }
+
                 if (see != null) {
                     if (isNotEmpty()) append("\n$indent *")
                     see.forEach {

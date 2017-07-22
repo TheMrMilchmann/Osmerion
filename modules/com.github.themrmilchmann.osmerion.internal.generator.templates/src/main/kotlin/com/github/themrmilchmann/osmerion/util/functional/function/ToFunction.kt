@@ -41,18 +41,20 @@ val ToFunction = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, typeParameters = arrayOf(GenericType("T")), visibility = Modifier.PUBLIC) {
+        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
             addAnnotations(FunctionalInterface)
 
             documentation = "A function converting an Object to {@code $t_value}."
             authors(AUTHOR_LEON_LINHART)
             since = VERSION_1_0_0_0
 
+            val tp_T = typeParameter("T", "type of the input value")
+
             t_value.method(
                 "apply",
                 "Applies this function to the given argument.",
 
-                GenericType("T").PARAM("t", "the function argument"),
+                tp_T.PARAM("t", "the function argument"),
 
                 returnDoc = "the function result",
                 since = VERSION_1_0_0_0

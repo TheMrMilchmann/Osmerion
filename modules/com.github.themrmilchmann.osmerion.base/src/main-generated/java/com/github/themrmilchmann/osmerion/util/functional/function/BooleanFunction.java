@@ -33,6 +33,8 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
 /**
  * A function converting a {@code boolean} to {@code Object}.
  *
+ * @param <T> type of the returned value
+ *
  * @author Leon Linhart
  * @since 1.0.0.0
  */

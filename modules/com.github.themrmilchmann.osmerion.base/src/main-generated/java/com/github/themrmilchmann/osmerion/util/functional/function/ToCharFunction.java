@@ -33,6 +33,8 @@ package com.github.themrmilchmann.osmerion.util.functional.function;
 /**
  * A function converting an Object to {@code char}.
  *
+ * @param <T> type of the input value
+ *
  * @author Leon Linhart
  * @since 1.0.0.0
  */

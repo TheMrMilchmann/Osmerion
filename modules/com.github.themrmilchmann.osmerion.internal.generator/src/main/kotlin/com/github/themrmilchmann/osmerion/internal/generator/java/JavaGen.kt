@@ -80,6 +80,7 @@ abstract class JavaType(
         else alpha.compareTo(beta)
     }
     private val imports = TreeSet<Import>()
+    internal val typeParameters = mutableListOf<JavaTypeParameter>()
 
     override var category: String = ""
     var authors: Array<out String>? = null
@@ -150,7 +151,7 @@ abstract class JavaType(
     override final fun toString() = fileName
 
     protected fun PrintWriter.printType(indent: String = "", subIndent: String = indent + INDENT) {
-        println(documentation.toJavaDoc(indent, see = see, authors = authors, since = since))
+        println(documentation.toJavaDoc(indent, typeParameters = typeParameters, see = see, authors = authors, since = since))
 
         if (annotations.isNotEmpty()) println(printAnnotations(indent = indent, annotations = annotations))
 
@@ -202,7 +203,6 @@ fun Profile.javaClass(
     packageName: String,
     moduleName: String,
     superClass: IType? = null,
-    typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
     kind: String = KIND_MAIN,
     init: JavaClass.() -> Unit
@@ -232,7 +232,7 @@ fun Profile.javaClass(
         toString()
     }
 
-    val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
+    val target = JavaClass(fileName, packageName, moduleName, superClass, visibility, v, kind)
     init.invoke(target)
     this@javaClass.targets.add(target)
 
@@ -244,7 +244,6 @@ class JavaClass internal constructor(
     packageName: String,
     moduleName: String,
     val superClass: IType?,
-    val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String,
     kind: String
@@ -259,6 +258,14 @@ class JavaClass internal constructor(
     fun addInterfaces(vararg interfaces: IType) {
         interfaces.forEach { addImport(it) }
         this@JavaClass.interfaces.addAll(interfaces)
+    }
+
+    fun typeParameter(type: String, documentation: String): IType {
+        val t_tp = GenericType(type)
+        val tp = JavaTypeParameter(t_tp, documentation)
+        this@JavaClass.typeParameters.add(tp)
+
+        return t_tp
     }
 
     fun constructor(
@@ -340,7 +347,6 @@ class JavaClass internal constructor(
         packageName: String,
         moduleName: String,
         superClass: IType? = null,
-        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
@@ -370,7 +376,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
+        val target = JavaClass(fileName, packageName, moduleName, superClass, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
 
@@ -381,7 +387,6 @@ class JavaClass internal constructor(
         fileName: String,
         packageName: String,
         moduleName: String,
-        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
@@ -404,7 +409,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
+        val target = JavaInterface(fileName, packageName, moduleName, visibility, v, kind)
         init.invoke(target)
         this@JavaClass.body.add(target)
 
@@ -495,7 +500,7 @@ class JavaClass internal constructor(
         print("class ")
         print(fileName)
 
-        if (typeParameters != null) {
+        if (typeParameters.isNotEmpty()) {
             print("<")
             print(StringJoiner(", ").apply {
                 typeParameters.forEach { add(it.toString()) }
@@ -522,7 +527,6 @@ fun Profile.javaInterface(
     fileName: String,
     packageName: String,
     moduleName: String,
-    typeParameters: Array<out IType>? = null,
     visibility: Int = 0,
     kind: String = KIND_MAIN,
     init: JavaInterface.() -> Unit
@@ -545,7 +549,7 @@ fun Profile.javaInterface(
         toString()
     }
 
-    val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
+    val target = JavaInterface(fileName, packageName, moduleName, visibility, v, kind)
     init.invoke(target)
     this@javaInterface.targets.add(target)
 
@@ -556,7 +560,6 @@ class JavaInterface internal constructor(
     override val name: String,
     packageName: String,
     moduleName: String,
-    val typeParameters: Array<out IType>?,
     val intVisibility: Int,
     val visibility: String,
     kind: String
@@ -567,6 +570,14 @@ class JavaInterface internal constructor(
     fun addInterfaces(vararg interfaces: IType) {
         interfaces.forEach { addImport(it) }
         this@JavaInterface.interfaces.addAll(interfaces)
+    }
+
+    fun typeParameter(type: String, documentation: String): IType {
+        val t_tp = GenericType(type)
+        val tp = JavaTypeParameter(t_tp, documentation)
+        this@JavaInterface.typeParameters.add(tp)
+
+        return t_tp
     }
 
     fun IType.field(
@@ -608,7 +619,6 @@ class JavaInterface internal constructor(
         packageName: String,
         moduleName: String,
         superClass: IType? = null,
-        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaClass.() -> Unit
@@ -638,7 +648,7 @@ class JavaInterface internal constructor(
             toString()
         }
 
-        val target = JavaClass(fileName, packageName, moduleName, superClass, typeParameters, visibility, v, kind)
+        val target = JavaClass(fileName, packageName, moduleName, superClass, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
 
@@ -649,7 +659,6 @@ class JavaInterface internal constructor(
         fileName: String,
         packageName: String,
         moduleName: String,
-        typeParameters: Array<out IType>? = null,
         visibility: Int = 0,
         kind: String = KIND_MAIN,
         init: JavaInterface.() -> Unit
@@ -672,7 +681,7 @@ class JavaInterface internal constructor(
             toString()
         }
 
-        val target = JavaInterface(fileName, packageName, moduleName, typeParameters, visibility, v, kind)
+        val target = JavaInterface(fileName, packageName, moduleName, visibility, v, kind)
         init.invoke(target)
         this@JavaInterface.body.add(target)
 
@@ -747,7 +756,7 @@ class JavaInterface internal constructor(
         print("interface ")
         print(fileName)
 
-        if (typeParameters != null) {
+        if (typeParameters.isNotEmpty()) {
             print("<")
             print(StringJoiner(", ").apply {
                 typeParameters.forEach { add(it.toString()) }
@@ -922,6 +931,15 @@ class JavaParameter internal constructor(
     val documentation: String,
     val annotations: List<Annotation>? = null
 )
+
+internal class JavaTypeParameter(
+    val type: IType,
+    val documentation: String
+) {
+
+    override fun toString() = type.toString()
+
+}
 
 internal fun printAnnotations(indent: String = "", annotations: Collection<Annotation>, separator: String = LN) =
     StringJoiner(separator).run {
