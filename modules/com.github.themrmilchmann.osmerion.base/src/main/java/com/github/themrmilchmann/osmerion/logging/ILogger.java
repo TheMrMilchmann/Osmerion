@@ -33,7 +33,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * TODO doc
+ * An {@code ILogger} defines methods that can be used for logging and reading the state of a logger.
+ *
+ * This interface does not require the underlying logger to have an editable configuration. Implementations may or may not be configurable, therefor this
+ * interface only provides read-only access for configurations.
  *
  * @see ILogListener
  * @see LogLevel

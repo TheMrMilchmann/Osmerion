@@ -39,10 +39,15 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * TODO doc
+ * A simple {@code Logger} implementation.
+ *
+ * <p>The {@code Logger} may not be configured directly. To change the logger's configuration after it has been created by {@link Builder#build()}, the
+ * respective {@link Handle} must be used.</p>
  *
  * <p>{@link ILogListener}s are guaranteed to be called in a thread-safe manner as long as they are not added to more than one logger. However, the thread from
  * which the the listeners are called may alter.</p>
+ *
+ * <p>A {@code Logger} may only be created by using a {@link Logger.Builder}.</p>
  *
  * @see Builder
  * @see ILogger
@@ -232,10 +237,22 @@ public final class Logger implements ILogger {
         private int severity;
         private boolean useParentConfig;
 
+        /**
+         * Create a new builder that creates orphan {@code Logger}s (Loggers without a parent).
+         *
+         * @since 1.0.0.0
+         */
         public Builder() {
             this(null);
         }
 
+        /**
+         * Create a new builder that uses the specified {@code Logger} as parent for its created {@code Logger}s.
+         *
+         * @param parent the logger to be used as parent
+         *
+         * @since 1.0.0.0
+         */
         public Builder(Logger parent) {
             this.parent = parent;
         }
