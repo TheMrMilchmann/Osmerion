@@ -62,6 +62,18 @@ val ObservableValue = Profile {
                 since = VERSION_1_0_0_0
             )
 
+            t_value.boxedType.method(
+                "getValue",
+                inheritDoc,
+
+                annotations = listOf(Override),
+                category = CAT_VALUE_OPS,
+                since = VERSION_1_0_0_0,
+                body = """
+return this.get();
+"""
+            )
+
             void.method(
                 "addListener",
                 """
