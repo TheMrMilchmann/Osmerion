@@ -50,4 +50,13 @@ public interface ReadOnlyProperty<T> extends ObservableValue<T> {
      */
     ReadOnlyProperty<T> asReadOnlyProperty();
 
+    /**
+     * Returns whether or not this property is bound to an {@link ObservableValue}.
+     *
+     * @return whether or not this property is bound
+     *
+     * @since 1.0.0.0
+     */
+    boolean isBound();
+
 }

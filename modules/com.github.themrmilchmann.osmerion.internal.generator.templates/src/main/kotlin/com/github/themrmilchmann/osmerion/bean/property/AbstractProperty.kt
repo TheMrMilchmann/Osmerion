@@ -41,9 +41,11 @@ fun AbstractProperty(type: PrimitiveType) = if (types.contains(type)) Type(name(
 
 private const val CAT_F_CONSTANTS       = "0_"
 private const val CAT_F_INSTANCE        = "1_"
-private const val CAT_M_CONSTRUCTORS    = "2_"
-private const val CAT_M_VALOPS          = "3_Value Operations"
-private const val CAT_M_LISTENERS       = "4_Listeners"
+private const val CAT_F_INSTANCE_B      = "2_"
+private const val CAT_M_CONSTRUCTORS    = "3_"
+private const val CAT_M_VALOPS          = "4_Value Operations"
+private const val CAT_M_BINDING         = "5_Binding"
+private const val CAT_M_LISTENERS       = "6_Listeners"
 
 val AbstractProperty = Profile {
     types.forEach {
@@ -87,6 +89,22 @@ val AbstractProperty = Profile {
                 visibility = Modifier.PROTECTED,
                 category = CAT_F_INSTANCE,
                 since = VERSION_1_0_0_0
+            )
+
+            ObservableValue(t_value).field(
+                "binding",
+                "",
+
+                visibility = Modifier.PRIVATE,
+                category = CAT_F_INSTANCE_B
+            )
+
+            ChangeListener(t_value).field(
+                "bindingListener",
+                "",
+
+                visibility = Modifier.PRIVATE,
+                category = CAT_F_INSTANCE_B
             )
 
             constructor(
@@ -156,6 +174,19 @@ return this.get();
                 body = """
 if (this.isBound()) throw new UnsupportedOperationException("A bound property's value may not be set explicitly");
 
+return this.setImpl(value);
+"""
+            )
+
+            t_value.method(
+                "setImpl",
+                "",
+
+                t_value.PARAM("value", ""),
+
+                visibility = Modifier.PRIVATE,
+                category = CAT_M_VALOPS,
+                body = """
 $t_value oldValue = this.value;
 value = this.validate(value);
 
@@ -194,6 +225,63 @@ return this.set(value);
                 category = CAT_M_VALOPS,
                 returnDoc = "the validated value",
                 since = VERSION_1_0_0_0
+            )
+
+            // #################################################################################################################################################
+            // # Binding #######################################################################################################################################
+            // #################################################################################################################################################
+
+            void.method(
+                "bind",
+                """
+                Binds this property's value to the value of a given {@link ${ObservableValue(t_value)}}. When a property is bound to a value it will always
+                mirror the validated ({@link #validate($t_value)}) version of that value. Any attempt to set the value of a bound property explicitly will fail.
+                A bound property may be unbound again by calling {@link #unbind()}.
+                """,
+
+                ObservableValue(t_value).PARAM("other", "the observable value to bind this property to"),
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
+                category = CAT_M_BINDING,
+                since = VERSION_1_0_0_0,
+                throws = arrayOf(
+                    "NullPointerException if the given {@code ObservableValue} is null",
+                    "IllegalStateException if this property is already bound to a value"
+                ),
+                body = """
+if (other == null) throw new NullPointerException("The value to bind a property to may not be null!");
+if (this.binding != null) throw new IllegalStateException("The property is already bound to a value!");
+
+this.binding = other;
+this.binding.addListener(this.bindingListener = (observable, oldValue, newValue) -> this.setImpl(newValue));
+"""
+            )
+
+            boolean.method(
+                "isBound",
+                inheritDoc,
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
+                category = CAT_M_BINDING,
+                since = VERSION_1_0_0_0,
+                body = """
+return this.binding != null;
+"""
+            )
+
+            void.method(
+                "unbind",
+                inheritDoc,
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
+                category = CAT_M_BINDING,
+                since = VERSION_1_0_0_0,
+                body = """
+if (this.binding == null) throw new IllegalStateException("The property is not bound to a value!");
+
+this.binding.removeListener(this.bindingListener);
+this.binding = null;
+"""
             )
 
             // #################################################################################################################################################

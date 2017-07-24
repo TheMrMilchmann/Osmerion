@@ -39,7 +39,8 @@ private fun name(type: PrimitiveType) = "ReadOnly${type.abbrevName}Wrapper"
 fun ReadOnlyWrapper(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_VALUE_OPS = "1_Value Operations"
-private const val CAT_LISTENERS = "2_Listeners"
+private const val CAT_BINDING   = "2_Binding"
+private const val CAT_LISTENERS = "3_Listeners"
 
 val ReadOnlyWrapper = Profile {
     types.forEach {
@@ -80,6 +81,19 @@ super(property);
                 since = VERSION_1_0_0_0,
                 body = """
 return this.property.get();
+"""
+            )
+
+            boolean.method(
+                "isBound",
+                inheritDoc,
+
+                visibility = Modifier.PUBLIC,
+                annotations = listOf(Override),
+                category = CAT_BINDING,
+                since = VERSION_1_0_0_0,
+                body = """
+return this.property.isBound();
 """
             )
 

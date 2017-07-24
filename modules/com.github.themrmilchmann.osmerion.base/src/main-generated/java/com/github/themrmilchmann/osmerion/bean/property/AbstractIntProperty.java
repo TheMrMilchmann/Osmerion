@@ -33,6 +33,7 @@ package com.github.themrmilchmann.osmerion.bean.property;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.themrmilchmann.osmerion.bean.value.ObservableIntValue;
 import com.github.themrmilchmann.osmerion.bean.value.WritableIntValue;
 import com.github.themrmilchmann.osmerion.bean.value.change.*;
 
@@ -65,6 +66,9 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      * @since 1.0.0.0
      */
     protected int value;
+
+    private ObservableIntValue binding;
+    private IntChangeListener bindingListener;
 
     /**
      * Creates a new {@link AbstractIntProperty} with the default initial value {@link #INITIAL_VALUE}
@@ -119,6 +123,11 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
     public final int set(int value) {
         if (this.isBound()) throw new UnsupportedOperationException("A bound property's value may not be set explicitly");
         
+        return this.setImpl(value);
+    }
+
+
+    private int setImpl(int value) {
         int oldValue = this.value;
         value = this.validate(value);
         
@@ -151,6 +160,51 @@ public abstract class AbstractIntProperty extends Property<Integer> implements R
      * @since 1.0.0.0
      */
     protected abstract int validate(int value);
+
+    // #########################################################################################################################################################
+    // # Binding ###############################################################################################################################################
+    // #########################################################################################################################################################
+
+    /**
+     * Binds this property's value to the value of a given {@link ObservableIntValue}. When a property is bound to a value it will always
+     * mirror the validated ({@link #validate(int)}) version of that value. Any attempt to set the value of a bound property explicitly will fail.
+     * A bound property may be unbound again by calling {@link #unbind()}.
+     *
+     * @param other the observable value to bind this property to
+     *
+     * @throws NullPointerException if the given {@code ObservableValue} is null
+     * @throws IllegalStateException if this property is already bound to a value
+     *
+     * @since 1.0.0.0
+     */
+    public final void bind(ObservableIntValue other) {
+        if (other == null) throw new NullPointerException("The value to bind a property to may not be null!");
+        if (this.binding != null) throw new IllegalStateException("The property is already bound to a value!");
+        
+        this.binding = other;
+        this.binding.addListener(this.bindingListener = (observable, oldValue, newValue) -> this.setImpl(newValue));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0.0
+     */
+    public final boolean isBound() {
+        return this.binding != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0.0
+     */
+    public final void unbind() {
+        if (this.binding == null) throw new IllegalStateException("The property is not bound to a value!");
+        
+        this.binding.removeListener(this.bindingListener);
+        this.binding = null;
+    }
 
     // #########################################################################################################################################################
     // # Listeners #############################################################################################################################################

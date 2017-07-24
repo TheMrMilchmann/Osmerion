@@ -41,15 +41,17 @@ import com.github.themrmilchmann.osmerion.bean.value.WritableValue;
  */
 public abstract class Property<T> implements ReadOnlyProperty<T>, WritableValue<T> {
 
+    // #########################################################################################################################################################
+    // # Binding ###############################################################################################################################################
+    // #########################################################################################################################################################
+
     /**
-     * TODO doc
+     * Unbinds this property's value.
      *
-     * @return
+     * @throws IllegalStateException if this property is not bound to a value
      *
      * @since 1.0.0.0
      */
-	public boolean isBound() {
-		return false; // TODO impl property binding
-	}
+	public abstract void unbind();
 
 }
