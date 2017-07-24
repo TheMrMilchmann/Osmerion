@@ -50,4 +50,14 @@ public interface ObservableObjectValue<T> extends ObservableValue<T> {
      */
     T get();
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0.0
+     */
+    @Override
+    default T getValue() {
+        return this.get();
+    }
+
 }
