@@ -50,5 +50,6 @@ module com.github.themrmilchmann.osmerion.base {
     exports com.github.themrmilchmann.osmerion.bean.value;
     exports com.github.themrmilchmann.osmerion.bean.value.change;
     exports com.github.themrmilchmann.osmerion.logging;
+    exports com.github.themrmilchmann.osmerion.util.functional.function;
 
 }
