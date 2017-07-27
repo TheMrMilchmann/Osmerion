@@ -53,6 +53,7 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
                 options.isFork = true
                 options.isDebug = true
                 options.sourcepath = files(".")
+                options.isVerbose = true
 
                 options.compilerArgs.add("-Werror")
                 options.compilerArgs.add("-Xlint:all")
