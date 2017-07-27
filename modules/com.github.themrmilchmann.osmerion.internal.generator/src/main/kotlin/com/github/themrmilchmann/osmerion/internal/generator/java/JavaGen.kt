@@ -277,7 +277,8 @@ class JavaClass internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
-        annotations: List<Annotation>? = null
+        annotations: List<Annotation>? = null,
+        preserveOrder: Boolean = true
     ) {
         val v = StringBuilder().run {
             if (Modifier.isPublic(visibility)) append("public ")
@@ -297,7 +298,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val constructor = JavaConstructor(this, documentation, parameters, v, body, category, since, throws, see, annotations)
+        val constructor = JavaConstructor(this, documentation, parameters, v, body, category, since, throws, see, annotations, preserveOrder)
         this@JavaClass.body.add(constructor)
     }
 
@@ -427,7 +428,8 @@ class JavaClass internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
-        annotations: List<Annotation>? = null
+        annotations: List<Annotation>? = null,
+        preserveOrder: Boolean = true
     ) {
         val v = StringBuilder().run {
             val isAbstract = Modifier.isAbstract(visibility)
@@ -489,7 +491,7 @@ class JavaClass internal constructor(
         addImport(this)
         parameters.forEach { addImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations, preserveOrder)
         this@JavaClass.body.add(method)
     }
 
@@ -699,7 +701,8 @@ class JavaInterface internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
-        annotations: List<Annotation>? = null
+        annotations: List<Annotation>? = null,
+        preserveOrder: Boolean = true
     ) {
         val v = StringBuilder().run {
             val isStatic = Modifier.isStatic(visibility)
@@ -745,7 +748,7 @@ class JavaInterface internal constructor(
         addImport(this)
         parameters.forEach { addImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations, preserveOrder)
         this@JavaInterface.body.add(method)
     }
 
@@ -822,8 +825,9 @@ class JavaConstructor internal constructor(
     since: String,
     throws: Array<out String>?,
     see: Array<out String>?,
-    annotations: List<Annotation>?
-): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, annotations) {
+    annotations: List<Annotation>?,
+    preserveOrder: Boolean
+): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, annotations, preserveOrder) {
 
     override fun getWeight() = WEIGHT_CONSTRUCTOR
 
@@ -846,13 +850,31 @@ open class JavaMethod internal constructor(
     val since: String,
     val throws: Array<out String>?,
     val see: Array<out String>?,
-    val annotations: List<Annotation>?
+    val annotations: List<Annotation>?,
+    val preserveOrder: Boolean
 ): Member {
 
     override fun compareTo(other: Member): Int {
-        val cmp = super.compareTo(other)
+        var cmp = super.compareTo(other)
 
-        return if (cmp != 0) cmp else 1
+        if (cmp != 0) return cmp
+
+        if (other is JavaMethod && !preserveOrder) {
+            val maxParams = Math.max(parameters.size, other.parameters.size) - 1
+
+            for (i in 0..maxParams) {
+                if (parameters.size <= i && other.parameters.size > i)
+                    return -1
+                else if (other.parameters.size <= i)
+                    return 1
+
+                cmp = parameters[i].type.simpleName.compareTo(other.parameters[i].type.simpleName)
+
+                if (cmp != 0) return cmp
+            }
+        }
+
+        return 1
     }
 
     override fun getWeight() = WEIGHT_METHOD
