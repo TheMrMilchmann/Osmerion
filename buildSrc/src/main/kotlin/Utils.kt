@@ -28,13 +28,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import org.gradle.api.*
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.*
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.*
 import java.io.File
 
 fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = true) {
+    val JDK_9_HOME = jdk9(this)
+
     afterEvaluate {
         val java = the<JavaPluginConvention>()
         java.sourceCompatibility = JavaVersion.VERSION_1_9
@@ -52,15 +54,20 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
 
         tasks {
             "compileJava"(JavaCompile::class) {
-                options.forkOptions.javaHome = File(System.getenv().getOrDefault("JDK_9", "$rootDir/config/jdk-9")) // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
                 options.isFork = true
-                options.isDebug = true
+                options.forkOptions.javaHome = JDK_9_HOME // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
+
                 options.sourcepath = files(".")
-                options.isVerbose = true
+
+                options.isDebug = true
+                options.debugOptions.debugLevel = "source,lines"
 
                 options.compilerArgs.add("-Werror")
                 options.compilerArgs.add("-Xlint:all")
+
+                project.tasks["javadoc"].enabled = false
             }
+
         }
     }
 
@@ -79,5 +86,7 @@ fun Project.configureKotlinProject(stdlib: Boolean = true) {
         if (stdlib) "compile"(kotlin("stdlib-jre8"))
     }
 }
+
+fun jdk9(project : Project) = File(System.getenv().getOrDefault("JDK_9", "${project.rootDir}/config/jdk-9"))
 
 fun osmerion(path: String = "") = "com.github.themrmilchmann.osmerion${if (path.isNotEmpty()) ".$path" else "" }"

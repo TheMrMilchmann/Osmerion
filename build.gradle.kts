@@ -31,13 +31,49 @@ allprojects {
     group = osmerion()
     version = "0.1.0.0-SNAPSHOT"
 
+    evaluationDependsOnChildren()
+
     repositories {
         mavenCentral()
         maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
 }
 
+
 tasks {
+    val createMSPFile = "createMSPFile" {
+        val mspFile = File(buildDir, "modulesourcepath.args")
+        outputs.file(mspFile)
+
+        doLast {
+            mspFile.delete()
+            mspFile.appendText("--module-source-path\n")
+            mspFile.appendText("${project.projectDir.path}/modules/*/src/{main,main-generated}/java/")
+        }
+    }
+
+    "javadoc"(Javadoc::class) {
+        val documentedProjects = arrayOf(
+            project(":modules:${osmerion("base")}"),
+
+            project(":modules:${osmerion("internal.annotation")}")
+        )
+
+        executable = File(jdk9(project), "bin/javadoc").absolutePath // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
+        destinationDir = File(projectDir, "doc/web/")
+
+        source(documentedProjects.map {
+            val java = it.the<JavaPluginConvention>()
+            val sourceSets = java.sourceSets
+
+            sourceSets["main"].java
+        })
+
+        options.optionFiles(File(buildDir, "modulesourcepath.args"))
+
+        dependsOn(createMSPFile, documentedProjects.map { "${it.path}:compileJava" })
+    }
+
     "wrapper"(Wrapper::class) {
         distributionUrl = "https://downloads.gradle.org/distributions-snapshots/gradle-4.2-20170720235752+0000-all.zip"
     }
