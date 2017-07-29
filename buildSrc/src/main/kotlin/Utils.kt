@@ -43,8 +43,11 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
         val sourceSets = java.sourceSets
 
         if (generated) {
-            sourceSets["main"].java.srcDir("/src/main-generated/java")
-            sourceSets["test"].java.srcDir("/src/test-generated/java")
+            val mainGen = mkdir(File(projectDir, "src/main-generated/"))
+            val testGen = mkdir(File(projectDir, "src/test-generated/"))
+
+            sourceSets["main"].java.srcDir(mainGen)
+            sourceSets["test"].java.srcDir(testGen)
         }
 
         tasks {
