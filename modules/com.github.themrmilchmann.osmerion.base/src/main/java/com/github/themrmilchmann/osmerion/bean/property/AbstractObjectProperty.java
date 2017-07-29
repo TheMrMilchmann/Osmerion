@@ -119,11 +119,13 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
     /**
      * {@inheritDoc}
      *
+     * @throws IllegalStateException if the property is bound to a value
+     *
      * @since 1.0.0.0
      */
     @Override
     public final T set(T value) {
-        if (this.isBound()) throw new UnsupportedOperationException("A bound property's value may not be set explicitly");
+        if (this.isBound()) throw new IllegalStateException("A bound property's value may not be set explicitly");
 
         return this.setImpl(value);
     }
@@ -143,6 +145,8 @@ public abstract class AbstractObjectProperty<T> extends Property<T> implements R
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalStateException if the property is bound to a value
      *
      * @since 1.0.0.0
      */

@@ -171,8 +171,9 @@ return this.get();
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
+                throws = arrayOf("IllegalStateException if the property is bound to a value"),
                 body = """
-if (this.isBound()) throw new UnsupportedOperationException("A bound property's value may not be set explicitly");
+if (this.isBound()) throw new IllegalStateException("A bound property's value may not be set explicitly");
 
 return this.setImpl(value);
 """
@@ -210,6 +211,7 @@ return oldValue;
                 annotations = listOf(Override),
                 category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
+                throws = arrayOf("IllegalStateException if the property is bound to a value"),
                 body = """
 return this.set(value);
 """
