@@ -66,35 +66,34 @@ val ReadOnlyWrapper = Profile {
                 ReadOnlyProperty(t_value).PARAM("property", "the property to be wrapped"),
 
                 since = VERSION_1_0_0_0,
-                body = """
-super(property);
-"""
+
+                body = "super(property);"
             )
 
             t_value.method(
                 "get",
                 inheritDoc,
 
+                category = CAT_VALUE_OPS,
+
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
-                category = CAT_VALUE_OPS,
                 since = VERSION_1_0_0_0,
-                body = """
-return this.property.get();
-"""
+
+                body = "return this.property.get();"
             )
 
             boolean.method(
                 "isBound",
                 inheritDoc,
 
+                category = CAT_BINDING,
+
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
-                category = CAT_BINDING,
                 since = VERSION_1_0_0_0,
-                body = """
-return this.property.isBound();
-"""
+
+                body = "return this.property.isBound();"
             )
 
             void.method(
@@ -103,13 +102,13 @@ return this.property.isBound();
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
+                category = CAT_LISTENERS,
+
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
-                category = CAT_LISTENERS,
                 since = VERSION_1_0_0_0,
-                body = """
-this.property.addListener(listener);
-"""
+
+                body = "this.property.addListener(listener);"
             )
 
             void.method(
@@ -118,13 +117,13 @@ this.property.addListener(listener);
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
+                category = CAT_LISTENERS,
+
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
-                category = CAT_LISTENERS,
                 since = VERSION_1_0_0_0,
-                body = """
-this.property.removeListener(listener);
-"""
+
+                body = "this.property.removeListener(listener);"
             )
         }
     }

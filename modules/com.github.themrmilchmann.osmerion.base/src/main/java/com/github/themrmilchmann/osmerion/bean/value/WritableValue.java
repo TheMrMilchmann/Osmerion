@@ -34,6 +34,8 @@ package com.github.themrmilchmann.osmerion.bean.value;
  *
  * <p>This class should not be used directly. Instead implement one of its specialized subclasses.</p>
  *
+ * @param <T> type of the observable value
+ *
  * @author Leon Linhart
  * @since 1.0.0.0
  */

@@ -52,11 +52,11 @@ val AbstractProperty = Profile {
         val t_value = it
 
         javaClass(name(t_value), packageName, MODULE_BASE, superClass = ParametrizedType("Property", packageName, t_value.boxedType.simpleName), visibility = Modifier.PUBLIC.or(Modifier.ABSTRACT)) {
-            addInterfaces(ReadOnlyProperty(t_value))
-            addInterfaces(WritableValue(t_value))
-
             addImport(Import(getOsmerionPath("bean.value.change"), "*"))
             addImport(Import("java.util", "ArrayList"))
+
+            addInterfaces(ReadOnlyProperty(t_value))
+            addInterfaces(WritableValue(t_value))
 
             documentation = "A basic {@code $t_value} property."
             see(SimpleProperty(t_value).toString())
@@ -67,9 +67,11 @@ val AbstractProperty = Profile {
                 "INITIAL_VALUE",
                 "The initial value of an $fileName.",
 
-                visibility = Modifier.PUBLIC.or(Modifier.STATIC).or(Modifier.FINAL),
                 category = CAT_F_CONSTANTS,
+
+                visibility = Modifier.PUBLIC.or(Modifier.STATIC).or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
+
                 value = t_value.nullValue
             )
 
@@ -77,8 +79,9 @@ val AbstractProperty = Profile {
                 "changeListeners",
                 "The list of ChangeListeners attached to this property.",
 
-                visibility = Modifier.PROTECTED,
                 category = CAT_F_INSTANCE,
+
+                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
@@ -86,8 +89,9 @@ val AbstractProperty = Profile {
                 "value",
                 "The current value of this property.",
 
-                visibility = Modifier.PROTECTED,
                 category = CAT_F_INSTANCE,
+
+                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
@@ -95,27 +99,29 @@ val AbstractProperty = Profile {
                 "binding",
                 "",
 
-                visibility = Modifier.PRIVATE,
-                category = CAT_F_INSTANCE_B
+                category = CAT_F_INSTANCE_B,
+
+                visibility = Modifier.PRIVATE
             )
 
             ChangeListener(t_value).field(
                 "bindingListener",
                 "",
 
-                visibility = Modifier.PRIVATE,
-                category = CAT_F_INSTANCE_B
+                category = CAT_F_INSTANCE_B,
+
+                visibility = Modifier.PRIVATE
             )
 
             constructor(
                 "Creates a new {@link $this} with the default initial value {@link #INITIAL_VALUE}",
 
-                visibility = Modifier.PROTECTED,
                 category = CAT_M_CONSTRUCTORS,
+
+                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
-                body = """
-this(INITIAL_VALUE);
-"""
+
+                body = "this(INITIAL_VALUE);"
             )
 
             constructor(
@@ -123,12 +129,12 @@ this(INITIAL_VALUE);
 
                 t_value.PARAM("initialValue", "the initial value for this property"),
 
-                visibility = Modifier.PROTECTED,
                 category = CAT_M_CONSTRUCTORS,
+
+                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
-                body = """
-this.value = initialValue;
-"""
+
+                body = "this.value = initialValue;"
             )
 
             // #################################################################################################################################################
@@ -139,26 +145,26 @@ this.value = initialValue;
                 "get",
                 inheritDoc,
 
+                category = CAT_M_VALOPS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
-                body = """
-return this.value;
-"""
+
+                body = "return this.value;"
             )
 
             t_value.boxedType.method(
                 "getValue",
                 inheritDoc,
 
+                category = CAT_M_VALOPS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
-                body = """
-return this.get();
-"""
+
+                body = "return this.get();"
             )
 
             t_value.method(
@@ -167,11 +173,13 @@ return this.get();
 
                 t_value.PARAM("value", ""),
 
+                category = CAT_M_VALOPS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
                 throws = arrayOf("IllegalStateException if the property is bound to a value"),
+
                 body = """
 if (this.isBound()) throw new IllegalStateException("A bound property's value may not be set explicitly");
 
@@ -185,8 +193,10 @@ return this.setImpl(value);
 
                 t_value.PARAM("value", ""),
 
-                visibility = Modifier.PRIVATE,
                 category = CAT_M_VALOPS,
+
+                visibility = Modifier.PRIVATE,
+
                 body = """
 $t_value oldValue = this.value;
 value = this.validate(value);
@@ -207,14 +217,14 @@ return oldValue;
 
                 t_value.boxedType.PARAM("value", ""),
 
+                category = CAT_M_VALOPS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_VALOPS,
                 since = VERSION_1_0_0_0,
                 throws = arrayOf("IllegalStateException if the property is bound to a value"),
-                body = """
-return this.set(value);
-"""
+
+                body = "return this.set(value);"
             )
 
             t_value.method(
@@ -223,8 +233,9 @@ return this.set(value);
 
                 t_value.PARAM("value", "the value to be validated"),
 
-                visibility = Modifier.PROTECTED.or(Modifier.ABSTRACT),
                 category = CAT_M_VALOPS,
+
+                visibility = Modifier.PROTECTED.or(Modifier.ABSTRACT),
                 returnDoc = "the validated value",
                 since = VERSION_1_0_0_0
             )
@@ -243,13 +254,15 @@ return this.set(value);
 
                 ObservableValue(t_value).PARAM("other", "the observable value to bind this property to"),
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 category = CAT_M_BINDING,
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
                 throws = arrayOf(
                     "NullPointerException if the given {@code ObservableValue} is null",
                     "IllegalStateException if this property is already bound to a value"
                 ),
+
                 body = """
 if (other == null) throw new NullPointerException("The value to bind a property to may not be null!");
 if (this.binding != null) throw new IllegalStateException("The property is already bound to a value!");
@@ -263,21 +276,23 @@ this.binding.addListener(this.bindingListener = (observable, oldValue, newValue)
                 "isBound",
                 inheritDoc,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 category = CAT_M_BINDING,
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
-                body = """
-return this.binding != null;
-"""
+
+                body = "return this.binding != null;"
             )
 
             void.method(
                 "unbind",
                 inheritDoc,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 category = CAT_M_BINDING,
+
+                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
+
                 body = """
 if (this.binding == null) throw new IllegalStateException("The property is not bound to a value!");
 
@@ -296,11 +311,13 @@ this.binding = null;
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
+                category = CAT_M_LISTENERS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_LISTENERS,
                 see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
+
                 body = """
 if (listener == null) throw new NullPointerException();
 if (this.changeListeners == null) this.changeListeners = new ArrayList<>(1);
@@ -315,17 +332,18 @@ this.changeListeners.add(listener);
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
+                category = CAT_M_LISTENERS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_LISTENERS,
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
+
                 body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
             )
-
 
             void.method(
                 "removeListener",
@@ -333,10 +351,12 @@ if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 
                 ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType.simpleName}").PARAM("listener", ""),
 
+                category = CAT_M_LISTENERS,
+
                 visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 annotations = listOf(Override),
-                category = CAT_M_LISTENERS,
                 since = VERSION_1_0_0_0,
+
                 body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);

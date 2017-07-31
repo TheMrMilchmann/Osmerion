@@ -58,6 +58,7 @@ val WritableValue = Profile {
                 t_value.PARAM("value", "the new value"),
 
                 category = CAT_VALUE_OPS,
+
                 returnDoc = "the previous value of this {@code ${this.fileName}}",
                 since = VERSION_1_0_0_0
             )

@@ -36,6 +36,8 @@ import com.github.themrmilchmann.osmerion.bean.value.change.*;
  *
  * <p>This class should not be used directly. Instead implement one of its specialized subclasses.</p>
  *
+ * @param <T> type of the observable value
+ *
  * @see WritableValue
  *
  * @author Leon Linhart

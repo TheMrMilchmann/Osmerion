@@ -43,10 +43,10 @@ val ChangeListener = Profile {
         val t_value = it
 
         javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            authors(AUTHOR_LEON_LINHART)
             addAnnotations(FunctionalInterface)
 
             documentation = "A specialized {@code $t_value} {@link ChangeListener}."
+            authors(AUTHOR_LEON_LINHART)
             since = VERSION_1_0_0_0
 
             void.method(
@@ -75,6 +75,7 @@ val ChangeListener = Profile {
                 visibility = Modifier.STATIC,
                 returnDoc = "a specialized ChangeListener wrapping around the given one",
                 since = VERSION_1_0_0_0,
+
                 body = """
 return (listener instanceof ${name(t_value)}) ? (${name(t_value)}) listener : new ${name(t_value)}() {
 

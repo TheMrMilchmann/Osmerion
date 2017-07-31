@@ -32,10 +32,12 @@ package com.github.themrmilchmann.osmerion.bean.value;
 /**
  * A writable {@code Object} value.
  *
+ * @param <T> type of the observable value
+ *
  * @author Leon Linhart
  * @since 1.0.0.0
  */
-public interface WritableObjectValue<T> extends WritableValue<T> {
+public interface WritableObjectValue<T> extends WritableValue<T>, ObservableObjectValue<T> {
 
     // #################################################################################################################
     // # Value Operations ##############################################################################################

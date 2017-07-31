@@ -52,12 +52,12 @@ val SimpleProperty = Profile {
             constructor(
                 "Creates a new {@link $this} with the default initial value {@link ${AbstractProperty(t_value)}#INITIAL_VALUE}",
 
-                visibility = Modifier.PROTECTED,
                 category = CAT_CONSTRUCTORS,
+
+                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
-                body = """
-super();
-"""
+
+                body = "super();"
             )
 
             constructor(
@@ -65,12 +65,12 @@ super();
 
                 t_value.PARAM("initialValue", "the initial value for this property"),
 
-                visibility = Modifier.PUBLIC,
                 category = CAT_CONSTRUCTORS,
+
+                visibility = Modifier.PUBLIC,
                 since = VERSION_1_0_0_0,
-                body = """
-super(initialValue);
-"""
+
+                body = "super(initialValue);"
             )
 
             t_value.method(
@@ -79,13 +79,13 @@ super(initialValue);
 
                 t_value.PARAM("value", ""),
 
+                category = CAT_VALUE_OPS,
+
                 visibility = Modifier.PUBLIC,
                 annotations = listOf(Override),
-                category = CAT_VALUE_OPS,
                 since = VERSION_1_0_0_0,
-                body = """
-return value;
-"""
+
+                body = "return value;"
             )
         }
     }

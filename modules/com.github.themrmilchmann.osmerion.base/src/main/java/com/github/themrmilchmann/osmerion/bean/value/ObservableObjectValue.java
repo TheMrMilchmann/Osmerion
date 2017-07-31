@@ -32,6 +32,10 @@ package com.github.themrmilchmann.osmerion.bean.value;
 /**
  * An observable {@code Object} value.
  *
+ * @param <T> type of the observable value
+ *
+ * @see WritableObjectValue
+ *
  * @author Leon Linhart
  * @since 1.0.0.0
  */

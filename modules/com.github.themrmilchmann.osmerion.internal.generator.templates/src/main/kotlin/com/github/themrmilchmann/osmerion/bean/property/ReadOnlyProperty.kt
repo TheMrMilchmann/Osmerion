@@ -55,9 +55,8 @@ val ReadOnlyProperty = Profile {
                 inheritDoc,
 
                 since = VERSION_1_0_0_0,
-                body = """
-return (this instanceof ReadOnlyWrapper ? this : new ReadOnly${t_value.abbrevName}Wrapper(this));
-"""
+
+                body = "return (this instanceof ReadOnlyWrapper ? this : new ReadOnly${t_value.abbrevName}Wrapper(this));"
             )
         }
     }

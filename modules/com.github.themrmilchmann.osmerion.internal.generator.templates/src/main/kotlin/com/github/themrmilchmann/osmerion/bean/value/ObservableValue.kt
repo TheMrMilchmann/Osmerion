@@ -46,10 +46,12 @@ val ObservableValue = Profile {
         val t_value = it
 
         javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addInterfaces(ParametrizedType("ObservableValue", packageName, t_value.boxedType.simpleName))
             addImport(Import("$packageName.change", "*"))
 
+            addInterfaces(ParametrizedType("ObservableValue", packageName, t_value.boxedType.simpleName))
+
             documentation = "An observable {@code ${t_value.simpleName}} value."
+            see(WritableValue(t_value).toString())
             authors(AUTHOR_LEON_LINHART)
             since = VERSION_1_0_0_0
 
@@ -87,7 +89,7 @@ return this.get();
 
                 category = CAT_LISTENERS,
                 throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
-                see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
+                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0
             )
 
@@ -99,7 +101,8 @@ return this.get();
 
                 annotations = listOf(Override),
                 category = CAT_LISTENERS,
-                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
+                see = arrayOf(
+                    "#removeListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
                 body = """
 this.addListener(${ChangeListener(t_value)}.wrap(listener));
