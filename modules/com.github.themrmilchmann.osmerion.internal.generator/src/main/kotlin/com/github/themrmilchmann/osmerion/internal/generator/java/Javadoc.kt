@@ -149,7 +149,7 @@ internal fun String.toJavaDoc(indent: String = INDENT, typeParameters: List<Java
 
 /** Specialized formatting for methods. */
 internal fun JavaMethod.toJavaDoc(indent: String = ""): String {
-    if (returnDoc.isEmpty() && throws == null && see == null && since.isEmpty()) {
+    if (returnDoc.isEmpty() && throws == null && see == null && since.isEmpty() && typeParameters == null) {
         if (documentation.isEmpty() && parameters.all { it.documentation.isEmpty() })
             return ""
 
@@ -170,7 +170,15 @@ internal fun JavaMethod.toJavaDoc(indent: String = ""): String {
                 }
             }
 
-            if (!returnDoc.isEmpty()) {
+            typeParameters?.forEach {
+                if (isNotEmpty()) append("\n$indent * ")
+                append("@param <")
+                append(it.type)
+                append("> ")
+                append(it.documentation)
+            }
+
+            if (returnDoc.isNotEmpty()) {
                 if (isNotEmpty()) append("\n$indent *\n$indent * ")
                 append("@return ")
                 append(returnDoc.cleanup("$indent *         "))

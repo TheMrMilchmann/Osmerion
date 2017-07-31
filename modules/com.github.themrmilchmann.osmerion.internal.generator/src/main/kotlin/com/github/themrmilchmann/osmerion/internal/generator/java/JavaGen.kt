@@ -277,6 +277,7 @@ class JavaClass internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
+        typeParameters: Array<out JavaTypeParameter>? = null,
         annotations: List<Annotation>? = null,
         preserveOrder: Boolean = true
     ) {
@@ -298,7 +299,7 @@ class JavaClass internal constructor(
             toString()
         }
 
-        val constructor = JavaConstructor(this, documentation, parameters, v, body, category, since, throws, see, annotations, preserveOrder)
+        val constructor = JavaConstructor(this, documentation, parameters, v, body, category, since, throws, see, typeParameters, annotations, preserveOrder)
         this@JavaClass.body.add(constructor)
     }
 
@@ -428,6 +429,7 @@ class JavaClass internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
+        typeParameters: Array<out JavaTypeParameter>? = null,
         annotations: List<Annotation>? = null,
         preserveOrder: Boolean = true
     ) {
@@ -491,7 +493,7 @@ class JavaClass internal constructor(
         addImport(this)
         parameters.forEach { addImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations, preserveOrder)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, typeParameters, annotations, preserveOrder)
         this@JavaClass.body.add(method)
     }
 
@@ -701,6 +703,7 @@ class JavaInterface internal constructor(
         since: String = "",
         throws: Array<out String>? = null,
         see: Array<out String>? = null,
+        typeParameters: Array<out JavaTypeParameter>? = null,
         annotations: List<Annotation>? = null,
         preserveOrder: Boolean = true
     ) {
@@ -748,7 +751,7 @@ class JavaInterface internal constructor(
         addImport(this)
         parameters.forEach { addImport(it.type) }
 
-        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, annotations, preserveOrder)
+        val method = JavaMethod(this, name, documentation, parameters, v, body, category, returnDoc, since, throws, see, typeParameters, annotations, preserveOrder)
         this@JavaInterface.body.add(method)
     }
 
@@ -825,9 +828,10 @@ class JavaConstructor internal constructor(
     since: String,
     throws: Array<out String>?,
     see: Array<out String>?,
+    typeParameters: Array<out JavaTypeParameter>?,
     annotations: List<Annotation>?,
     preserveOrder: Boolean
-): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, annotations, preserveOrder) {
+): JavaMethod(type, type.simpleName, documentation, parameters, visibility, body, category, "", since, throws, see, typeParameters, annotations, preserveOrder) {
 
     override fun getWeight() = WEIGHT_CONSTRUCTOR
 
@@ -850,6 +854,7 @@ open class JavaMethod internal constructor(
     val since: String,
     val throws: Array<out String>?,
     val see: Array<out String>?,
+    val typeParameters: Array<out JavaTypeParameter>?,
     val annotations: List<Annotation>?,
     val preserveOrder: Boolean
 ): Member {
@@ -881,6 +886,16 @@ open class JavaMethod internal constructor(
 
     open fun PrintWriter.printDeclaration() {
         print(visibility)
+
+
+        if (typeParameters != null && typeParameters.isNotEmpty()) {
+            print("<")
+            print(StringJoiner(", ").apply {
+                typeParameters.forEach { add(it.toString()) }
+            })
+            print("> ")
+        }
+
         print("$type ")
         print(name)
     }
@@ -954,7 +969,7 @@ class JavaParameter internal constructor(
     val annotations: List<Annotation>? = null
 )
 
-internal class JavaTypeParameter(
+class JavaTypeParameter(
     val type: IType,
     val documentation: String
 ) {

@@ -143,6 +143,8 @@ class ParametrizedType(
     val parameters: String
 ): Type(simpleName, packageName) {
 
+    constructor(type: IType, parameters: String): this(type.simpleName, type.packageName, parameters)
+
     override fun toString(): String = super.toString() + "<$parameters>"
 
 }
