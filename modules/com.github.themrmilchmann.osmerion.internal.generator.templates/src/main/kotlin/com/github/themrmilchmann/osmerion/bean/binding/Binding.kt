@@ -29,7 +29,6 @@
  */
 package com.github.themrmilchmann.osmerion.bean.binding
 
-import com.github.themrmilchmann.osmerion.bean.property.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
 import com.github.themrmilchmann.osmerion.internal.generator.*

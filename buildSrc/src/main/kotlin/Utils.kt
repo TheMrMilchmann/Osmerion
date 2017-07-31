@@ -67,7 +67,6 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
 
                 project.tasks["javadoc"].enabled = false
             }
-
         }
     }
 
