@@ -32,7 +32,7 @@ package com.github.themrmilchmann.osmerion.bean.property;
 import com.github.themrmilchmann.osmerion.bean.value.WritableValue;
 
 /**
- * TODO doc
+ * A generic interface that defines the methods common to all (writable) properties independent of their type.
  *
  * @param <T> the type of the value
  *
