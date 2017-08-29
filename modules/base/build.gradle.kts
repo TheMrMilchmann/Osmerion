@@ -27,30 +27,20 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/**
- * This module provides the base functionality used by Osmerion.
- *
- * <p>The primary focus of this module is providing implementations for:</p>
- * <ul>
- *     <li>beans,</li>
- *     <li>collections,</li>
- *     <li>logging utilities,</li>
- *     <li>platform utilities, and </li>
- *     <li>efficient, specialized types and functions.</li>
- * </ul>
- *
- * @author Leon Linhart
- * @since 1.0.0.0
- */
-module com.github.themrmilchmann.osmerion.base {
+plugins {
+    `java-library`
+    id("org.gradle.java.experimental-jigsaw").version("0.1.1")
+}
 
-    requires com.github.themrmilchmann.osmerion.internal.annotation;
+javaModule.setName(osmerion("base"))
+configureJavaProject()
 
-    exports com.github.themrmilchmann.osmerion.bean.binding;
-    exports com.github.themrmilchmann.osmerion.bean.property;
-    exports com.github.themrmilchmann.osmerion.bean.value;
-    exports com.github.themrmilchmann.osmerion.bean.value.change;
-    exports com.github.themrmilchmann.osmerion.logging;
-    exports com.github.themrmilchmann.osmerion.util.functional.function;
+tasks {
+    "compileJava"(JavaCompile::class) {
+        dependsOn(":modules:internal.generator.templates:generate")
+    }
+}
 
+dependencies {
+    compile(project(":modules:internal.annotation"))
 }

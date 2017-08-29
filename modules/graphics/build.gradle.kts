@@ -32,15 +32,9 @@ plugins {
     id("org.gradle.java.experimental-jigsaw").version("0.1.1")
 }
 
-javaModule.setName(osmerion("base"))
+javaModule.setName(osmerion("graphics"))
 configureJavaProject()
 
-tasks {
-    "compileJava"(JavaCompile::class) {
-        dependsOn(":modules:${osmerion("internal.generator.templates")}:generate")
-    }
-}
-
 dependencies {
-    compile(project(":modules:${osmerion("internal.annotation")}"))
+    compile(project(":modules:base"))
 }

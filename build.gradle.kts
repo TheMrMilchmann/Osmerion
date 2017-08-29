@@ -54,9 +54,9 @@ tasks {
 
     "javadoc"(Javadoc::class) {
         val documentedProjects = arrayOf(
-            project(":modules:${osmerion("base")}"),
+            project(":modules:base"),
 
-            project(":modules:${osmerion("internal.annotation")}")
+            project(":modules:internal.annotation")
         )
 
         executable = File(jdk9(project), "bin/javadoc").absolutePath // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
