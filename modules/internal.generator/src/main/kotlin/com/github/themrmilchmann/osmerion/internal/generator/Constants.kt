@@ -37,8 +37,8 @@ const val KIND_TEST = "test"
 
 const val PACKAGE = "com.github.themrmilchmann.osmerion"
 
-val MODULE_BASE = getOsmerionPath("base")
-val MODULE_GRAPHICS = getOsmerionPath("graphics")
+val MODULE_BASE = "base"
+val MODULE_GRAPHICS = "graphics"
 
 const val VERSION_1_0_0_0 = "1.0.0.0"
 
