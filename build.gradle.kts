@@ -59,7 +59,6 @@ tasks {
             project(":modules:internal.annotation")
         )
 
-        executable = File(jdk9(project), "bin/javadoc").absolutePath // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
         destinationDir = File(projectDir, "doc/web/")
 
         source(documentedProjects.map {
@@ -72,9 +71,5 @@ tasks {
         options.optionFiles(File(buildDir, "modulesourcepath.args"))
 
         dependsOn(createMSPFile, documentedProjects.map { "${it.path}:compileJava" })
-    }
-
-    "wrapper"(Wrapper::class) {
-        distributionUrl = "https://downloads.gradle.org/distributions-snapshots/gradle-4.2-20170720235752+0000-all.zip"
     }
 }

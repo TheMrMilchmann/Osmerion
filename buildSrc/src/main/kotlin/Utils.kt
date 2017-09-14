@@ -35,8 +35,6 @@ import org.gradle.kotlin.dsl.*
 import java.io.File
 
 fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = true) {
-    val JDK_9_HOME = jdk9(this)
-
     afterEvaluate {
         val java = the<JavaPluginConvention>()
         java.sourceCompatibility = JavaVersion.VERSION_1_9
@@ -54,9 +52,6 @@ fun Project.configureJavaProject(generated: Boolean = true, tests: Boolean = tru
 
         tasks {
             "compileJava"(JavaCompile::class) {
-                options.isFork = true
-                options.forkOptions.javaHome = JDK_9_HOME // TODO temporary JDK9 workaround (until Gradle runs properly on jdk9)
-
                 options.sourcepath = files(".")
 
                 options.isDebug = true
@@ -85,7 +80,5 @@ fun Project.configureKotlinProject(stdlib: Boolean = true) {
         if (stdlib) "compile"(kotlin("stdlib-jre8"))
     }
 }
-
-fun jdk9(project : Project) = File(System.getenv().getOrDefault("JDK_9", "${project.rootDir}/config/jdk-9"))
 
 fun osmerion(path: String = "") = "com.github.themrmilchmann.osmerion${if (path.isNotEmpty()) ".$path" else "" }"
