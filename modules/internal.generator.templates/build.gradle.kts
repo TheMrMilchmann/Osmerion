@@ -27,23 +27,24 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import com.github.themrmilchmann.kraton.gradle.tasks.*
-
 plugins {
     kotlin("jvm")
-    id("com.github.themrmilchmann.kraton") version "0.1.1"
 }
 
 configureKotlinProject()
 
 tasks {
-    "generate"(Generate::class) {
+    "generate"(JavaExec::class) {
         dependsOn("compileKotlin")
 
-        templatesRoot = File(project(":modules:internal.generator.templates").projectDir, "src/main/kotlin/")
-        outputRoot = parent.projectDir
-
+        main = osmerion("internal.generator.GeneratorKt")
         classpath = java.sourceSets["main"].runtimeClasspath
+        isIgnoreExitValue = false
+
+        val templatesRoot = File(project(":modules:internal.generator.templates").projectDir, "src/main/kotlin/").absolutePath
+        val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
+
+        args(templatesRoot, modulesRoot)
     }
 
     "clean-generated" {
@@ -58,5 +59,5 @@ tasks {
 }
 
 dependencies {
-    compile(project(":modules:internal.kraton.dsl-services"))
+    compile(project(":modules:internal.generator"))
 }
