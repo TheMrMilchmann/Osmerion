@@ -65,3 +65,7 @@ tasks {
         }
     }
 }
+
+dependencies {
+    compile("com.github.themrmilchmann.kraton:kraton-lang-java:0.2.0-SNAPSHOT")
+}
