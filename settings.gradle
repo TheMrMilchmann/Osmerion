@@ -32,6 +32,5 @@ include 'modules:base',
 
         'modules:internal.annotation',
         'modules:internal.generator.templates',
-        'modules:internal.kraton.dsl-services'
 
 rootProject.name = 'Osmerion'

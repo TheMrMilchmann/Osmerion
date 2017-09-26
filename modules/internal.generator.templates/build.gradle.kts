@@ -65,7 +65,3 @@ tasks {
         }
     }
 }
-
-dependencies {
-    compile(project(":modules:internal.kraton.dsl-services"))
-}
