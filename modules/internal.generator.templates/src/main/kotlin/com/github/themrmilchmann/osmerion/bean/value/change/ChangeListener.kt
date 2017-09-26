@@ -29,27 +29,31 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value.change
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "${type.abbrevName}ChangeListener"
-fun ChangeListener(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "${type.abbrevName}ChangeListener"
+fun ChangeListener(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ChangeListener = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addAnnotations(FunctionalInterface)
-
-            documentation = "A specialized {@code $t_value} {@link ChangeListener}."
+        Annotate(FunctionalInterface::class.asType)
+        public..javaInterface(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A specialized {@code $t_value} {@link ChangeListener}.",
+            since = VERSION_1_0_0_0,
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            void.method(
+            void(
                 "onChanged",
                 "Processes a value change of an ObservableValue this listener is attached to.",
 
@@ -60,7 +64,7 @@ val ChangeListener = Profile {
                 since = VERSION_1_0_0_0
             )
 
-            this.method(
+            static..this(
                 "wrap",
                 """
                 Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
@@ -70,9 +74,8 @@ val ChangeListener = Profile {
                 wrapped listener is passed as argument.
                 """,
 
-                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType}").PARAM("listener", "the listener to be wrapped"),
+                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", "the listener to be wrapped"),
 
-                visibility = Modifier.STATIC,
                 returnDoc = "a specialized ChangeListener wrapping around the given one",
                 since = VERSION_1_0_0_0,
 

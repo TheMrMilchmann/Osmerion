@@ -29,14 +29,14 @@
  */
 package com.github.themrmilchmann.osmerion.bean.property
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "ReadOnly${type.abbrevName}Wrapper"
-fun ReadOnlyWrapper(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "ReadOnly${type.abbrevName}Wrapper"
+fun ReadOnlyWrapper(type: JavaPrimitiveType) =
+    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_VALUE_OPS = "1_Value Operations"
 private const val CAT_BINDING   = "2_Binding"
@@ -45,22 +45,28 @@ private const val CAT_LISTENERS = "3_Listeners"
 val ReadOnlyWrapper = Profile {
     types.forEach {
         val t_value = it
-        val sup = ParametrizedType("ReadOnlyWrapper", packageName, "${t_value.boxedType.simpleName}, ${ReadOnlyProperty(t_value)}")
+        val sup = JavaTypeReference("ReadOnlyWrapper", packageName, t_value.boxedType, ReadOnlyProperty(t_value))
 
-        javaClass(name(t_value), packageName, MODULE_BASE, superClass = sup, visibility = Modifier.FINAL) {
-            addInterfaces(ReadOnlyProperty(t_value))
-
+        final..javaClass(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
             documentation = """
-            A read-only wrapper for {@code $t_value} properties.
+                A read-only wrapper for {@code $t_value} properties.
 
-            Method calls are redirected to the underlying property.
-            """
+                Method calls are redirected to the underlying property.
+                """,
+            since = VERSION_1_0_0_0,
+            superClass = sup,
+            interfaces = arrayOf(ReadOnlyProperty(t_value)),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
             constructor(
                 """
-                Creates a new {@code $fileName} wrapping around the given property.
+                Creates a new {@code $className} wrapping around the given property.
                 """,
 
                 ReadOnlyProperty(t_value).PARAM("property", "the property to be wrapped"),
@@ -70,57 +76,49 @@ val ReadOnlyWrapper = Profile {
                 body = "super(property);"
             )
 
-            t_value.method(
+            Override..
+            public..t_value(
                 "get",
                 inheritDoc,
 
                 category = CAT_VALUE_OPS,
-
-                visibility = Modifier.PUBLIC,
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "return this.property.get();"
             )
 
-            boolean.method(
+            Override..
+            public..boolean(
                 "isBound",
                 inheritDoc,
 
                 category = CAT_BINDING,
-
-                visibility = Modifier.PUBLIC,
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "return this.property.isBound();"
             )
 
-            void.method(
+            Override..
+            public..void(
                 "addListener",
                 inheritDoc,
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
                 category = CAT_LISTENERS,
-
-                visibility = Modifier.PUBLIC,
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "this.property.addListener(listener);"
             )
 
-            void.method(
+            Override..
+            public..void(
                 "removeListener",
                 inheritDoc,
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
                 category = CAT_LISTENERS,
-
-                visibility = Modifier.PUBLIC,
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "this.property.removeListener(listener);"

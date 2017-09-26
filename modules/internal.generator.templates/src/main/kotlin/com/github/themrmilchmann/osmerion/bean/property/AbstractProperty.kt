@@ -29,15 +29,14 @@
  */
 package com.github.themrmilchmann.osmerion.bean.property
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "Abstract${type.abbrevName}Property"
-fun AbstractProperty(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "Abstract${type.abbrevName}Property"
+fun AbstractProperty(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_F_CONSTANTS       = "0_"
 private const val CAT_F_INSTANCE        = "1_"
@@ -51,87 +50,84 @@ val AbstractProperty = Profile {
     types.forEach {
         val t_value = it
 
-        javaClass(name(t_value), packageName, MODULE_BASE, superClass = ParametrizedType("Property", packageName, t_value.boxedType.simpleName), visibility = Modifier.PUBLIC.or(Modifier.ABSTRACT)) {
-            addImport(Import(getOsmerionPath("bean.value.change"), "*"))
-            addImport(Import("java.util", "ArrayList"))
+        public..abstract..javaClass(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A basic {@code $t_value} property.",
+            since = VERSION_1_0_0_0,
+            superClass = JavaTypeReference("Property", packageName, t_value.boxedType),
+            interfaces = arrayOf(
+                ReadOnlyProperty(t_value),
+                WritableValue(t_value)
+            ),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
+            import(getOsmerionPath("bean.value.change"))
+            import(java.util.ArrayList::class.asType)
 
-            addInterfaces(ReadOnlyProperty(t_value))
-            addInterfaces(WritableValue(t_value))
-
-            documentation = "A basic {@code $t_value} property."
             see(SimpleProperty(t_value).toString())
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            t_value.field(
+            public..static..final..t_value(
                 "INITIAL_VALUE",
-                "The initial value of an $fileName.",
+                t_value.nullValue,
+                "The initial value of an $className.",
 
                 category = CAT_F_CONSTANTS,
-
-                visibility = Modifier.PUBLIC.or(Modifier.STATIC).or(Modifier.FINAL),
-                since = VERSION_1_0_0_0,
-
-                value = t_value.nullValue
+                since = VERSION_1_0_0_0
             )
 
-            List(ChangeListener(t_value).toString()).field(
+            protected..JavaTypeReference("List", "java.util", ChangeListener(t_value))(
                 "changeListeners",
+                null,
                 "The list of ChangeListeners attached to this property.",
 
                 category = CAT_F_INSTANCE,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
-            t_value.field(
+            protected..t_value(
                 "value",
+                null,
                 "The current value of this property.",
 
                 category = CAT_F_INSTANCE,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
-            ObservableValue(t_value).field(
+            private..ObservableValue(t_value)(
                 "binding",
+                null,
                 "",
 
-                category = CAT_F_INSTANCE_B,
-
-                visibility = Modifier.PRIVATE
+                category = CAT_F_INSTANCE_B
             )
 
-            ChangeListener(t_value).field(
+            private..ChangeListener(t_value)(
                 "bindingListener",
+                null,
                 "",
 
-                category = CAT_F_INSTANCE_B,
-
-                visibility = Modifier.PRIVATE
+                category = CAT_F_INSTANCE_B
             )
 
-            constructor(
+            protected..constructor(
                 "Creates a new {@link $this} with the default initial value {@link #INITIAL_VALUE}",
 
                 category = CAT_M_CONSTRUCTORS,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
 
                 body = "this(INITIAL_VALUE);"
             )
 
-            constructor(
+            protected..constructor(
                 "Creates a new {@link $this} with specified initial value.",
 
                 t_value.PARAM("initialValue", "the initial value for this property"),
 
                 category = CAT_M_CONSTRUCTORS,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
 
                 body = "this.value = initialValue;"
@@ -141,44 +137,39 @@ val AbstractProperty = Profile {
             // # VALOPS ########################################################################################################################################
             // #################################################################################################################################################
 
-            t_value.method(
+            Override..
+            public..final..t_value(
                 "get",
                 inheritDoc,
 
                 category = CAT_M_VALOPS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "return this.value;"
             )
 
-            t_value.boxedType.method(
+            Override..
+            public..final..t_value.boxedType(
                 "getValue",
                 inheritDoc,
 
                 category = CAT_M_VALOPS,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "return this.get();"
             )
 
-            t_value.method(
+            Override..
+            public..final..t_value(
                 "set",
                 inheritDoc,
 
                 t_value.PARAM("value", ""),
 
                 category = CAT_M_VALOPS,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
-                throws = arrayOf("IllegalStateException if the property is bound to a value"),
+                exceptions = arrayOf(java.lang.IllegalStateException::class.asType to "if the property is bound to a value"),
 
                 body = """
 if (this.isBound()) throw new IllegalStateException("A bound property's value may not be set explicitly");
@@ -187,15 +178,13 @@ return this.setImpl(value);
 """
             )
 
-            t_value.method(
+            private..t_value(
                 "setImpl",
                 "",
 
                 t_value.PARAM("value", ""),
 
                 category = CAT_M_VALOPS,
-
-                visibility = Modifier.PRIVATE,
 
                 body = """
 $t_value oldValue = this.value;
@@ -211,31 +200,27 @@ return oldValue;
 """
             )
 
-            t_value.boxedType.method(
+            Override..
+            public..final..t_value.boxedType(
                 "setValue",
                 inheritDoc,
 
                 t_value.boxedType.PARAM("value", ""),
 
                 category = CAT_M_VALOPS,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
-                throws = arrayOf("IllegalStateException if the property is bound to a value"),
+                exceptions = arrayOf(java.lang.IllegalStateException::class.asType to "if the property is bound to a value"),
 
                 body = "return this.set(value);"
             )
 
-            t_value.method(
+            protected..abstract..t_value(
                 "validate",
                 "Validates the specified value and returns the result.",
 
                 t_value.PARAM("value", "the value to be validated"),
 
                 category = CAT_M_VALOPS,
-
-                visibility = Modifier.PROTECTED.or(Modifier.ABSTRACT),
                 returnDoc = "the validated value",
                 since = VERSION_1_0_0_0
             )
@@ -244,7 +229,7 @@ return oldValue;
             // # Binding #######################################################################################################################################
             // #################################################################################################################################################
 
-            void.method(
+            public..final..void(
                 "bind",
                 """
                 Binds this property's value to the value of a given {@link ${ObservableValue(t_value)}}. When a property is bound to a value it will always
@@ -255,12 +240,10 @@ return oldValue;
                 ObservableValue(t_value).PARAM("other", "the observable value to bind this property to"),
 
                 category = CAT_M_BINDING,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
-                throws = arrayOf(
-                    "NullPointerException if the given {@code ObservableValue} is null",
-                    "IllegalStateException if this property is already bound to a value"
+                exceptions = arrayOf(
+                    java.lang.NullPointerException::class.asType to "if the given {@code ObservableValue} is null",
+                    java.lang.IllegalStateException::class.asType to "if this property is already bound to a value"
                 ),
 
                 body = """
@@ -272,25 +255,21 @@ this.binding.addListener(this.bindingListener = (observable, oldValue, newValue)
 """
             )
 
-            boolean.method(
+            public..final..boolean(
                 "isBound",
                 inheritDoc,
 
                 category = CAT_M_BINDING,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
 
                 body = "return this.binding != null;"
             )
 
-            void.method(
+            public..final..void(
                 "unbind",
                 inheritDoc,
 
                 category = CAT_M_BINDING,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
 
                 body = """
@@ -305,16 +284,14 @@ this.binding = null;
             // # LISTENERS #####################################################################################################################################
             // #################################################################################################################################################
 
-            void.method(
+            Override..
+            public..final..void(
                 "addListener",
                 inheritDoc,
 
                 ChangeListener(t_value).PARAM("listener", ""),
 
                 category = CAT_M_LISTENERS,
-
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
 
@@ -326,7 +303,8 @@ this.changeListeners.add(listener);
 """
             )
 
-            void.method(
+            Override..
+            public..final..void(
                 "removeListener",
                 inheritDoc,
 
@@ -334,9 +312,6 @@ this.changeListeners.add(listener);
 
                 category = CAT_M_LISTENERS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
-                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
 
                 body = """
@@ -345,16 +320,15 @@ if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
             )
 
-            void.method(
+            Override..
+            public..final..void(
                 "removeListener",
                 inheritDoc,
 
-                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType.simpleName}").PARAM("listener", ""),
+                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", ""),
 
                 category = CAT_M_LISTENERS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = """

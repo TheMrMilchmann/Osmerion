@@ -27,7 +27,23 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.themrmilchmann.osmerion.internal.generator.java
+package com.github.themrmilchmann.osmerion
+
+fun getOsmerionPath(path: String? = null) =
+    "com.github.themrmilchmann.osmerion${if (path != null) ".$path" else ""}"
+
+const val MODULE_BASE = "base/src"
+
+val String.generated get() = "$this-generated"
+val SRCSET_MAIN_GEN = "main".generated
+
+// Authors
+
+const val AUTHOR_LEON_LINHART = "Leon Linhart"
+
+// Versions
+
+const val VERSION_1_0_0_0 = "1.0.0.0"
 
 const val COPYRIGHT_HEADER = """/*
  * Copyright (c) 2017 Leon Linhart,
@@ -59,7 +75,3 @@ const val COPYRIGHT_HEADER = """/*
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */"""
-
-const val INDENT = "    "
-const val CATEGORY_DIVIDER = "################################################################################################################################################################"
-const val inheritDoc = "{@inheritDoc}"

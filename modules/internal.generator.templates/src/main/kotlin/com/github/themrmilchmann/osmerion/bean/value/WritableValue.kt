@@ -29,13 +29,12 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: PrimitiveType) = "Writable${type.abbrevName}Value"
-fun WritableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "Writable${type.abbrevName}Value"
+fun WritableValue(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_VALUE_OPS = "1_Value Operations"
 
@@ -43,23 +42,27 @@ val WritableValue = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addInterfaces(ParametrizedType("WritableValue", packageName, t_value.boxedType.simpleName))
-            addInterfaces(ObservableValue(t_value))
-
-            documentation = "A writable {@code ${t_value.simpleName}} value."
+        public..javaInterface(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A writable {@code $t_value} value.",
+            since = VERSION_1_0_0_0,
+            superInterfaces = arrayOf(JavaTypeReference("WritableValue", packageName, t_value.boxedType), ObservableValue(t_value)),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            t_value.method(
+            t_value(
                 "set",
-                "Sets the value of this {@link ${this.fileName}}.",
+                "Sets the value of this {@link ${this.className}}.",
 
                 t_value.PARAM("value", "the new value"),
 
                 category = CAT_VALUE_OPS,
 
-                returnDoc = "the previous value of this {@code ${this.fileName}}",
+                returnDoc = "the previous value of this {@code ${this.className}}",
                 since = VERSION_1_0_0_0
             )
         }

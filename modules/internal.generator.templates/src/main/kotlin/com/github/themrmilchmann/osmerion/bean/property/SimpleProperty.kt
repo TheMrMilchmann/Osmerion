@@ -29,13 +29,13 @@
  */
 package com.github.themrmilchmann.osmerion.bean.property
 
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: PrimitiveType) = "Simple${type.abbrevName}Property"
-fun SimpleProperty(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "Simple${type.abbrevName}Property"
+fun SimpleProperty(type: JavaPrimitiveType) =
+    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_CONSTRUCTORS = "0_"
 private const val CAT_VALUE_OPS = "1_Value Operations"
@@ -44,45 +44,46 @@ val SimpleProperty = Profile {
     types.forEach {
         val t_value = it
 
-        javaClass(name(t_value), packageName, MODULE_BASE, superClass = AbstractProperty(t_value), visibility = Modifier.PUBLIC) {
-            documentation = "A simple implementation of {@link ${AbstractProperty(t_value)}}."
+        public..javaClass(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A simple implementation of {@link ${AbstractProperty(t_value)}}.",
+            since = VERSION_1_0_0_0,
+            superClass = AbstractProperty(t_value),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            constructor(
+            protected..constructor(
                 "Creates a new {@link $this} with the default initial value {@link ${AbstractProperty(t_value)}#INITIAL_VALUE}",
 
                 category = CAT_CONSTRUCTORS,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0,
 
                 body = "super();"
             )
 
-            constructor(
+            public..constructor(
                 "Creates a new {@link $this} with specified initial value.",
 
                 t_value.PARAM("initialValue", "the initial value for this property"),
 
                 category = CAT_CONSTRUCTORS,
-
-                visibility = Modifier.PUBLIC,
                 since = VERSION_1_0_0_0,
 
                 body = "super(initialValue);"
             )
 
-            t_value.method(
+            Override..
+            public..t_value(
                 "validate",
                 inheritDoc,
 
                 t_value.PARAM("value", ""),
 
                 category = CAT_VALUE_OPS,
-
-                visibility = Modifier.PUBLIC,
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = "return value;"

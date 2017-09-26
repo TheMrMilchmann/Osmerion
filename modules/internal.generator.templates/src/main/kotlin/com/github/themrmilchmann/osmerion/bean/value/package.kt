@@ -29,8 +29,8 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
 internal val packageName = getOsmerionPath("bean.value")
 internal val types = listOf(boolean, char, byte, short, int, long, float, double)

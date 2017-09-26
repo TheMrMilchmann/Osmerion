@@ -27,6 +27,18 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import com.github.themrmilchmann.kraton.gradle.tasks.*
+
+buildscript {
+    repositories {
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
+
+    dependencies {
+        classpath("com.github.themrmilchmann.kraton:kraton-gradle:0.2.0-SNAPSHOT")
+    }
+}
+
 plugins {
     kotlin("jvm")
 }
@@ -34,17 +46,13 @@ plugins {
 configureKotlinProject()
 
 tasks {
-    "generate"(JavaExec::class) {
+    "generate"(Generate::class) {
         dependsOn("compileKotlin")
 
-        main = osmerion("internal.generator.GeneratorKt")
+        templatesRoot = File(project(":modules:internal.generator.templates").projectDir, "src/main/kotlin/")
+        outputRoot = File(rootProject.projectDir, "modules")
+
         classpath = java.sourceSets["main"].runtimeClasspath
-        isIgnoreExitValue = false
-
-        val templatesRoot = File(project(":modules:internal.generator.templates").projectDir, "src/main/kotlin/").absolutePath
-        val modulesRoot = File(rootProject.projectDir, "modules").absolutePath
-
-        args(templatesRoot, modulesRoot)
     }
 
     "clean-generated" {
@@ -59,5 +67,5 @@ tasks {
 }
 
 dependencies {
-    compile(project(":modules:internal.generator"))
+    compile(project(":modules:internal.kraton.dsl-services"))
 }

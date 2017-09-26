@@ -29,28 +29,32 @@
  */
 package com.github.themrmilchmann.osmerion.util.functional.function
 
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: PrimitiveType) = "${type.abbrevName}Function"
-fun FromFunction(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "${type.abbrevName}Function"
+fun FromFunction(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val FromFunction = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addAnnotations(FunctionalInterface)
-
-            documentation = "A function converting a {@code $t_value} to {@code Object}."
+        Annotate(FunctionalInterface::class.asType)..
+        public..javaInterface(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A function converting a {@code $t_value} to {@code Object}.",
+            since = VERSION_1_0_0_0,
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            val tp_T = typeParameter("T", "type of the returned value")
+            val tp_T = "T".typeParameter("type of the returned value")
 
-            tp_T.method(
+            tp_T(
                 "apply",
                 "Applies this function to the given argument.",
 

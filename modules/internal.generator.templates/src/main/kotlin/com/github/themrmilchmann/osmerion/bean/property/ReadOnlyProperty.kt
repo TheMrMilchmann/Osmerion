@@ -29,28 +29,32 @@
  */
 package com.github.themrmilchmann.osmerion.bean.property
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "ReadOnly${type.abbrevName}Property"
-fun ReadOnlyProperty(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "ReadOnly${type.abbrevName}Property"
+fun ReadOnlyProperty(type: JavaPrimitiveType) =
+    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ReadOnlyProperty = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addInterfaces(ParametrizedType("ReadOnlyProperty", packageName, t_value.boxedType.simpleName))
-            addInterfaces(ObservableValue(t_value))
-
-            documentation = "A read-only representation of a {@code $t_value} property."
+        javaInterface(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "A read-only representation of a {@code $t_value} property.",
+            since = VERSION_1_0_0_0,
+            superInterfaces = arrayOf(JavaTypeReference("ReadOnlyProperty", packageName, t_value.boxedType), ObservableValue(t_value)),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            ReadOnlyProperty(t_value).method(
+            default..ReadOnlyProperty(t_value)(
                 "asReadOnlyProperty",
                 inheritDoc,
 

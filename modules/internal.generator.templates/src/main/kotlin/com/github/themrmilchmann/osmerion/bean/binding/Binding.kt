@@ -29,16 +29,16 @@
  */
 package com.github.themrmilchmann.osmerion.bean.binding
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
 import com.github.themrmilchmann.osmerion.util.functional.function.*
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "${type.abbrevName}Binding"
-fun Binding(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "${type.abbrevName}Binding"
+fun Binding(type: JavaPrimitiveType) =
+    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_M_STATIC          = "0_"
 private const val CAT_F_INSTANCE        = "1_Instance Fields"
@@ -49,20 +49,25 @@ val Binding = Profile {
     types.forEach {
         val t_value = it
 
-        javaClass(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC.or(Modifier.ABSTRACT)) {
-            addImport(Import("java.util", "ArrayList"))
-            addImport(Import(getOsmerionPath("bean.value"), "*"))
-            addImport(Import(getOsmerionPath("bean.value.change"), "*"))
-            addImport(Import(getOsmerionPath("util.functional.function"), "*"))
+        public..abstract..javaClass(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "An {@code ${ObservableValue(t_value)}} that is used to keep track of another observable.",
+            since = VERSION_1_0_0_0,
+            interfaces = arrayOf(ObservableValue(t_value)),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
+            import(java.util.ArrayList::class.asType)
+            import(getOsmerionPath("bean.value"))
+            import(getOsmerionPath("bean.value.change"))
+            import(getOsmerionPath("util.functional.function"))
 
-            addInterfaces(ObservableValue(t_value))
-
-            documentation = "An {@code ${ObservableValue(t_value)}} that is used to keep track of another observable."
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
             types.filter { it != t_value }.forEach {
-                this.method(
+                public..static..this(
                     "wrap",
                     "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
 
@@ -70,9 +75,6 @@ val Binding = Profile {
                     FromToFunction(it, t_value).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
 
                     category = CAT_M_STATIC,
-                    preserveOrder = false,
-
-                    visibility = Modifier.PUBLIC.or(Modifier.STATIC),
                     returnDoc = "the wrapper binding",
                     since = VERSION_1_0_0_0,
 
@@ -92,25 +94,22 @@ return new ${name(t_value)}() {{
                 )
             }
 
-            this.method(
+            public..static..this(
                 "wrap",
                 "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
 
-                ParametrizedType("ObservableValue", getOsmerionPath("bean.value"), "T").PARAM("observable", "the observable to be wrapped"),
-                ParametrizedType(ToFunction(t_value), "T").PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
+                JavaTypeReference("ObservableValue", getOsmerionPath("bean.value"), JavaGenericType("T")).PARAM("observable", "the observable to be wrapped"),
+                JavaTypeReference(ToFunction(t_value).className, ToFunction(t_value).packageName, JavaGenericType("T")).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
 
                 category = CAT_M_STATIC,
-                preserveOrder = false,
-
-                visibility = Modifier.PUBLIC.or(Modifier.STATIC),
-                typeParameters = arrayOf(JavaTypeParameter(GenericType("T"), "the type of the value to be wrapped")),
+                typeParameters = arrayOf(JavaGenericType("T") to "the type of the value to be wrapped"),
                 returnDoc = "the wrapper binding",
                 since = VERSION_1_0_0_0,
 
                 body = """
 return new ${name(t_value)}() {{
     ChangeListener<T> listener = (observable, oldValue, newValue) -> {
-        $t_value prevValue = this.value;
+        ${t_value.asString(this)} prevValue = this.value;
         this.value = converter.apply(newValue);
 
         if (this.changeListeners != null) this.changeListeners.forEach(l -> l.onChanged(this, prevValue, this.value));
@@ -126,23 +125,22 @@ return new ${name(t_value)}() {{
             // # Instance Fields ###############################################################################################################################
             // #################################################################################################################################################
 
-            ParametrizedType("List", "java.util", ChangeListener(t_value).simpleName).field(
+            protected..JavaTypeReference("List", "java.util", ChangeListener(t_value))(
                 "changeListeners",
+                null,
                 "The list of ChangeListeners attached to this binding.",
 
                 category = CAT_F_INSTANCE,
-
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
-            t_value.field(
+            protected..t_value(
                 "value",
+                null,
                 "",
 
                 category = CAT_F_INSTANCE,
 
-                visibility = Modifier.PROTECTED,
                 since = VERSION_1_0_0_0
             )
 
@@ -150,13 +148,12 @@ return new ${name(t_value)}() {{
             // # Value Operations ##############################################################################################################################
             // #################################################################################################################################################
 
-            t_value.method(
+            public..final..t_value(
                 "get",
                 inheritDoc,
 
                 category = CAT_M_VALOPS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
                 since = VERSION_1_0_0_0,
                 body = "return this.value;"
             )
@@ -165,7 +162,8 @@ return new ${name(t_value)}() {{
             // # Listening #####################################################################################################################################
             // #################################################################################################################################################
 
-            void.method(
+            Annotate(JavaTypeReference("Override", null))..
+            public..final..void(
                 "addListener",
                 inheritDoc,
 
@@ -173,8 +171,6 @@ return new ${name(t_value)}() {{
 
                 category = CAT_M_LISTENERS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
 
@@ -186,7 +182,8 @@ this.changeListeners.add(listener);
 """
             )
 
-            void.method(
+            Annotate(JavaTypeReference("Override", null))..
+            public..final..void(
                 "removeListener",
                 inheritDoc,
 
@@ -194,8 +191,6 @@ this.changeListeners.add(listener);
 
                 category = CAT_M_LISTENERS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0,
 
@@ -205,16 +200,15 @@ if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
             )
 
-            void.method(
+            Annotate(JavaTypeReference("Override", null))..
+            public..final..void(
                 "removeListener",
                 inheritDoc,
 
-                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType.simpleName}").PARAM("listener", ""),
+                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", ""),
 
                 category = CAT_M_LISTENERS,
 
-                visibility = Modifier.PUBLIC.or(Modifier.FINAL),
-                annotations = listOf(Override),
                 since = VERSION_1_0_0_0,
 
                 body = """
@@ -222,6 +216,7 @@ if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
             )
+
         }
     }
 }

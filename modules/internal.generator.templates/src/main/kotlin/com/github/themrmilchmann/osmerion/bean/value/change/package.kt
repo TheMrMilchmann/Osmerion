@@ -29,8 +29,8 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value.change
 
-import com.github.themrmilchmann.osmerion.internal.generator.getOsmerionPath
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
 internal val types = listOf(boolean, char, byte, short, int, long, float, double)
 internal val packageName = getOsmerionPath("bean.value.change")

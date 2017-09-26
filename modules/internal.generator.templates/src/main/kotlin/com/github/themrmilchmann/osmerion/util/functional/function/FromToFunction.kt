@@ -29,14 +29,16 @@
  */
 package com.github.themrmilchmann.osmerion.util.functional.function
 
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 
-private fun name(from: PrimitiveType, to: PrimitiveType) = "${from.abbrevName}To${to.abbrevName}Function"
-fun FromToFunction(from: PrimitiveType, to: PrimitiveType)
-    = if (types.contains(from) && types.contains(to)) Type(name(from, to), packageName) else throw IllegalArgumentException("")
+private fun name(from: JavaPrimitiveType, to: JavaPrimitiveType) = "${from.abbrevName}To${to.abbrevName}Function"
+fun FromToFunction(from: JavaPrimitiveType, to: JavaPrimitiveType) =
+    if (types.contains(from) && types.contains(to))
+        JavaTypeReference(name(from, to), packageName)
+    else
+        throw IllegalArgumentException("")
 
 val FromToFunction = Profile {
     types.forEach {
@@ -45,14 +47,19 @@ val FromToFunction = Profile {
         types.forEach {
             val t_to = it
 
-            javaInterface(name(t_from, t_to), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-                addAnnotations(FunctionalInterface)
-
-                documentation = "A function converting an {@code $t_from} to {@code $t_to}."
+            Annotate(FunctionalInterface::class.asType)..
+            public..javaInterface(
+                name(t_from, t_to),
+                packageName,
+                MODULE_BASE,
+                SRCSET_MAIN_GEN,
+                documentation = "A function converting an {@code $t_from} to {@code $t_to}.",
+                since = VERSION_1_0_0_0,
+                copyrightHeader = COPYRIGHT_HEADER
+            ) {
                 authors(AUTHOR_LEON_LINHART)
-                since = VERSION_1_0_0_0
 
-                t_to.method(
+                t_to(
                     "apply",
                     "Applies this function to the given argument.",
 

@@ -29,14 +29,13 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
+import com.github.themrmilchmann.kraton.*
+import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
-import com.github.themrmilchmann.osmerion.internal.generator.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.*
-import com.github.themrmilchmann.osmerion.internal.generator.java.Type
-import java.lang.reflect.*
 
-private fun name(type: PrimitiveType) = "Observable${type.abbrevName}Value"
-fun ObservableValue(type: PrimitiveType) = if (types.contains(type)) Type(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JavaPrimitiveType) = "Observable${type.abbrevName}Value"
+fun ObservableValue(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_VALUE_OPS = "1_Value Operations"
 private const val CAT_LISTENERS = "2_Listeners"
@@ -45,30 +44,35 @@ val ObservableValue = Profile {
     types.forEach {
         val t_value = it
 
-        javaInterface(name(t_value), packageName, MODULE_BASE, visibility = Modifier.PUBLIC) {
-            addImport(Import("$packageName.change", "*"))
+        public..javaInterface(
+            name(t_value),
+            packageName,
+            MODULE_BASE,
+            SRCSET_MAIN_GEN,
+            documentation = "An observable {@code $t_value} value.",
+            since = VERSION_1_0_0_0,
+            superInterfaces = arrayOf(JavaTypeReference("ObservableValue", packageName, t_value.boxedType)),
+            copyrightHeader = COPYRIGHT_HEADER
+        ) {
+            import("$packageName.change")
 
-            addInterfaces(ParametrizedType("ObservableValue", packageName, t_value.boxedType.simpleName))
-
-            documentation = "An observable {@code ${t_value.simpleName}} value."
             see(WritableValue(t_value).toString())
             authors(AUTHOR_LEON_LINHART)
-            since = VERSION_1_0_0_0
 
-            t_value.method(
+            t_value(
                 "get",
-                "Returns the value of this {@link ${this.fileName}}.",
+                "Returns the value of this {@link ${this.className}}.",
 
                 category = CAT_VALUE_OPS,
-                returnDoc = "the value of this {@code ${this.fileName}}",
+                returnDoc = "the value of this {@code ${this.className}}",
                 since = VERSION_1_0_0_0
             )
 
-            t_value.boxedType.method(
+            Override..
+            default..t_value.boxedType(
                 "getValue",
                 inheritDoc,
 
-                annotations = listOf(Override),
                 category = CAT_VALUE_OPS,
                 since = VERSION_1_0_0_0,
                 body = """
@@ -76,7 +80,7 @@ return this.get();
 """
             )
 
-            void.method(
+            void(
                 "addListener",
                 """
                 Attaches the specified listener to this {@link ObservableValue}.
@@ -88,18 +92,18 @@ return this.get();
                 ChangeListener(t_value).PARAM("listener", "the listener to be attached to this {@code ObservableValue}"),
 
                 category = CAT_LISTENERS,
-                throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
+                exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0
             )
 
-            void.method(
+            Override..
+            default..void(
                 "addListener",
                 inheritDoc,
 
-                ParametrizedType("ChangeListener", packageName, "? super ${t_value.boxedType.simpleName}").PARAM("listener", ""),
+                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", ""),
 
-                annotations = listOf(Override),
                 category = CAT_LISTENERS,
                 see = arrayOf(
                     "#removeListener(${ChangeListener(t_value)})"),
@@ -109,14 +113,14 @@ this.addListener(${ChangeListener(t_value)}.wrap(listener));
 """
             )
 
-            void.method(
+            void(
                 "removeListener",
                 "Detaches the specified listener from this value.",
 
                 ChangeListener(t_value).PARAM("listener", "the listener to be detached from this value"),
 
                 category = CAT_LISTENERS,
-                throws = arrayOf("NullPointerException if {@code listener} is {@code null}"),
+                exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
                 see = arrayOf("#addListener(${ChangeListener(t_value)})"),
                 since = VERSION_1_0_0_0
             )
