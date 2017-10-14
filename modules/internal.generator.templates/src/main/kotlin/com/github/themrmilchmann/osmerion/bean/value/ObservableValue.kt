@@ -31,14 +31,12 @@ package com.github.themrmilchmann.osmerion.bean.value
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
 
-private fun name(type: JavaPrimitiveType) = "Observable${type.abbrevName}Value"
-fun ObservableValue(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
-
-private const val CAT_VALUE_OPS = "1_Value Operations"
-private const val CAT_LISTENERS = "2_Listeners"
+private fun name(type: JvmPrimitiveType) = "Observable${type.abbrevName}Value"
+fun ObservableValue(type: JvmPrimitiveType) = if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ObservableValue = Profile {
     types.forEach {
@@ -51,7 +49,7 @@ val ObservableValue = Profile {
             SRCSET_MAIN_GEN,
             documentation = "An observable {@code $t_value} value.",
             since = VERSION_1_0_0_0,
-            superInterfaces = arrayOf(JavaTypeReference("ObservableValue", packageName, t_value.boxedType)),
+            superInterfaces = arrayOf(JvmTypeReference("ObservableValue", packageName, t_value.box)),
             copyrightHeader = COPYRIGHT_HEADER
         ) {
             import("$packageName.change")
@@ -59,71 +57,70 @@ val ObservableValue = Profile {
             see(WritableValue(t_value).toString())
             authors(AUTHOR_LEON_LINHART)
 
-            t_value(
-                "get",
-                "Returns the value of this {@link ${this.className}}.",
+            group("Value Operations") {
+                t_value(
+                    "get",
+                    "Returns the value of this {@link ${this.scopeRoot.className}}.",
 
-                category = CAT_VALUE_OPS,
-                returnDoc = "the value of this {@code ${this.className}}",
-                since = VERSION_1_0_0_0
-            )
+                    returnDoc = "the value of this {@code ${this.scopeRoot.className}}",
+                    since = VERSION_1_0_0_0
+                )
 
-            Override..
-            default..t_value.boxedType(
-                "getValue",
-                inheritDoc,
+                Override..
+                    default..t_value.box(
+                    "getValue",
+                    inheritDoc,
 
-                category = CAT_VALUE_OPS,
-                since = VERSION_1_0_0_0,
-                body = """
+                    since = VERSION_1_0_0_0,
+                    body = """
 return this.get();
 """
-            )
+                )
+            }
 
-            void(
-                "addListener",
-                """
+            group("Listeners") {
+                void(
+                    "addListener",
+                    """
                 Attaches the specified listener to this {@link ObservableValue}.
 
                 As long as the listener is attached it will be notified whenever the value of this {@code ObservableValue} changes via
                 {@link ChangeListener#onChanged(ObservableValue, Object, Object)}.
                 """,
 
-                ChangeListener(t_value).PARAM("listener", "the listener to be attached to this {@code ObservableValue}"),
+                    ChangeListener(t_value).PARAM("listener", "the listener to be attached to this {@code ObservableValue}"),
 
-                category = CAT_LISTENERS,
-                exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
-                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0_0
-            )
+                    exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
+                    see = arrayOf("#addListener(${ChangeListener(t_value).asString(scopeRoot)})"),
+                    since = VERSION_1_0_0_0
+                )
 
-            Override..
-            default..void(
-                "addListener",
-                inheritDoc,
+                Override..
+                    default..void(
+                    "addListener",
+                    inheritDoc,
 
-                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", ""),
+                    JvmTypeReference("ChangeListener", packageName, JvmGenericType("?", t_value.box, upperBounds = false)).PARAM("listener", ""),
 
-                category = CAT_LISTENERS,
-                see = arrayOf(
-                    "#removeListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0_0,
-                body = """
-this.addListener(${ChangeListener(t_value)}.wrap(listener));
+                    see = arrayOf(
+                        "#removeListener(${ChangeListener(t_value).asString(scopeRoot)})"),
+                    since = VERSION_1_0_0_0,
+                    body = """
+this.addListener(${ChangeListener(t_value).asString(scopeRoot)}.wrap(listener));
 """
-            )
+                )
 
-            void(
-                "removeListener",
-                "Detaches the specified listener from this value.",
+                void(
+                    "removeListener",
+                    "Detaches the specified listener from this value.",
 
-                ChangeListener(t_value).PARAM("listener", "the listener to be detached from this value"),
+                    ChangeListener(t_value).PARAM("listener", "the listener to be detached from this value"),
 
-                category = CAT_LISTENERS,
-                exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
-                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0_0
-            )
+                    exceptions = arrayOf(java.lang.NullPointerException::class.asType to "if {@code listener} is {@code null}"),
+                    see = arrayOf("#addListener(${ChangeListener(t_value).asString(scopeRoot)})"),
+                    since = VERSION_1_0_0_0
+                )
+            }
         }
     }
 }

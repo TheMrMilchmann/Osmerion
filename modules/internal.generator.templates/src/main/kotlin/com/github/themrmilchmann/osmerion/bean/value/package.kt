@@ -29,7 +29,7 @@
  */
 package com.github.themrmilchmann.osmerion.bean.value
 
-import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
 internal val packageName = getOsmerionPath("bean.value")

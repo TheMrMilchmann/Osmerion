@@ -31,21 +31,18 @@ package com.github.themrmilchmann.osmerion.bean.property
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
 
-private fun name(type: JavaPrimitiveType) = "ReadOnly${type.abbrevName}Wrapper"
-fun ReadOnlyWrapper(type: JavaPrimitiveType) =
-    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
-
-private const val CAT_VALUE_OPS = "1_Value Operations"
-private const val CAT_BINDING   = "2_Binding"
-private const val CAT_LISTENERS = "3_Listeners"
+private fun name(type: JvmPrimitiveType) = "ReadOnly${type.abbrevName}Wrapper"
+fun ReadOnlyWrapper(type: JvmPrimitiveType) =
+    if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ReadOnlyWrapper = Profile {
     types.forEach {
         val t_value = it
-        val sup = JavaTypeReference("ReadOnlyWrapper", packageName, t_value.boxedType, ReadOnlyProperty(t_value))
+        val sup = JvmTypeReference("ReadOnlyWrapper", packageName, t_value.box, ReadOnlyProperty(t_value))
 
         final..javaClass(
             name(t_value),
@@ -66,63 +63,60 @@ val ReadOnlyWrapper = Profile {
 
             constructor(
                 """
-                Creates a new {@code $className} wrapping around the given property.
+                Creates a new {@code ${this.scopeRoot.className}} wrapping around the given property.
                 """,
 
                 ReadOnlyProperty(t_value).PARAM("property", "the property to be wrapped"),
 
                 since = VERSION_1_0_0_0,
-
                 body = "super(property);"
             )
 
-            Override..
-            public..t_value(
-                "get",
-                inheritDoc,
+            group("Value Operations") {
+                Override..
+                    public..t_value(
+                    "get",
+                    inheritDoc,
 
-                category = CAT_VALUE_OPS,
-                since = VERSION_1_0_0_0,
+                    since = VERSION_1_0_0_0,
+                    body = "return this.property.get();"
+                )
+            }
 
-                body = "return this.property.get();"
-            )
+            group("Binding") {
+                Override..
+                    public..boolean(
+                    "isBound",
+                    inheritDoc,
 
-            Override..
-            public..boolean(
-                "isBound",
-                inheritDoc,
+                    since = VERSION_1_0_0_0,
+                    body = "return this.property.isBound();"
+                )
+            }
 
-                category = CAT_BINDING,
-                since = VERSION_1_0_0_0,
+            group("Listeners") {
+                Override..
+                    public..void(
+                    "addListener",
+                    inheritDoc,
 
-                body = "return this.property.isBound();"
-            )
+                    ChangeListener(t_value).PARAM("listener", ""),
 
-            Override..
-            public..void(
-                "addListener",
-                inheritDoc,
+                    since = VERSION_1_0_0_0,
+                    body = "this.property.addListener(listener);"
+                )
 
-                ChangeListener(t_value).PARAM("listener", ""),
+                Override..
+                    public..void(
+                    "removeListener",
+                    inheritDoc,
 
-                category = CAT_LISTENERS,
-                since = VERSION_1_0_0_0,
+                    ChangeListener(t_value).PARAM("listener", ""),
 
-                body = "this.property.addListener(listener);"
-            )
-
-            Override..
-            public..void(
-                "removeListener",
-                inheritDoc,
-
-                ChangeListener(t_value).PARAM("listener", ""),
-
-                category = CAT_LISTENERS,
-                since = VERSION_1_0_0_0,
-
-                body = "this.property.removeListener(listener);"
-            )
+                    since = VERSION_1_0_0_0,
+                    body = "this.property.removeListener(listener);"
+                )
+            }
         }
     }
 }

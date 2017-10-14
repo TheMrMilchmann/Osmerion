@@ -31,12 +31,13 @@ package com.github.themrmilchmann.osmerion.bean.property
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 
-private fun name(type: JavaPrimitiveType) = "ReadOnly${type.abbrevName}Property"
-fun ReadOnlyProperty(type: JavaPrimitiveType) =
-    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JvmPrimitiveType) = "ReadOnly${type.abbrevName}Property"
+fun ReadOnlyProperty(type: JvmPrimitiveType) =
+    if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ReadOnlyProperty = Profile {
     types.forEach {
@@ -49,7 +50,7 @@ val ReadOnlyProperty = Profile {
             SRCSET_MAIN_GEN,
             documentation = "A read-only representation of a {@code $t_value} property.",
             since = VERSION_1_0_0_0,
-            superInterfaces = arrayOf(JavaTypeReference("ReadOnlyProperty", packageName, t_value.boxedType), ObservableValue(t_value)),
+            superInterfaces = arrayOf(JvmTypeReference("ReadOnlyProperty", packageName, t_value.box), ObservableValue(t_value)),
             copyrightHeader = COPYRIGHT_HEADER
         ) {
             authors(AUTHOR_LEON_LINHART)

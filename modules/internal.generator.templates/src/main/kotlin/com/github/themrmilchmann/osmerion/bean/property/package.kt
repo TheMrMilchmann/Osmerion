@@ -29,7 +29,7 @@
  */
 package com.github.themrmilchmann.osmerion.bean.property
 
-import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
 internal val types = listOf(boolean, char, byte, short, int, long, float, double)

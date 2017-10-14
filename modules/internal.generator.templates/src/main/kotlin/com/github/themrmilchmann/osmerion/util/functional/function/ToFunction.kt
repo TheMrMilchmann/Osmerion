@@ -31,11 +31,12 @@ package com.github.themrmilchmann.osmerion.util.functional.function
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: JavaPrimitiveType) = "To${type.abbrevName}Function"
-fun ToFunction(type: JavaPrimitiveType) =
-    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JvmPrimitiveType) = "To${type.abbrevName}Function"
+fun ToFunction(type: JvmPrimitiveType) =
+    if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ToFunction = Profile {
     types.forEach {

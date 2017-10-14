@@ -31,11 +31,12 @@ package com.github.themrmilchmann.osmerion.bean.property
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: JavaPrimitiveType) = "Simple${type.abbrevName}Property"
-fun SimpleProperty(type: JavaPrimitiveType) =
-    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JvmPrimitiveType) = "Simple${type.abbrevName}Property"
+fun SimpleProperty(type: JvmPrimitiveType) =
+    if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_CONSTRUCTORS = "0_"
 private const val CAT_VALUE_OPS = "1_Value Operations"
@@ -59,9 +60,7 @@ val SimpleProperty = Profile {
             protected..constructor(
                 "Creates a new {@link $this} with the default initial value {@link ${AbstractProperty(t_value)}#INITIAL_VALUE}",
 
-                category = CAT_CONSTRUCTORS,
                 since = VERSION_1_0_0_0,
-
                 body = "super();"
             )
 
@@ -70,24 +69,22 @@ val SimpleProperty = Profile {
 
                 t_value.PARAM("initialValue", "the initial value for this property"),
 
-                category = CAT_CONSTRUCTORS,
                 since = VERSION_1_0_0_0,
-
                 body = "super(initialValue);"
             )
 
-            Override..
-            public..t_value(
-                "validate",
-                inheritDoc,
+            group("Value Operations") {
+                Override..
+                    public..t_value(
+                    "validate",
+                    inheritDoc,
 
-                t_value.PARAM("value", ""),
+                    t_value.PARAM("value", ""),
 
-                category = CAT_VALUE_OPS,
-                since = VERSION_1_0_0_0,
-
-                body = "return value;"
-            )
+                    since = VERSION_1_0_0_0,
+                    body = "return value;"
+                )
+            }
         }
     }
 }

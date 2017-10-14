@@ -31,12 +31,13 @@ package com.github.themrmilchmann.osmerion.util.functional.function
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
-private fun name(from: JavaPrimitiveType, to: JavaPrimitiveType) = "${from.abbrevName}To${to.abbrevName}Function"
-fun FromToFunction(from: JavaPrimitiveType, to: JavaPrimitiveType) =
+private fun name(from: JvmPrimitiveType, to: JvmPrimitiveType) = "${from.abbrevName}To${to.abbrevName}Function"
+fun FromToFunction(from: JvmPrimitiveType, to: JvmPrimitiveType) =
     if (types.contains(from) && types.contains(to))
-        JavaTypeReference(name(from, to), packageName)
+        JvmTypeReference(name(from, to), packageName)
     else
         throw IllegalArgumentException("")
 

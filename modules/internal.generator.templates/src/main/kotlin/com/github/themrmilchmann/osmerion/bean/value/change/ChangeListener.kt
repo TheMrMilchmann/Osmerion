@@ -31,11 +31,12 @@ package com.github.themrmilchmann.osmerion.bean.value.change
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 
-private fun name(type: JavaPrimitiveType) = "${type.abbrevName}ChangeListener"
-fun ChangeListener(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JvmPrimitiveType) = "${type.abbrevName}ChangeListener"
+fun ChangeListener(type: JvmPrimitiveType) = if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val ChangeListener = Profile {
     types.forEach {
@@ -64,7 +65,7 @@ val ChangeListener = Profile {
                 since = VERSION_1_0_0_0
             )
 
-            static..this(
+            static..this.scopeRoot(
                 "wrap",
                 """
                 Returns a specialized ChangeListener wrapping around the given one. However, if the given {@code listener} already is a specialized listener of
@@ -74,7 +75,7 @@ val ChangeListener = Profile {
                 wrapped listener is passed as argument.
                 """,
 
-                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", "the listener to be wrapped"),
+                JvmTypeReference("ChangeListener", packageName, JvmGenericType("?", t_value.box, upperBounds = false)).PARAM("listener", "the listener to be wrapped"),
 
                 returnDoc = "a specialized ChangeListener wrapping around the given one",
                 since = VERSION_1_0_0_0,
@@ -83,7 +84,7 @@ val ChangeListener = Profile {
 return (listener instanceof ${name(t_value)}) ? (${name(t_value)}) listener : new ${name(t_value)}() {
 
     @Override
-    public void onChanged(${ObservableValue(t_value)} observable, $t_value oldValue, $t_value newValue) {
+    public void onChanged(${ObservableValue(t_value).asString(scopeRoot)} observable, ${t_value.asString(scopeRoot)} oldValue, ${t_value.asString(scopeRoot)} newValue) {
         listener.onChanged(observable, oldValue, newValue);
     }
 

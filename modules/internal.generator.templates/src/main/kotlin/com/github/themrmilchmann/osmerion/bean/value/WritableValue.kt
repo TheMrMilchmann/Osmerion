@@ -31,10 +31,11 @@ package com.github.themrmilchmann.osmerion.bean.value
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 
-private fun name(type: JavaPrimitiveType) = "Writable${type.abbrevName}Value"
-fun WritableValue(type: JavaPrimitiveType) = if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
+private fun name(type: JvmPrimitiveType) = "Writable${type.abbrevName}Value"
+fun WritableValue(type: JvmPrimitiveType) = if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 private const val CAT_VALUE_OPS = "1_Value Operations"
 
@@ -49,22 +50,22 @@ val WritableValue = Profile {
             SRCSET_MAIN_GEN,
             documentation = "A writable {@code $t_value} value.",
             since = VERSION_1_0_0_0,
-            superInterfaces = arrayOf(JavaTypeReference("WritableValue", packageName, t_value.boxedType), ObservableValue(t_value)),
+            superInterfaces = arrayOf(JvmTypeReference("WritableValue", packageName, t_value.box), ObservableValue(t_value)),
             copyrightHeader = COPYRIGHT_HEADER
         ) {
             authors(AUTHOR_LEON_LINHART)
 
-            t_value(
-                "set",
-                "Sets the value of this {@link ${this.className}}.",
+            group("Value Operations") {
+                t_value(
+                    "set",
+                    "Sets the value of this {@link ${this.scopeRoot.className}}.",
 
-                t_value.PARAM("value", "the new value"),
+                    t_value.PARAM("value", "the new value"),
 
-                category = CAT_VALUE_OPS,
-
-                returnDoc = "the previous value of this {@code ${this.className}}",
-                since = VERSION_1_0_0_0
-            )
+                    returnDoc = "the previous value of this {@code ${this.scopeRoot.className}}",
+                    since = VERSION_1_0_0_0
+                )
+            }
         }
     }
 }

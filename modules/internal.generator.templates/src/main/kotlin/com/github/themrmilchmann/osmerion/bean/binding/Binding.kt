@@ -31,19 +31,15 @@ package com.github.themrmilchmann.osmerion.bean.binding
 
 import com.github.themrmilchmann.kraton.*
 import com.github.themrmilchmann.kraton.lang.java.*
+import com.github.themrmilchmann.kraton.lang.jvm.*
 import com.github.themrmilchmann.osmerion.*
 import com.github.themrmilchmann.osmerion.bean.value.*
 import com.github.themrmilchmann.osmerion.bean.value.change.*
 import com.github.themrmilchmann.osmerion.util.functional.function.*
 
-private fun name(type: JavaPrimitiveType) = "${type.abbrevName}Binding"
-fun Binding(type: JavaPrimitiveType) =
-    if (types.contains(type)) JavaTypeReference(name(type), packageName) else throw IllegalArgumentException("")
-
-private const val CAT_M_STATIC          = "0_"
-private const val CAT_F_INSTANCE        = "1_Instance Fields"
-private const val CAT_M_VALOPS          = "2_Value Operations"
-private const val CAT_M_LISTENERS       = "3_Listeners"
+private fun name(type: JvmPrimitiveType) = "${type.abbrevName}Binding"
+fun Binding(type: JvmPrimitiveType) =
+    if (types.contains(type)) JvmTypeReference(name(type), packageName) else throw IllegalArgumentException("")
 
 val Binding = Profile {
     types.forEach {
@@ -66,22 +62,22 @@ val Binding = Profile {
 
             authors(AUTHOR_LEON_LINHART)
 
-            types.filter { it != t_value }.forEach {
-                public..static..this(
-                    "wrap",
-                    "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
+            group {
+                types.filter { it != t_value }.forEach {
+                    public..static..this.scopeRoot(
+                        "wrap",
+                        "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
 
-                    ObservableValue(it).PARAM("observable", "the observable to be wrapped"),
-                    FromToFunction(it, t_value).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
+                        ObservableValue(it).PARAM("observable", "the observable to be wrapped"),
+                        FromToFunction(it, t_value).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
 
-                    category = CAT_M_STATIC,
-                    returnDoc = "the wrapper binding",
-                    since = VERSION_1_0_0_0,
+                        returnDoc = "the wrapper binding",
+                        since = VERSION_1_0_0_0,
 
-                    body = """
+                        body = """
 return new ${name(t_value)}() {{
-    ${ChangeListener(it)} listener = (observable, oldValue, newValue) -> {
-        $t_value prevValue = this.value;
+    ${ChangeListener(it).asString(scopeRoot)} listener = (observable, oldValue, newValue) -> {
+        ${t_value.asString(scopeRoot)} prevValue = this.value;
         this.value = converter.apply(newValue);
 
         if (this.changeListeners != null) this.changeListeners.forEach(l -> l.onChanged(this, prevValue, this.value));
@@ -91,25 +87,24 @@ return new ${name(t_value)}() {{
     observable.addListener(listener);
 }};
 """
-                )
-            }
+                    )
+                }
 
-            public..static..this(
-                "wrap",
-                "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
+                public..static..this.scopeRoot(
+                    "wrap",
+                    "Returns a new {@code ${name(t_value)}} that wraps around the given observable and uses the given converter to convert its value.",
 
-                JavaTypeReference("ObservableValue", getOsmerionPath("bean.value"), JavaGenericType("T")).PARAM("observable", "the observable to be wrapped"),
-                JavaTypeReference(ToFunction(t_value).className, ToFunction(t_value).packageName, JavaGenericType("T")).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
+                    JvmTypeReference("ObservableValue", getOsmerionPath("bean.value"), JvmGenericType("T")).PARAM("observable", "the observable to be wrapped"),
+                    JvmTypeReference(ToFunction(t_value).className, ToFunction(t_value).packageName, JvmGenericType("T")).PARAM("converter", "the converter to convert the {@code $it} value to type {@code $t_value}"),
 
-                category = CAT_M_STATIC,
-                typeParameters = arrayOf(JavaGenericType("T") to "the type of the value to be wrapped"),
-                returnDoc = "the wrapper binding",
-                since = VERSION_1_0_0_0,
+                    typeParameters = arrayOf(JvmGenericType("T") to "the type of the value to be wrapped"),
+                    returnDoc = "the wrapper binding",
+                    since = VERSION_1_0_0_0,
 
-                body = """
+                    body = """
 return new ${name(t_value)}() {{
     ChangeListener<T> listener = (observable, oldValue, newValue) -> {
-        ${t_value.asString(this)} prevValue = this.value;
+        ${t_value.asString(this.scopeRoot)} prevValue = this.value;
         this.value = converter.apply(newValue);
 
         if (this.changeListeners != null) this.changeListeners.forEach(l -> l.onChanged(this, prevValue, this.value));
@@ -119,18 +114,18 @@ return new ${name(t_value)}() {{
     observable.addListener(listener);
 }};
 """
-            )
+                )
+            }
 
             // #################################################################################################################################################
             // # Instance Fields ###############################################################################################################################
             // #################################################################################################################################################
 
-            protected..JavaTypeReference("List", "java.util", ChangeListener(t_value))(
+            protected..JvmTypeReference("List", "java.util", ChangeListener(t_value))(
                 "changeListeners",
                 null,
                 "The list of ChangeListeners attached to this binding.",
 
-                category = CAT_F_INSTANCE,
                 since = VERSION_1_0_0_0
             )
 
@@ -139,84 +134,70 @@ return new ${name(t_value)}() {{
                 null,
                 "",
 
-                category = CAT_F_INSTANCE,
-
                 since = VERSION_1_0_0_0
             )
 
-            // #################################################################################################################################################
-            // # Value Operations ##############################################################################################################################
-            // #################################################################################################################################################
+            group("Value Operations") {
+                public..final..t_value(
+                    "get",
+                    inheritDoc,
 
-            public..final..t_value(
-                "get",
-                inheritDoc,
+                    since = VERSION_1_0_0_0,
+                    body = "return this.value;"
+                )
+            }
 
-                category = CAT_M_VALOPS,
 
-                since = VERSION_1_0_0_0,
-                body = "return this.value;"
-            )
+            group("Listeners") {
+                Annotate(JvmTypeReference("Override", null))..
+                    public..final..void(
+                    "addListener",
+                    inheritDoc,
 
-            // #################################################################################################################################################
-            // # Listening #####################################################################################################################################
-            // #################################################################################################################################################
+                    ChangeListener(t_value).PARAM("listener", ""),
 
-            Annotate(JavaTypeReference("Override", null))..
-            public..final..void(
-                "addListener",
-                inheritDoc,
+                    see = arrayOf("#removeListener(${ChangeListener(t_value).asString(scopeRoot)})"),
+                    since = VERSION_1_0_0_0,
 
-                ChangeListener(t_value).PARAM("listener", ""),
-
-                category = CAT_M_LISTENERS,
-
-                see = arrayOf("#removeListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0_0,
-
-                body = """
+                    body = """
 if (listener == null) throw new NullPointerException();
 if (this.changeListeners == null) this.changeListeners = new ArrayList<>(1);
 
 this.changeListeners.add(listener);
 """
-            )
+                )
 
-            Annotate(JavaTypeReference("Override", null))..
-            public..final..void(
-                "removeListener",
-                inheritDoc,
+                Annotate(JvmTypeReference("Override", null))..
+                    public..final..void(
+                    "removeListener",
+                    inheritDoc,
 
-                ChangeListener(t_value).PARAM("listener", ""),
+                    ChangeListener(t_value).PARAM("listener", ""),
 
-                category = CAT_M_LISTENERS,
+                    see = arrayOf("#addListener(${ChangeListener(t_value).asString(scopeRoot)})"),
+                    since = VERSION_1_0_0_0,
 
-                see = arrayOf("#addListener(${ChangeListener(t_value)})"),
-                since = VERSION_1_0_0_0,
-
-                body = """
+                    body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
-            )
+                )
 
-            Annotate(JavaTypeReference("Override", null))..
-            public..final..void(
-                "removeListener",
-                inheritDoc,
+                Annotate(JvmTypeReference("Override", null))..
+                    public..final..void(
+                    "removeListener",
+                    inheritDoc,
 
-                JavaTypeReference("ChangeListener", packageName, JavaGenericType("?", t_value.boxedType, upperBounds = false)).PARAM("listener", ""),
+                    JvmTypeReference("ChangeListener", packageName, JvmGenericType("?", t_value.box, upperBounds = false)).PARAM("listener", ""),
 
-                category = CAT_M_LISTENERS,
+                    since = VERSION_1_0_0_0,
 
-                since = VERSION_1_0_0_0,
-
-                body = """
+                    body = """
 if (listener == null) throw new NullPointerException();
 if (!this.changeListeners.isEmpty()) this.changeListeners.remove(listener);
 """
-            )
-
+                )
+            }
         }
     }
 }
